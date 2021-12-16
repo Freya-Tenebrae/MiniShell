@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2021/11/01 19:52:11 by cmaginot         ###   ########.fr        #
+#    Updated: 2021/12/13 15:31:25 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME=minishell
@@ -15,33 +15,39 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_minishell.c)
 OBJS=$(SRCS:.c=.o)
 
+FOLDER=srcs
 INCLUDES=$(addprefix includes/, \
 	ft_minishell.h)
-FOLDER=srcs
 
-CC=gcc -g
+NAME_LIBFT=libft
+NAME_GNL=get_next_line
+LIBFT=includes/libft
+GNL=includes/Get_next_line
+
+
+CC=clang -g
 CFLAGS=-Wall -Wextra -Werror -g3 -fsanitize=address
 RM=rm -f
 
 all: $(NAME)
 
-bonus: $(NAME_BONUS)
-
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(INCLUDES)
-
-$(NAME_BONUS): $(OBJS_BONUS)
-	$(CC) $(CFLAGS) -o $@ $^ $(INCLUDES)
+	make -C $(LIBFT) bonus
+	make -C $(GNL)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)/libft.a $(GNL)/get_next_line.a
 
 %.o: %.c
-	$(CC) -c $(CFLAGS) -o $@ $< $(INCLUDES)
+	$(CC) -c $(CFLAGS) -o $@ $< -I $(INCLUDES)
 
 clean:
-	$(RM) $(OBJS) $(OBJS_BONUS)
+	make clean -C $(LIBFT)
+	make clean -C $(GNL)
+	$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME) $(NAME_BONUS)
+	make fclean -C $(LIBFT)
+	make fclean -C $(GNL)
+	$(RM) $(NAME)
+
 
 re: fclean all
-
-re_bonus: fclean bonus

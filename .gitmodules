@@ -1,0 +1,6 @@
+[submodule "includes/Get_next_line"]
+	path = includes/Get_next_line
+	url = https://github.com/Freya-Tenebrae/Get_next_line.git
+[submodule "includes/libft"]
+	path = includes/libft
+	url = https://github.com/Freya-Tenebrae/libft.git

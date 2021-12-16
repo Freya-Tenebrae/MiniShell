@@ -1,0 +1,102 @@
+Readline
+
+	char *readline(const char *prompt);
+	read a line from the teminal and return it (memory is allocated), return NULL if EOF.
+
+printf
+
+	int printf(const char *str, ...)
+	print informations on the terminal (args may be like : "something %i %s", 42, another_str)
+
+malloc
+
+	void *malloc(size_t size);
+	allocate a memory space of size bites (and return a void * pointing on the allocated space)
+
+free
+
+	void free(void *ptr);
+	free a memory space previously allocated.
+
+write
+
+	size_t write(int fildes, const void *buf, size_t nbyte);
+	print nbyte character of *buf on fildes.
+
+access
+
+	int access(const char *path, int amode);
+	check the file named by the path for accessibility according to amode.
+	amode = access permissions to be checked (R_OK, W_OK, X_OK) or the existence test (F_OK)
+
+open
+
+	int open(const char *path, int oflag, ...);
+	"open" a file named by the path and return a file descriptor (fd) associated to the file.
+
+read
+
+	size_t read(int fd, void *buf, size_t nbyte);
+	read nbyte of the file associated to the file descriptor (fd), stock it in buf, and return the 
+	number of byte actually read.
+
+close
+
+	int close(int fd);
+	"close" a file by dissociated the file descriptor (fd) from the original file.
+
+wait --> important
+
+	pid_t wait(int *stat_loc);
+	suspend execution of the thread until a child processes exit or a signal is recived
+
+watpid
+
+	pid_t waitpid(pid_t pid, int *stat_loc, int options);
+	suspend execution of the thread until a specific child processes (defined by a pid) exit 
+	or a signal is recived from the pid.
+
+wait3 ???
+wait4 ???
+
+signal
+sigaction
+kill
+exit
+
+fork --> important
+getcwd
+chdir --> important
+opendir
+readdir
+closedir
+stat
+lstat
+fstat
+unlink
+execve--> important
+dup
+dup2
+pipe
+strerror
+perror
+isatty
+ttyname
+ttyslot
+ioctl
+getenv
+tcsetattr
+tcgetattr
+tgetent
+tgetflag
+tegtnum
+tgetstr
+tgoto
+tputs
+
+
+rl_clear_history
+rl_on_new_line
+rl_replace_line
+rl_redisplay
+add_history
