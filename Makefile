@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
+#    By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2021/12/13 15:31:25 by cmaginot         ###   ########.fr        #
+#    Updated: 2021/12/18 19:21:56 by gadeneux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 NAME=minishell
 
 SRCS=$(addprefix ${FOLDER}/, \

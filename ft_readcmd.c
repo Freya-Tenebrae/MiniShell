@@ -59,7 +59,7 @@ static char	*ft_writeon(char **str, char c)
 	return (res);
 }
 
-int		ft_iswhitespace(char c)
+static int		ft_iswhitespace(char c)
 {
 	return (c == (char) 32 || c == '\n' || c == '\t'
 		|| c == '\v' || c == '\f' || c == '\r');
@@ -106,7 +106,7 @@ static int		ft_gettype(char *str)
 	return (-1);
 }
 
-static int	ft_isoperator(char *str)
+static int		ft_isoperator(char *str)
 {
 	return (ft_gettype(str) != -1);
 }
@@ -132,7 +132,7 @@ static t_elem	*ft_lastelem(t_elem *list)
 	return (cursor);
 }
 
-static int	ft_addon(t_elem **list, char *str)
+static int		ft_addon(t_elem **list, char *str)
 {
 	int label = !(*list);
 	if (!list)
@@ -167,12 +167,21 @@ t_elem	*ft_readcmd(char *str)
 			return (0);
 		buffer = 0;
 	}
+	if (i == -1)
+		return (0);
+	if (buffer)
+		free(buffer);
 	return (list);
 }
 
 int		main(int ac, char **av)
 {
-	t_elem *list = ft_readcmd("input < cat -e test.sh | | grep script.sh > output");
+	t_elem *list = ft_readcmd("   input < cat -e test.sh | | grep script.sh > output");
+	if (!list)
+	{
+		printf("Error\n");
+		return (0);
+	}
 	while (list)
 	{
 		printf("%-10s [%d]\n", list->str, list->type);
