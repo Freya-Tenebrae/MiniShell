@@ -6,26 +6,29 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/18 21:30:26 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/18 21:55:46 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-int		main(void)
+int		main(int ac, char **av, char **envp)
 {
-	ft_isoperator(0);
-	t_elem *list = ft_readcmd("   input < cat -e test.sh | | grep script.sh > output");
-	if (!list)
-	{
-		printf("Error\n");
-		return (0);
-	}
-	while (list)
-	{
-		printf("%-10s [%d]\n", list->str, list->type);
-		list = list->next;
-	}
+	(void) ac;
+	(void) av;
+	// t_elem *list = ft_readcmd("   input < cat -e test.sh | | grep script.sh > output");
+	// if (!list)
+	// {
+	// 	printf("Error\n");
+	// 	return (0);
+	// }
+	// while (list)
+	// {
+	// 	printf("%-10s [%d]\n", list->str, list->type);
+	// 	list = list->next;
+	// }
+	printf("%s\n", ft_getpath(envp));
+	ft_execcmd(ft_getpath(envp), "echo blehhhh");
 	return (0);
 }
 // int	main()
