@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/18 21:48:40 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/19 00:30:07 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,4 +138,61 @@ char	*ft_getpath(char **envp)
 		envp++;
 	}
 	return (dst);
+}
+
+char	*ft_runcmd(char *path, char *cmd, char *infile)
+{
+	char	*res;
+	int		fd[2];
+
+	res = 0;
+	if (pipe(fd) == -1)
+		return (0);
+		
+	int pid = fork();
+	if (pid == 0)
+	{
+		close(fd[0]);
+
+		if (infile)
+		{
+			int	input[2];
+			if (pipe(input) == -1)
+				return (0);
+			int pid2 = fork();
+			if (pid2 == 0)
+			{
+				close(fd[0]);
+				close(fd[1]);
+				write(input[1], infile, ft_strlen(infile));
+				exit(0);
+			}
+			close(input[1]);
+			waitpid(pid2, 0, 0);
+			dup2(input[0], STDIN_FILENO);
+			close(input[0]);
+		}
+
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		
+		ft_execcmd(path, cmd);
+		close(STDOUT_FILENO);
+		return (0);
+	} else {
+		close(fd[1]);
+		int ret = 0;
+		char *tmp = 0;
+		while ((ret = get_next_line(fd[0], &tmp)))
+		{
+			ft_writestr_on(&res, tmp);
+			ft_writechar_on(&res, '\n');
+			// printf("\"%s\"\n", tmp);
+		}
+		close(fd[0]);
+	}
+	waitpid(pid, 0, 0);
+	close(fd[0]);
+	close(fd[1]);
+	return (res);
 }

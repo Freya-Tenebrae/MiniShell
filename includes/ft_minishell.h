@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/18 21:48:15 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/19 00:19:21 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,14 @@ int		main(int ac, char **av, char **envp);
 t_elem	*ft_readcmd(char *str);
 int		ft_execcmd(char *path, char *cmd);
 char	*ft_getpath(char **envp);
+char	*ft_runcmd(char *path, char *cmd, char *infile);
 /* ************************************************************************** */
 /*                                   TOOLS                                    */
 /* ************************************************************************** */
 int		ft_isoperator(char *str);
+char	*ft_writestr_on(char **str, char *to_add);
+char	*ft_writechar_on(char **str, char c);
+char		*ft_chartostring(char c);
 /* ************************************************************************** */
 /*                                    END                                     */
 /* ************************************************************************** */

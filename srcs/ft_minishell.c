@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/18 21:55:46 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/19 00:20:29 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ int		main(int ac, char **av, char **envp)
 	// 	printf("%-10s [%d]\n", list->str, list->type);
 	// 	list = list->next;
 	// }
-	printf("%s\n", ft_getpath(envp));
-	ft_execcmd(ft_getpath(envp), "echo blehhhh");
+	char *str = ft_runcmd(ft_getpath(envp), "ls -la", 0);
+	printf("Output: \n");
+	printf("\"%s\"\n", str);
+	str = ft_runcmd(ft_getpath(envp), "grep srcs", str);
+	printf("Output: \n");
+	printf("\"%s\"\n", str);
 	return (0);
 }
 // int	main()

@@ -6,13 +6,13 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/18 21:33:55 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/18 23:58:21 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-static char		*ft_chartostring(char c)
+char		*ft_chartostring(char c)
 {
 	char *str = malloc(sizeof(char) * 2);
 	if (!str)
@@ -22,7 +22,7 @@ static char		*ft_chartostring(char c)
 	return (str);
 }
 
-static char		*ft_writeon(char **str, char c)
+char		*ft_writechar_on(char **str, char c)
 {
 	if (!str)
 		return (0);
@@ -31,8 +31,7 @@ static char		*ft_writeon(char **str, char c)
 		*str = ft_chartostring(c);
 		return (*str);
 	}
-	int len = ft_strlen(*str);
-	char *res = malloc((sizeof(char) * len) + 2);
+	char *res = malloc((sizeof(char) * ft_strlen(*str)) + 2);
 	if (!res)
 		return (0);
 	int i = 0;
@@ -43,6 +42,23 @@ static char		*ft_writeon(char **str, char c)
 	}
 	res[i] = c;
 	res[i + 1] = '\0';
+	free(*str);
+	*str = res;
+	return (res);
+}
+
+char		*ft_writestr_on(char **str, char *to_add)
+{
+	if (!str)
+		return (0);
+	if (!(*str))
+	{
+		*str = ft_strdup(to_add);
+		return (*str);
+	}
+	char *res = ft_strjoin(*str, to_add);
+	if (!res)
+		return (0);
 	free(*str);
 	*str = res;
 	return (res);
@@ -62,14 +78,14 @@ static int		ft_readnext(char *str, int i, char **buffer)
 		i++;
 	while (str[i] && !ft_iswhitespace(str[i]))
 	{
-		if (!ft_writeon(buffer, str[i]))
+		if (!ft_writechar_on(buffer, str[i]))
 			return (-1);
 		i++;
 	}
 	return (i);
 }
 
-static int		ft_stris(char *str1, char *str2)
+static int		ft_str_is(char *str1, char *str2)
 {
 	if (!str1 && !str2)
 		return (1);
@@ -88,15 +104,15 @@ static int		ft_gettype(char *str)
 {
 	if (!str)
 		return (-1);
-	if (ft_stris(str, "<"))
+	if (ft_str_is(str, "<"))
 		return (IN);
-	if (ft_stris(str, "<<"))
+	if (ft_str_is(str, "<<"))
 		return (DOUBLE_IN);
-	if (ft_stris(str, ">"))
+	if (ft_str_is(str, ">"))
 		return (OUT);	
-	if (ft_stris(str, ">>"))
+	if (ft_str_is(str, ">>"))
 		return (DOUBLE_OUT);
-	if (ft_stris(str, "|"))
+	if (ft_str_is(str, "|"))
 		return (PIPE);
 	return (ARGUMENT);
 }
