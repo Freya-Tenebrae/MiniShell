@@ -6,7 +6,7 @@
 #    By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2021/12/18 21:17:07 by gadeneux         ###   ########.fr        #
+#    Updated: 2021/12/19 00:55:16 by gadeneux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME=minishell
 SRCS=$(addprefix ${FOLDER}/, \
 	ft_minishell.c \
 	ft_readcmd.c \
-	ft_execcmd.c)
+	ft_execcmd.c \
+	ft_cmdline.c )
 OBJS=$(SRCS:.c=.o)
 
 FOLDER=srcs

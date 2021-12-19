@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/19 00:19:21 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/19 01:28:59 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_elem	*ft_readcmd(char *str);
 int		ft_execcmd(char *path, char *cmd);
 char	*ft_getpath(char **envp);
 char	*ft_runcmd(char *path, char *cmd, char *infile);
+t_elem	*ft_runcmd_next(t_elem *elem, char **envp, char **infile);
 /* ************************************************************************** */
 /*                                   TOOLS                                    */
 /* ************************************************************************** */
