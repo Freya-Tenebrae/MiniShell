@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/20 13:49:25 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 20:20:17 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@
 // 	(void) envp;
 	
 // 	char **cmd_args = malloc(sizeof(char*) * 3);
-// 	cmd_args[0] = ft_strdup("ls");
+// 	cmd_args[0] = ft_strdup("lss");
 // 	cmd_args[1] = ft_strdup("-la");
 // 	cmd_args[2] = NULL;
-// 	ft_execcmd(ft_getpath(envp), cmd_args);
+// 	// ft_execcmd(ft_getpath(envp), cmd_args);
+// 	int ret = 0;
+// 	char *out = ft_runcmd(ft_getpath(envp), cmd_args, 0, &ret);
+// 	printf("\n[%s] ret=%d\n", out, ret);
 // 	return (0);
 // }
 
@@ -52,23 +55,30 @@ int	main(int ac, char **av, char **envp)
 			return (1);
 		}
 		
-		t_elem *list = ft_readcmd(str);
-		if (!list)
-			return (1);
-			
-		t_elem *cursor = list;
-		
-		while (cursor)
+		int ret = 0;
+		t_elem *list = ft_readcmd(str, &ret);
+		if (ret == READ_OK)
 		{
-			printf("%-3d ~%s~\n", cursor->type, cursor->str);
-			cursor = cursor->next;
+			t_elem *cursor = list;
+			
+			// while (cursor)
+			// {
+			// 	printf("%-3d ~%s~\n", cursor->type, cursor->str);
+			// 	cursor = cursor->next;
+			// }
+			
+			cursor = list;
+			char *infile = 0;
+			while ((cursor = ft_runcmd_next(cursor, envp, &infile, &ret)))
+				;
+			free(infile);
+			
+		} else if (ret == READ_QUOTE_ERR) {
+			printf("quote error.\n");
+		} else {
+			printf("error.\n");
+			return (1);
 		}
-		
-		cursor = list;
-		char *infile = 0;
-		while ((cursor = ft_runcmd_next(cursor, envp, &infile)))
-			;
-		free(infile);
 		free(str);
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/20 15:08:06 by cmaginot         ###   ########.fr       */
+/*   Updated: 2021/12/20 20:59:15 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 /*                                  INCLUDES                                  */
 /* ************************************************************************** */
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # include "libft/libft.h"
 # include "Get_next_line/get_next_line.h"
@@ -30,6 +32,11 @@
 # define OUT 4
 # define DOUBLE_OUT 5
 # define PIPE 6
+
+# define READ_OK 0
+# define READ_ERR -1
+# define READ_ALLOC_ERR -2
+# define READ_QUOTE_ERR -3
 
 /* ************************************************************************** */
 /*                                 VAR GLOBAL                                 */
@@ -52,10 +59,10 @@ typedef struct	s_elem {
 /*                                  FONCTION                                  */
 /* ************************************************************************** */
 int		main(int ac, char **av, char **envp);
-t_elem	*ft_readcmd(char *str);
+t_elem	*ft_readcmd(char *str, int *ret);
 int		ft_execcmd(char *path, char **cmd_args);
 char	*ft_getpath(char **envp);
-char	*ft_runcmd(char *path, char **cmd_args, char *infile);
+char	*ft_runcmd(char *path, char **cmd_args, char *infile, int *ret);
 t_elem	*ft_runcmd_next(t_elem *elem, char **envp, char **infile);
 /* ************************************************************************** */
 /*                                   TOOLS                                    */

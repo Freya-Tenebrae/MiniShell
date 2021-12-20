@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/20 02:45:33 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 20:58:33 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,20 +147,22 @@ char	*ft_getpath(char **envp)
 	return (dst);
 }
 
-char	*ft_runcmd(char *path, char **cmd_args, char *infile)
+char	*ft_runcmd(char *path, char **cmd_args, char *infile, int *ret)
 {
 	char	*res;
 	int		fd[2];
-
+	int		err[2];
+	
 	res = 0;
 	if (pipe(fd) == -1)
 		return (0);
-		
+	if (pipe(err) == -1)
+		return (0);
 	int pid = fork();
 	if (pid == 0)
 	{
 		close(fd[0]);
-
+		close(err[0]);
 		if (infile)
 		{
 			int	input[2];
@@ -171,6 +173,8 @@ char	*ft_runcmd(char *path, char **cmd_args, char *infile)
 			{
 				close(fd[0]);
 				close(fd[1]);
+				close(err[0]);
+				close(err[1]);
 				write(input[1], infile, ft_strlen(infile));
 				exit(0);
 			}
@@ -179,27 +183,33 @@ char	*ft_runcmd(char *path, char **cmd_args, char *infile)
 			dup2(input[0], STDIN_FILENO);
 			close(input[0]);
 		}
-
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
-		
-		ft_execcmd(path, cmd_args);
-		close(STDOUT_FILENO);
-		return (0);
+		if (!ft_execcmd(path, cmd_args))
+		{
+			ft_putstr_fd("bash: ", STDOUT_FILENO);
+			ft_putstr_fd(cmd_args[0], STDOUT_FILENO);
+			ft_putstr_fd(": command not found\n", STDOUT_FILENO);
+			int x = 0;
+			write(err[1], &x, sizeof(int));
+			exit(0);
+		}
 	} else {
 		close(fd[1]);
-		int ret = 0;
-		char *tmp = 0;
-		while ((ret = get_next_line(fd[0], &tmp)))
-		{
-			ft_writestr_on(&res, tmp);
-			ft_writechar_on(&res, '\n');
-			// printf("\"%s\"\n", tmp);
-		}
+		close(err[1]);
+		char c;
+		while (read(fd[0], &c, sizeof(char)))
+			ft_writechar_on(&res, c);
+		int x = 1;
+		read(err[0], &x, sizeof(int));
+		*ret = x;
 		close(fd[0]);
+		close(err[0]);
 	}
 	waitpid(pid, 0, 0);
 	close(fd[0]);
 	close(fd[1]);
+	close(err[0]);
+	close(err[1]);
 	return (res);
 }

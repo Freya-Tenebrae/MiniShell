@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/20 14:44:48 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 16:22:20 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int		ft_readnext(char *str, int i, char **buffer)
 	int in_quote = 0;
 	char quote = 0;
 	if (!str)
-		return (-1);
+		return (READ_ERR);
 	while (str[i] && ft_iswhitespace(str[i]))
 		i++;
 	while (str[i])
@@ -93,7 +93,7 @@ static int		ft_readnext(char *str, int i, char **buffer)
 		if (!ft_iswhitespace(str[i]) || in_quote % 2 != 0)
 		{
 			if ((!quote || str[i] != quote) && !ft_writechar_on(buffer, str[i]))
-				return (-1);
+				return (READ_ALLOC_ERR);
 		} else {
 			break ;
 		}
@@ -101,6 +101,8 @@ static int		ft_readnext(char *str, int i, char **buffer)
 			quote = 0;
 		i++;
 	}
+	if (in_quote && in_quote % 2 != 0)
+		return (READ_QUOTE_ERR);
 	return (i);
 }
 
@@ -185,14 +187,14 @@ static int		ft_addon(t_elem **list, char *str)
 	return (1);
 }
 
-t_elem	*ft_readcmd(char *str)
+t_elem	*ft_readcmd(char *str, int *ret)
 {
 	int	i = 0;
 	char *buffer = 0;
 	t_elem *list = 0;
 	if (!str)
 		return (0);
-	while ((i = ft_readnext(str, i, &buffer)) != -1 && (size_t) i < ft_strlen(str) && i != -1)
+	while ((i = ft_readnext(str, i, &buffer)) != -1 && (size_t) i < ft_strlen(str) && i >= 0)
 	{
 		if (!ft_addon(&list, buffer))
 			return (0);
@@ -203,8 +205,12 @@ t_elem	*ft_readcmd(char *str)
 		if (!ft_addon(&list, buffer))
 			return (0);
 	}
-	if (i == -1)
+	if (i < 0)
+	{
+		*ret = i;
 		return (0);
+	}
+	*ret = READ_OK;
 	if (buffer)
 		free(buffer);
 	return (list);
