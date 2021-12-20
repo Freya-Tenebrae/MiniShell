@@ -39,6 +39,7 @@
 		"unordered_map": "c",
 		"utility": "c",
 		"vector": "c",
-		"sstream": "c"
+		"sstream": "c",
+		"__bit_reference": "c"
 	}
 }

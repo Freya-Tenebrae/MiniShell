@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/20 02:20:41 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:11:37 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,16 @@ static int		ft_readnext(char *str, int i, char **buffer)
 		return (-1);
 	while (str[i] && ft_iswhitespace(str[i]))
 		i++;
+	int write_count = 0;
 	while (str[i])
 	{
+		// printf("'%c'\n", str[i]);
 		if (str[i] == '"')
 			q1++;
 		if (!ft_iswhitespace(str[i]) || q1 % 2 != 0)
 		{
+			if (str[i] != '"')
+				write_count++;
 			if (str[i] != '"' && !ft_writechar_on(buffer, str[i]))
 				return (-1);
 		} else {
@@ -90,6 +94,7 @@ static int		ft_readnext(char *str, int i, char **buffer)
 		}
 		i++;
 	}
+	// printf("Writed %d\n", write_count);
 	return (i);
 }
 
@@ -187,7 +192,7 @@ t_elem	*ft_readcmd(char *str)
 			return (0);
 		buffer = 0;
 	}
-	if (buffer)
+	if (i != -1)
 	{
 		if (!ft_addon(&list, buffer))
 			return (0);
