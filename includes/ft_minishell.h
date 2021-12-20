@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/20 15:08:06 by cmaginot         ###   ########.fr       */
+/*   Updated: 2021/12/20 16:09:28 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 /*                                  INCLUDES                                  */
 /* ************************************************************************** */
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # include "libft/libft.h"
 # include "Get_next_line/get_next_line.h"
@@ -64,6 +66,8 @@ int		ft_isoperator(char *str);
 char	*ft_writestr_on(char **str, char *to_add);
 char	*ft_writechar_on(char **str, char c);
 char	*ft_chartostring(char c);
+void	ft_signal_handler(int signal);
+void	ft_init_signal_handling();
 /* ************************************************************************** */
 /*                                    END                                     */
 /* ************************************************************************** */
