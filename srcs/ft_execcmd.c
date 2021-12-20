@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/20 01:55:38 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 02:42:36 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,10 @@ int	ft_execcmd(char *path, char **cmd_args)
 		char *label = 0;
 		
 		if (!clone)
+		{
+			free(paths);
 			return (0);
+		}
 		
 		ft_writestr_on(&label, paths[i]);
 		ft_writechar_on(&label, '/');
@@ -117,12 +120,13 @@ int	ft_execcmd(char *path, char **cmd_args)
 		if (execve(clone[0], clone, NULL) != -1)
 		{
 			ft_freetab(clone);
-			free(label);
+			free(paths);
 			return (1);
 		}
 		ft_freetab(clone);
 		i++;
 	}
+	free(paths);
 	return (0);
 }
 
