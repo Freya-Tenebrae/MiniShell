@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/19 00:30:07 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 01:55:38 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,6 @@ char	*ft_after(char *str)
 	return (ret);
 }
 
-char	*ft_strfjoin(char *s1, char *s2)
-{
-	char	*dst;
-
-	dst = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	if (!dst)
-		return (0);
-	return (dst);
-}
-
 void	ft_freetab(char **strs)
 {
 	int	i;
@@ -84,42 +72,57 @@ void	ft_freetab(char **strs)
 	free(strs);
 }
 
-static int	__ft_execcmd(char ***args, int *i, char **cmd)
+char	**ft_clonetab(char **strs)
 {
-	char **cmd_args;
-	if (*args)
+	int len = 0;
+	while (strs[len])
+		len++;
+	char **res = malloc(sizeof(char*) * (len + 1));
+	if (!res)
+		return (0);
+	int i = 0;
+	while (strs[i])
 	{
-		while ((*args)[*i])
-		{
-			cmd_args = ft_split(*cmd, ' ');
-			if (cmd_args)
-			{
-				free(cmd_args[0]);
-				cmd_args[0] = ft_strfjoin(ft_strfjoin(ft_strdup((*args)[*i]), ft_strdup("/")), ft_before(*cmd));
-				if (execve(cmd_args[0], cmd_args, NULL) != -1)
-				{
-					ft_freetab(cmd_args);
-					ft_freetab(*args);
-					return (1);
-				}
-				ft_freetab(cmd_args);
-			}
-			(*i)++;
-		}
-		ft_freetab(*args);
+		res[i] = ft_strdup(strs[i]);
+		i++;
 	}
-	return (0);
+	res[i] = NULL;
+	return (res);
 }
 
-int	ft_execcmd(char *path, char *cmd)
+int	ft_execcmd(char *path, char **cmd_args)
 {
-	char	**args;
+	char	**paths;
 	int		i;
 
 	i = 0;
-	args = ft_split(path, ':');
-	if (__ft_execcmd(&args, &i, &cmd) == 1)
-		return (1);
+	paths = ft_split(path, ':');
+	if (!paths)
+		return (0);
+	while (paths[i])
+	{
+		char **clone = ft_clonetab(cmd_args);
+		char *label = 0;
+		
+		if (!clone)
+			return (0);
+		
+		ft_writestr_on(&label, paths[i]);
+		ft_writechar_on(&label, '/');
+		ft_writestr_on(&label, cmd_args[0]);
+		
+		free(clone[0]);
+		clone[0] = label;
+		
+		if (execve(clone[0], clone, NULL) != -1)
+		{
+			ft_freetab(clone);
+			free(label);
+			return (1);
+		}
+		ft_freetab(clone);
+		i++;
+	}
 	return (0);
 }
 
@@ -140,7 +143,7 @@ char	*ft_getpath(char **envp)
 	return (dst);
 }
 
-char	*ft_runcmd(char *path, char *cmd, char *infile)
+char	*ft_runcmd(char *path, char **cmd_args, char *infile)
 {
 	char	*res;
 	int		fd[2];
@@ -176,7 +179,7 @@ char	*ft_runcmd(char *path, char *cmd, char *infile)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 		
-		ft_execcmd(path, cmd);
+		ft_execcmd(path, cmd_args);
 		close(STDOUT_FILENO);
 		return (0);
 	} else {

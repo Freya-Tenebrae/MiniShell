@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/19 00:50:34 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 00:36:02 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,22 @@ static int		ft_iswhitespace(char c)
 
 static int		ft_readnext(char *str, int i, char **buffer)
 {
+	int q1 = 0;
 	if (!str)
 		return (-1);
 	while (str[i] && ft_iswhitespace(str[i]))
 		i++;
-	while (str[i] && !ft_iswhitespace(str[i]))
+	while (str[i])
 	{
-		if (!ft_writechar_on(buffer, str[i]))
-			return (-1);
+		if (str[i] == '"')
+			q1++;
+		if (!ft_iswhitespace(str[i]) || q1 % 2 != 0)
+		{
+			if (str[i] != '"' && !ft_writechar_on(buffer, str[i]))
+				return (-1);
+		} else {
+			break ;
+		}
 		i++;
 	}
 	return (i);
