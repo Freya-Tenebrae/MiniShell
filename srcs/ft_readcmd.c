@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/20 14:11:37 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:44:48 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,31 +70,37 @@ static int		ft_iswhitespace(char c)
 		|| c == '\v' || c == '\f' || c == '\r');
 }
 
+static int		ft_isquote(char c)
+{
+	return (c == '\'' || c == '"');
+}
+
 static int		ft_readnext(char *str, int i, char **buffer)
 {
-	int q1 = 0;
+	int in_quote = 0;
+	char quote = 0;
 	if (!str)
 		return (-1);
 	while (str[i] && ft_iswhitespace(str[i]))
 		i++;
-	int write_count = 0;
 	while (str[i])
 	{
-		// printf("'%c'\n", str[i]);
-		if (str[i] == '"')
-			q1++;
-		if (!ft_iswhitespace(str[i]) || q1 % 2 != 0)
+		if (ft_isquote(str[i]) && (!quote || quote == str[i]))
 		{
-			if (str[i] != '"')
-				write_count++;
-			if (str[i] != '"' && !ft_writechar_on(buffer, str[i]))
+			quote = str[i];
+			in_quote++;
+		}
+		if (!ft_iswhitespace(str[i]) || in_quote % 2 != 0)
+		{
+			if ((!quote || str[i] != quote) && !ft_writechar_on(buffer, str[i]))
 				return (-1);
 		} else {
 			break ;
 		}
+		if (in_quote % 2 == 0)
+			quote = 0;
 		i++;
 	}
-	// printf("Writed %d\n", write_count);
 	return (i);
 }
 
