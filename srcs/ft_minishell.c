@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/20 20:20:17 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 22:25:48 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	main(int ac, char **av, char **envp)
 	(void) ac;
 	(void) av;
 	(void) envp;
+	g_minishell_status = 0;
+	ft_init_signal_handling();
 	while (42 == 42)
 	{
 		pwd = NULL;
@@ -47,39 +49,54 @@ int	main(int ac, char **av, char **envp)
 		free(pwd);
 		ft_putstr(" > ");
 		res_gnl = get_next_line(0, &str);
-		if (res_gnl == -1)
-			return (-1);
-		if (ft_strcmp("exit", str) == 0)
+		if (res_gnl == 0)
 		{
 			free(str);
 			return (1);
 		}
-		
-		int ret = 0;
-		t_elem *list = ft_readcmd(str, &ret);
-		if (ret == READ_OK)
+		else if (res_gnl == -1)
+			return (-1);
+		if (g_minishell_status == 0)
 		{
-			t_elem *cursor = list;
-			
-			// while (cursor)
-			// {
-			// 	printf("%-3d ~%s~\n", cursor->type, cursor->str);
-			// 	cursor = cursor->next;
-			// }
-			
-			cursor = list;
-			char *infile = 0;
-			while ((cursor = ft_runcmd_next(cursor, envp, &infile, &ret)))
-				;
-			free(infile);
-			
-		} else if (ret == READ_QUOTE_ERR) {
-			printf("quote error.\n");
-		} else {
-			printf("error.\n");
+			if (ft_strcmp("exit", str) == 0)
+			{
+				free(str);
+				return (1);
+			}
+			int ret = 0;
+			t_elem *list = ft_readcmd(str, &ret);
+			if (ret == READ_OK)
+			{
+				t_elem *cursor = list;
+				
+				// while (cursor)
+				// {
+				// 	printf("%-3d ~%s~\n", cursor->type, cursor->str);
+				// 	cursor = cursor->next;
+				// }
+				
+				cursor = list;
+				char *infile = 0;
+				while ((cursor = ft_runcmd_next(cursor, envp, &infile)))
+					;
+				free(infile);
+				
+			} else if (ret == READ_QUOTE_ERR) {
+				printf("quote error.\n");
+			} else {
+				printf("error.\n");
+				return (1);
+			}
+			free(str);
+		}
+		else if (g_minishell_status == 2)
+		{
 			return (1);
 		}
-		free(str);
+		else
+		{
+			g_minishell_status = 0;
+		}
 	}
 	return (0);
 }

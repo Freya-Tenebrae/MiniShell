@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+         #
+#    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2021/12/19 00:55:16 by gadeneux         ###   ########.fr        #
+#    Updated: 2021/12/20 16:55:08 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_minishell.c \
 	ft_readcmd.c \
 	ft_execcmd.c \
-	ft_cmdline.c )
+	ft_cmdline.c \
+	ft_signal_handler.c)
 OBJS=$(SRCS:.c=.o)
 
 FOLDER=srcs
@@ -38,7 +39,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	make -C $(LIBFT) bonus
 	make -C $(GNL)
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)/libft.a $(GNL)/get_next_line.a
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)/libft.a $(GNL)/get_next_line.a -lreadline
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) -o $@ $< -I $(INCLUDES)

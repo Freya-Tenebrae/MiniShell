@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/20 20:59:15 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 22:26:31 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int		ft_isoperator(char *str);
 char	*ft_writestr_on(char **str, char *to_add);
 char	*ft_writechar_on(char **str, char c);
 char	*ft_chartostring(char c);
+void	ft_signal_handler(int signal);
+void	ft_init_signal_handling();
 /* ************************************************************************** */
 /*                                    END                                     */
 /* ************************************************************************** */
