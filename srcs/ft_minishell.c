@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/20 02:04:21 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 02:09:32 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,17 @@ int	main(int ac, char **av, char **envp)
 			free(str);
 			return (1);
 		}
-		// ft_putstr(str);
-		// ft_putstr("\n");
+		
 		t_elem *list = ft_readcmd(str);
 		if (!list)
 			return (1);
 		t_elem *cursor = list;
 		
-		// while (cursor)
-		// {
-		// 	printf("%-3d ~%s~\n", cursor->type, cursor->str);
-		// 	cursor = cursor->next;
-		// }
+		while (cursor)
+		{
+			printf("%-3d ~%s~\n", cursor->type, cursor->str);
+			cursor = cursor->next;
+		}
 		
 		cursor = list;
 		char *infile = 0;

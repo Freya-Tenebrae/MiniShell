@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/20 02:03:52 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 02:11:54 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_elem	*ft_runcmd_next(t_elem *elem, char **envp, char **infile)
 	cmd_args[i] = NULL;
 	char *out = ft_runcmd(ft_getpath(envp), cmd_args, *infile);
 	printf("%s", out);
+	free(cmd_args);
 	free(*infile);
 	*infile = out;
 	return (elem);

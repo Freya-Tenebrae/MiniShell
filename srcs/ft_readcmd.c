@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/20 00:36:02 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/20 02:20:41 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int		ft_isoperator(char *str)
 
 static t_elem	*ft_createelem(char *str)
 {
+	if (!str)
+		str = ft_strdup("");
 	t_elem *res = malloc(sizeof(t_elem));
 	if (!res)
 		return (0);
