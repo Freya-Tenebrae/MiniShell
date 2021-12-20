@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/20 17:02:24 by cmaginot         ###   ########.fr       */
+/*   Updated: 2021/12/20 18:45:22 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int	main(int ac, char **av, char **envp)
 			free(str);
 			return (1);
 		}
+		else if (res_gnl == -1)
+			return (-1);
 		if (g_minishell_status == 0)
 		{
-			if (res_gnl == -1)
-				return (-1);
 			if (ft_strcmp("exit", str) == 0)
 			{
 				free(str);
