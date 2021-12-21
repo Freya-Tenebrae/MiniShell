@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/20 20:58:33 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/21 23:52:23 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,69 +147,68 @@ char	*ft_getpath(char **envp)
 	return (dst);
 }
 
-char	*ft_runcmd(char *path, char **cmd_args, char *infile, int *ret)
+t_output    *ft_runcmd(char *path, char **cmd_args, char *infile)
 {
-	char	*res;
-	int		fd[2];
-	int		err[2];
+	t_output	*res;
 	
-	res = 0;
-	if (pipe(fd) == -1)
+    int		stdout[2];
+    int		stderr[2];
+    
+    res = malloc(sizeof(t_output));
+	if (!res)
 		return (0);
-	if (pipe(err) == -1)
-		return (0);
-	int pid = fork();
-	if (pid == 0)
-	{
-		close(fd[0]);
-		close(err[0]);
+	res->output = 0;
+	res->error = 0;
+	if (pipe(stdout) == -1)
+        return (0);
+    if (pipe(stderr) == -1)
+        return (0);
+	
+    int pid = fork();
+    if (pid == 0)
+    {
+        close(stdout[0]);
+        close(stderr[0]);
+       	
 		if (infile)
-		{
-			int	input[2];
-			if (pipe(input) == -1)
-				return (0);
-			int pid2 = fork();
-			if (pid2 == 0)
-			{
-				close(fd[0]);
-				close(fd[1]);
-				close(err[0]);
-				close(err[1]);
-				write(input[1], infile, ft_strlen(infile));
-				exit(0);
-			}
-			close(input[1]);
-			waitpid(pid2, 0, 0);
-			dup2(input[0], STDIN_FILENO);
-			close(input[0]);
-		}
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-		if (!ft_execcmd(path, cmd_args))
-		{
-			ft_putstr_fd("bash: ", STDOUT_FILENO);
-			ft_putstr_fd(cmd_args[0], STDOUT_FILENO);
-			ft_putstr_fd(": command not found\n", STDOUT_FILENO);
-			int x = 0;
-			write(err[1], &x, sizeof(int));
-			exit(0);
-		}
-	} else {
-		close(fd[1]);
-		close(err[1]);
+        {
+            int input[2];
+            if (pipe(input) == -1)
+                return (0);
+            int pid2 = fork();
+            if (pid2 == 0)
+            {
+                close(stdout[1]);
+				close(stderr[1]);
+                write(input[1], infile, ft_strlen(infile));
+                exit(0);
+            }
+            close(input[1]);
+            waitpid(pid2, 0, 0);
+            dup2(input[0], STDIN_FILENO);
+            close(input[0]);
+        }
+        
+		dup2(stdout[1], STDOUT_FILENO);
+        close(stdout[1]);
+		dup2(stderr[1], STDERR_FILENO);
+        close(stderr[1]);
+		
+        ft_execcmd(path, cmd_args);
+        exit(0);
+        return (0);
+    } else {
+        close(stdout[1]);
+        close(stderr[1]);
+        
 		char c;
-		while (read(fd[0], &c, sizeof(char)))
-			ft_writechar_on(&res, c);
-		int x = 1;
-		read(err[0], &x, sizeof(int));
-		*ret = x;
-		close(fd[0]);
-		close(err[0]);
-	}
-	waitpid(pid, 0, 0);
-	close(fd[0]);
-	close(fd[1]);
-	close(err[0]);
-	close(err[1]);
-	return (res);
+		while (read(stdout[0], &c, sizeof(char)))
+			ft_writechar_on(&res->output, c);
+		while (read(stderr[0], &c, sizeof(char)))
+			ft_writechar_on(&res->error, c);
+    }
+    waitpid(pid, 0, 0);
+    close(stdout[0]);
+    close(stderr[0]);
+    return (res);
 }

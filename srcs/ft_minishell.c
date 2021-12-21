@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/20 22:25:48 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/21 22:52:31 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,28 @@
 // 	(void) av;
 // 	(void) envp;
 	
-// 	char **cmd_args = malloc(sizeof(char*) * 3);
-// 	cmd_args[0] = ft_strdup("lss");
-// 	cmd_args[1] = ft_strdup("-la");
-// 	cmd_args[2] = NULL;
-// 	// ft_execcmd(ft_getpath(envp), cmd_args);
+// 	// char **cmd_args = malloc(sizeof(char*) * 3);
+// 	// cmd_args[0] = ft_strdup("ls");
+// 	// cmd_args[1] = ft_strdup("a");
+// 	// cmd_args[2] = NULL;
+// 	// int ret = 0;
+// 	// char *out = ft_runcmd(ft_getpath(envp), cmd_args, 0, &ret);
+	
 // 	int ret = 0;
-// 	char *out = ft_runcmd(ft_getpath(envp), cmd_args, 0, &ret);
-// 	printf("\n[%s] ret=%d\n", out, ret);
+// 	// t_elem *list = ft_readcmd("lss", &ret);
+// 	// t_elem *list = ft_readcmd("ls b | cat -e", &ret);
+// 	// t_elem *list = ft_readcmd("ls a", &ret);
+// 	// t_elem *list = ft_readcmd("echo test", &ret);
+	
+// 	// t_elem *list = ft_readcmd("echo test | cat -e", &ret);
+// 	if (ret == READ_OK)
+// 	{
+// 		t_elem *cursor = list;
+// 		char *infile = 0;
+// 		while ((cursor = ft_runcmd_next(cursor, envp, &infile)))
+// 			;
+// 		free(infile);
+// 	}
 // 	return (0);
 // }
 
@@ -58,7 +72,8 @@ int	main(int ac, char **av, char **envp)
 			return (-1);
 		if (g_minishell_status == 0)
 		{
-			if (ft_strcmp("exit", str) == 0)
+			if (ft_strcmp("exit", str) == 0
+			|| ft_strcmp("\\q", str) == 0)
 			{
 				free(str);
 				return (1);

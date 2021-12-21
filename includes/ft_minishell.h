@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/20 22:26:31 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:29:01 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ typedef struct	s_elem {
 	char			*str;
 }				t_elem;
 
+typedef struct s_output {
+	char *output;
+	char *error;
+}				t_output;
+
 /* ************************************************************************** */
 /*                                  FONCTION                                  */
 /* ************************************************************************** */
@@ -62,7 +67,7 @@ int		main(int ac, char **av, char **envp);
 t_elem	*ft_readcmd(char *str, int *ret);
 int		ft_execcmd(char *path, char **cmd_args);
 char	*ft_getpath(char **envp);
-char	*ft_runcmd(char *path, char **cmd_args, char *infile, int *ret);
+t_output	*ft_runcmd(char *path, char **cmd_args, char *infile);
 t_elem	*ft_runcmd_next(t_elem *elem, char **envp, char **infile);
 /* ************************************************************************** */
 /*                                   TOOLS                                    */
