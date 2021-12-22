@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/22 18:15:48 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/22 20:56:54 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,17 @@ static int	ft_act(char **str, char **envp)
 	list = ft_readcmd(*str, &ret);
 	if (ret == READ_OK)
 	{
-		infile = NULL;
+		(void) infile;
+		(void) envp;
 		while (list)
-			list = ft_runcmd_next(list, envp, &infile);
-		free(infile);
+		{
+			printf("%-3d ~%s~\n", list->type, list->str);
+			list = list->next;
+		}
+		// infile = NULL;
+		// while (list)
+		// 	list = ft_runcmd_next(list, envp, &infile);
+		// free(infile);
 	}
 	else if (ret == READ_QUOTE_ERR) 
 		printf("quote error.\n");

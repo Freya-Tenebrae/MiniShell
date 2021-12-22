@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/22 17:51:45 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/22 21:28:04 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,24 +241,29 @@ static int		ft_addon(t_elem **list, char *str, int type)
 
 char	*ft_keepinside_q(char *str)
 {
-	// char *res = 0;
-	// if (!str)
-	// 	return (0);
-	// if (ft_strlen(str) < 2)
-	// 	return (ft_strdup(str));
-	// if (!ft_isquote((str)[0]) || !ft_isquote(str[ft_strlen(str) - 1]))
-	// 	return (ft_strdup(str));
-	// if (str[0] != str[ft_strlen(str) - 1])
-	// 	return (ft_strdup(str));
-	// for (size_t i = 1; i < ft_strlen(str) -1; i++)
-	// 	ft_writechar_on(&res, str[i]);
-	// if (res[0] != str[0])
-	// 	return (ft_strdup(res));
-	// return (ft_keepinside_q(res));
+	char *res;
+
+	res = 0;
 	if (!str)
 		return (0);
-	return (ft_strdup(str));
+	char q = 0;
+	for (size_t i = 0; i < ft_strlen(str); ++i)
+	{
+		if (ft_isquote(str[i]) && q == 0)
+		{
+			q = str[i];
+		} else
+		if (ft_isquote(str[i]) && q != 0 && str[i] == q)
+		{
+			q = 0;
+		} else
+		if (q == 0 || str[i] != q)
+			ft_writechar_on(&res, str[i]);
+	}
+	return (res);
 }
+
+//		echo '''"test"'''
 
 t_elem	*ft_readcmd(char *str, int *ret)
 {
