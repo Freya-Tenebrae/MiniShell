@@ -6,51 +6,11 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/22 17:32:45 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/22 18:06:08 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-// int		main(int ac, char **av, char **envp)
-// {
-// 	(void) envp;
-// 	(void) ac;
-// 	(void) av;
-	
-// 	// printf("[%s]\n", ft_keepinside_q("\"'a'\""));
-
-// 	// echo test|cat -e
-// 	// 0123456789ABCDEF
-	
-// 	int ret = 0;
-// 	// t_elem *list = ft_readcmd("echo \" \"|cat", &ret);
-// 	// t_elem *list = ft_readcmd("echo \" \"| cat -e", &ret);
-// 	// t_elem *list = ft_readcmd("echo test|cat -e", &ret);
-// 	// t_elem *list = ft_readcmd("echo \"test|cat -e\" | cat -e", &ret);
-// 	// t_elem *list = ft_readcmd("echo '|' | echo | ls -l", &ret);
-
-// 	// t_elem *list = ft_readcmd("echo \"\"'test'\"\"", &ret);
-// 	t_elem *list = ft_readcmd("echo \"'\"test\"'\"<cat -e", &ret);
-	
-// 	// t_elem *list = ft_readcmd("echo |", &ret);
-// 	if (ret == READ_OK)
-// 	{
-// 		t_elem *cursor = list;
-		
-// 		while (cursor)
-// 		{
-// 			printf("%-3d ~%s~\n", cursor->type, cursor->str);
-// 			cursor = cursor->next;
-// 		}
-// 	} else if (ret == READ_QUOTE_ERR) {
-// 		printf("quote error.\n");
-// 	} else {
-// 		printf("error.\n");
-// 		return (1);
-// 	}
-// 	return (0);
-// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -107,8 +67,6 @@ int	main(int ac, char **av, char **envp)
 				
 			} else if (ret == READ_QUOTE_ERR) {
 				printf("quote error.\n");
-			} else if (ret == READ_QUOTE_ERR) {
-				printf("operator error.\n");
 			} else {
 				printf("error.\n");
 			}

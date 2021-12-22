@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/22 17:24:51 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/22 18:06:23 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+
 
 # include "libft/libft.h"
 # include "Get_next_line/get_next_line.h"
@@ -40,15 +43,10 @@
 # define READ_ERR -1
 # define READ_ALLOC_ERR -2
 # define READ_QUOTE_ERR -3
-# define READ_OPERATOR_ERR -4
 
 /* ************************************************************************** */
 /*                                 VAR GLOBAL                                 */
 /* ************************************************************************** */
-int	g_minishell_status;
-# define STATUS_ON 0
-# define STATUS_SKIP 1
-# define STATUS_EXIT 2
 
 /* ************************************************************************** */
 /*                                  TYPEDEF                                   */
@@ -84,6 +82,7 @@ char	*ft_chartostring(char c);
 char	*ft_keepinside_q(char *str);
 void	ft_signal_handler(int signal);
 void	ft_init_signal_handling();
+void	ft_put_prompt();
 /* ************************************************************************** */
 /*                                    END                                     */
 /* ************************************************************************** */
