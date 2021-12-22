@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/22 16:06:39 by cmaginot         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:20:12 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*ft_writechar_on(char **str, char c);
 char	*ft_chartostring(char c);
 void	ft_signal_handler(int signal);
 void	ft_init_signal_handling();
-void	ft_put_prompt(int i);
+void	ft_put_prompt();
 /* ************************************************************************** */
 /*                                    END                                     */
 /* ************************************************************************** */
