@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/20 22:32:02 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/22 14:17:03 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,22 @@ static int		ft_readnext(char *str, int i, char **buffer)
 		return (READ_ERR);
 	while (str[i] && ft_iswhitespace(str[i]))
 		i++;
+	if (str[i] == '|')
+	{
+		ft_writechar_on(buffer, str[i]);
+		i++;
+		return (i);
+	}
 	while (str[i])
 	{
+		// printf("%-3d '%c'\n", i, str[i]);
+		
 		if (ft_isquote(str[i]) && (!quote || quote == str[i]))
 		{
 			quote = str[i];
 			in_quote++;
 		}
+		
 		if (!ft_iswhitespace(str[i]) || in_quote % 2 != 0)
 		{
 			if ((!quote || str[i] != quote) && !ft_writechar_on(buffer, str[i]))
@@ -97,6 +106,14 @@ static int		ft_readnext(char *str, int i, char **buffer)
 		} else {
 			break ;
 		}
+
+		if (in_quote % 2 == 0 && str[i + 1] == '|')
+		{
+			// ft_writechar_on(buffer, str[i]);
+			i++;
+			break ;
+		}
+
 		if (in_quote % 2 == 0)
 			quote = 0;
 		i++;
@@ -196,12 +213,14 @@ t_elem	*ft_readcmd(char *str, int *ret)
 		return (0);
 	while ((i = ft_readnext(str, i, &buffer)) != -1 && (size_t) i < ft_strlen(str) && i >= 0)
 	{
+		// printf("%-3d [%s]\n", i, buffer);
 		if (!ft_addon(&list, buffer))
 			return (0);
 		buffer = 0;
 	}
 	if (i != -1)
 	{
+		// printf("%-3d [%s]\n", i, buffer);
 		if (!ft_addon(&list, buffer))
 			return (0);
 	}
