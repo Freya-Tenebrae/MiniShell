@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/22 16:20:01 by cmaginot         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:53:13 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,8 @@ static void	ft_loop(char **envp)
 				free(str);
 			break;
 		}
-		if (g_minishell_status == 0)
-		{
-			if (ft_act(&str, envp) != 0)
+		if (ft_act(&str, envp) != 0)
 				break;
-		}
-		else
-			g_minishell_status = 0;
 	}
 }
 
@@ -72,7 +67,6 @@ int	main(int ac, char **av, char **envp)
 {
 	(void) ac;
 	(void) av;
-	g_minishell_status = 0;
 	ft_init_signal_handling();
 	ft_loop(envp);
 	return (0);

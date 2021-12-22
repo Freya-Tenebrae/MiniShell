@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:09:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/22 15:29:18 by cmaginot         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:06:58 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ void	ft_signal_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
-		ft_putchar('\n');
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		g_minishell_status = STATUS_SKIP;
+		ft_putstr("\b\b  ");
+		ft_putstr("\n");
+		ft_put_prompt();
 	}
 	else if (signal == SIGQUIT)
-		g_minishell_status = STATUS_ON;
+		ft_putstr("\b\b  \b\b");
 }
 
 void	ft_init_signal_handling(void)
