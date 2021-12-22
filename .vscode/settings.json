@@ -40,6 +40,10 @@
 		"utility": "c",
 		"vector": "c",
 		"sstream": "c",
-		"__bit_reference": "c"
+		"__bit_reference": "c",
+		"__functional_base_03": "c",
+		"chrono": "c",
+		"limits": "c",
+		"ratio": "c"
 	}
 }

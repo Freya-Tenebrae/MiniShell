@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/21 20:29:01 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:24:51 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,15 @@
 # define OUT 4
 # define DOUBLE_OUT 5
 # define PIPE 6
+# define DOUBLE_PIPE 7
+# define AND 8
+# define DOUBLE_AND 9
 
 # define READ_OK 0
 # define READ_ERR -1
 # define READ_ALLOC_ERR -2
 # define READ_QUOTE_ERR -3
+# define READ_OPERATOR_ERR -4
 
 /* ************************************************************************** */
 /*                                 VAR GLOBAL                                 */
@@ -72,10 +76,12 @@ t_elem	*ft_runcmd_next(t_elem *elem, char **envp, char **infile);
 /* ************************************************************************** */
 /*                                   TOOLS                                    */
 /* ************************************************************************** */
-int		ft_isoperator(char *str);
+int		ft_str_isoperator(char *str);
+int		ft_char_isoperator(char c);
 char	*ft_writestr_on(char **str, char *to_add);
 char	*ft_writechar_on(char **str, char c);
 char	*ft_chartostring(char c);
+char	*ft_keepinside_q(char *str);
 void	ft_signal_handler(int signal);
 void	ft_init_signal_handling();
 /* ************************************************************************** */
