@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/21 20:49:23 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:55:05 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_elem	*ft_runcmd_next(t_elem *elem, char **envp, char **infile)
 		i++;
 	}
 	cmd_args[i] = NULL;
+	
 	t_output *out = ft_runcmd(ft_getpath(envp), cmd_args, *infile);
 	
 	free(cmd_args);

@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/22 14:17:03 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/22 17:51:45 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,43 +79,59 @@ static int		ft_readnext(char *str, int i, char **buffer)
 {
 	int in_quote = 0;
 	char quote = 0;
+	
 	if (!str)
 		return (READ_ERR);
 	while (str[i] && ft_iswhitespace(str[i]))
 		i++;
-	if (str[i] == '|')
+	
+	// Si débute par un opérateur, écris l'opérateur et renvoie.
+	if (ft_char_isoperator(str[i]))
 	{
-		ft_writechar_on(buffer, str[i]);
-		i++;
+		int j = 0;
+		char c = str[i];
+		while (ft_char_isoperator(str[i]))
+		{
+			if (j > 1 || str[i] != c)
+				return (i);
+			ft_writechar_on(buffer, str[i]);
+			i++;
+			j++;
+		}
 		return (i);
 	}
+	
 	while (str[i])
 	{
-		// printf("%-3d '%c'\n", i, str[i]);
-		
+		// Si le char est une quote, et que c'est l'ouverture ou une fermeture de quote
+		// Si fermeture, vérifie qu'il s'agit de la bonne quote.
 		if (ft_isquote(str[i]) && (!quote || quote == str[i]))
 		{
 			quote = str[i];
 			in_quote++;
 		}
 		
+		// si il s'agit pas d'un whitespace, ou si c'est entre quote
+		// écrire.
 		if (!ft_iswhitespace(str[i]) || in_quote % 2 != 0)
 		{
-			if ((!quote || str[i] != quote) && !ft_writechar_on(buffer, str[i]))
+			if (/*(!quote || str[i] != quote) &&*/ !ft_writechar_on(buffer, str[i]))
 				return (READ_ALLOC_ERR);
 		} else {
 			break ;
 		}
 
-		if (in_quote % 2 == 0 && str[i + 1] == '|')
+		// En dehors des parenthèses, si précédé par un opérateur, break.
+		if (in_quote % 2 == 0 && ft_char_isoperator(str[i + 1]))
 		{
-			// ft_writechar_on(buffer, str[i]);
 			i++;
 			break ;
 		}
-
+		
+		// réinitialise la quote à null en cas de fermeture.
 		if (in_quote % 2 == 0)
 			quote = 0;
+			
 		i++;
 	}
 	if (in_quote && in_quote % 2 != 0)
@@ -152,17 +168,36 @@ static int		ft_gettype(char *str)
 		return (DOUBLE_OUT);
 	if (ft_str_is(str, "|"))
 		return (PIPE);
+	if (ft_str_is(str, "||"))
+		return (DOUBLE_PIPE);
+	if (ft_str_is(str, "&"))
+		return (AND);
+	if (ft_str_is(str, "&&"))
+		return (DOUBLE_AND);
 	return (ARGUMENT);
 }
 
-int		ft_isoperator(char *str)
+int		ft_char_isoperator(char c)
+{
+	if (c == '<')
+		return (IN);
+	if (c == '>')
+		return (OUT);
+	if (c == '|')
+		return (PIPE);
+	if (c == '&')
+		return (AND);
+	return (0);
+}
+
+int		ft_str_isoperator(char *str)
 {
 	if (!str)
 		return (-1);
 	return (ft_gettype(str) != -1);
 }
 
-static t_elem	*ft_createelem(char *str)
+static t_elem	*ft_createelem(char *str, int type)
 {
 	if (!str)
 		str = ft_strdup("");
@@ -170,8 +205,8 @@ static t_elem	*ft_createelem(char *str)
 	if (!res)
 		return (0);
 	res->next = 0;
-	res->str = ft_strdup(str);
-	res->type = ft_gettype(str);
+	res->str = str;
+	res->type = type;
 	return (res);
 }
 
@@ -185,13 +220,13 @@ static t_elem	*ft_lastelem(t_elem *list)
 	return (cursor);
 }
 
-static int		ft_addon(t_elem **list, char *str)
+static int		ft_addon(t_elem **list, char *str, int type)
 {
 	if (!list)
 		return (-1);
 	if (!(*list))
 	{
-		*list = ft_createelem(str);
+		*list = ft_createelem(str, type);
 		(*list)->type = ARGUMENT;
 		if (!*list)
 			return (-1);
@@ -200,8 +235,29 @@ static int		ft_addon(t_elem **list, char *str)
 	t_elem *last = ft_lastelem(*list);
 	if (!last)
 		return (-1);
-	last->next = ft_createelem(str);
+	last->next = ft_createelem(str, type);
 	return (1);
+}
+
+char	*ft_keepinside_q(char *str)
+{
+	// char *res = 0;
+	// if (!str)
+	// 	return (0);
+	// if (ft_strlen(str) < 2)
+	// 	return (ft_strdup(str));
+	// if (!ft_isquote((str)[0]) || !ft_isquote(str[ft_strlen(str) - 1]))
+	// 	return (ft_strdup(str));
+	// if (str[0] != str[ft_strlen(str) - 1])
+	// 	return (ft_strdup(str));
+	// for (size_t i = 1; i < ft_strlen(str) -1; i++)
+	// 	ft_writechar_on(&res, str[i]);
+	// if (res[0] != str[0])
+	// 	return (ft_strdup(res));
+	// return (ft_keepinside_q(res));
+	if (!str)
+		return (0);
+	return (ft_strdup(str));
 }
 
 t_elem	*ft_readcmd(char *str, int *ret)
@@ -214,14 +270,14 @@ t_elem	*ft_readcmd(char *str, int *ret)
 	while ((i = ft_readnext(str, i, &buffer)) != -1 && (size_t) i < ft_strlen(str) && i >= 0)
 	{
 		// printf("%-3d [%s]\n", i, buffer);
-		if (!ft_addon(&list, buffer))
+		if (!ft_addon(&list, ft_keepinside_q(buffer), ft_gettype(buffer)))
 			return (0);
 		buffer = 0;
 	}
 	if (i != -1)
 	{
 		// printf("%-3d [%s]\n", i, buffer);
-		if (!ft_addon(&list, buffer))
+		if (!ft_addon(&list, ft_keepinside_q(buffer), ft_gettype(buffer)))
 			return (0);
 	}
 	if (i < 0)
