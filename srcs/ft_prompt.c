@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signal_handler.c                                :+:      :+:    :+:   */
+/*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/20 15:09:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/22 15:29:18 by cmaginot         ###   ########.fr       */
+/*   Created: 2021/12/22 15:29:08 by cmaginot          #+#    #+#             */
+/*   Updated: 2021/12/22 16:06:33 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-void	ft_signal_handler(int signal)
+void	ft_put_prompt(int i)
 {
-	if (signal == SIGINT)
-	{
-		ft_putchar('\n');
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		g_minishell_status = STATUS_SKIP;
-	}
-	else if (signal == SIGQUIT)
-		g_minishell_status = STATUS_ON;
-}
-
-void	ft_init_signal_handling(void)
-{
-	signal(SIGINT, ft_signal_handler);
-	signal(SIGQUIT, ft_signal_handler);
+	if (i == 0)
+		ft_putstr("==");
+	else if (i < 0)
+		ft_putstr("<");
+	else if (i > 0)
+		ft_putstr(">");
+	ft_putstr("minishell~ ");
 }

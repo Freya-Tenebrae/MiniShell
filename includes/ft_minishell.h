@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/21 20:29:01 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/22 16:06:39 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+
 
 # include "libft/libft.h"
 # include "Get_next_line/get_next_line.h"
@@ -78,6 +81,7 @@ char	*ft_writechar_on(char **str, char c);
 char	*ft_chartostring(char c);
 void	ft_signal_handler(int signal);
 void	ft_init_signal_handling();
+void	ft_put_prompt(int i);
 /* ************************************************************************** */
 /*                                    END                                     */
 /* ************************************************************************** */
