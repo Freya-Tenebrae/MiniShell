@@ -6,74 +6,11 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/22 21:28:04 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:28:22 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-char		*ft_chartostring(char c)
-{
-	char *str = malloc(sizeof(char) * 2);
-	if (!str)
-		return (0);
-	str[0] = c;
-	str[1] = '\0';
-	return (str);
-}
-
-char		*ft_writechar_on(char **str, char c)
-{
-	if (!str)
-		return (0);
-	if (!(*str))
-	{
-		*str = ft_chartostring(c);
-		return (*str);
-	}
-	char *res = malloc((sizeof(char) * ft_strlen(*str)) + 2);
-	if (!res)
-		return (0);
-	int i = 0;
-	while ((*str)[i] != '\0')
-	{
-		res[i] = (*str)[i];
-		i++;
-	}
-	res[i] = c;
-	res[i + 1] = '\0';
-	free(*str);
-	*str = res;
-	return (res);
-}
-
-char		*ft_writestr_on(char **str, char *to_add)
-{
-	if (!str)
-		return (0);
-	if (!(*str))
-	{
-		*str = ft_strdup(to_add);
-		return (*str);
-	}
-	char *res = ft_strjoin(*str, to_add);
-	if (!res)
-		return (0);
-	free(*str);
-	*str = res;
-	return (res);
-}
-
-static int		ft_iswhitespace(char c)
-{
-	return (c == (char) 32 || c == '\n' || c == '\t'
-		|| c == '\v' || c == '\f' || c == '\r');
-}
-
-static int		ft_isquote(char c)
-{
-	return (c == '\'' || c == '"');
-}
 
 static int		ft_readnext(char *str, int i, char **buffer)
 {
@@ -201,6 +138,7 @@ static t_elem	*ft_createelem(char *str, int type)
 {
 	if (!str)
 		str = ft_strdup("");
+
 	t_elem *res = malloc(sizeof(t_elem));
 	if (!res)
 		return (0);
@@ -262,8 +200,6 @@ char	*ft_keepinside_q(char *str)
 	}
 	return (res);
 }
-
-//		echo '''"test"'''
 
 t_elem	*ft_readcmd(char *str, int *ret)
 {

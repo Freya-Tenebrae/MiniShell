@@ -6,61 +6,11 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2021/12/21 23:52:23 by gadeneux         ###   ########.fr       */
+/*   Updated: 2021/12/24 12:27:40 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-char	*ft_before(char *str)
-{
-	char	*dst;
-	int		l;
-	int		i;
-
-	if (!str)
-		return (0);
-	l = 0;
-	while (str[l] && str[l] != (char) 32)
-		++l;
-	dst = malloc(l + 1);
-	if (!dst)
-		return (0);
-	i = 0;
-	while (str[i] && i < l)
-	{
-		dst[i] = str[i];
-		++i;
-	}
-	dst[i] = 0;
-	return (dst);
-}
-
-char	*ft_after(char *str)
-{
-	char	*dst;
-	char	*ret;
-	size_t	l;
-
-	if (!str)
-		return (0);
-	l = 0;
-	while (str[l] && str[l] != '\n')
-		l++;
-	if (!str[l])
-	{
-		free(str);
-		return (0);
-	}
-	dst = malloc(ft_strlen(str) - l);
-	ret = dst;
-	if (!ret)
-		return (0);
-	while (str[++l] && l < ft_strlen(str))
-		*dst++ = str[l];
-	dst = 0;
-	return (ret);
-}
 
 void	ft_freetab(char **strs)
 {
