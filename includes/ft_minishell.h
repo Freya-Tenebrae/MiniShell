@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/05 17:28:29 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/06 17:31:24 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ char	*ft_str_substring(char *str, int begin, int end);
 int		ft_str_indexof(char *str, char c);
 int		ft_str_lastindexof(char *str, int from, char c);
 int		ft_isquote(char c);
+int		ft_check_q(char *str);
 /* ************************************************************************** */
 /*                                    END                                     */
 /* ************************************************************************** */

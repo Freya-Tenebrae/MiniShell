@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/05 16:34:34 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/06 17:31:55 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ static int	ft_act(char **str, char **envp)
 		return (1);
 	}
 	
+	//Verifier que les quotes et backslash sont bien fermés sur la ligne de commande.
+	if (!ft_check_q(*str))
+	{
+		printf("Quote error.\n");
+		return (1);
+	}
+
+	// Remplacer les variables d'environnement sur la ligne de commande.
 	ft_replace_env(str);
 	
 	ret = 0;
@@ -41,12 +49,9 @@ static int	ft_act(char **str, char **envp)
 		while (list)
 			list = ft_runcmd_next(list, envp, &infile);
 		free(infile);
-	}
-	else if (ret == READ_QUOTE_ERR) 
-		printf("quote error.\n");
-	else
+	} else
 	{
-		printf("error.\n");
+		printf("Error.\n");
 		return (1);
 	}
 	free(*str);
