@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/05 17:35:49 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/06 16:27:03 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_replace_env(char **str)
 	{
 		if (backslash % 2 == 0)
 		{
-			if ((*str)[i] == '$' && ft_isquote((*str)[i + 1]))
+			if ((*str)[i] == '$' && ft_isquote((*str)[i + 1]) && !quote)
 			{
 				i++;
 				continue ;
