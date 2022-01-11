@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/06 16:27:03 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:05:54 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_env	*ft_getenv(char *str)
 
 void	ft_replace_env(char **str)
 {
-	int		backslash;
 	char	quote;
 	char	*res;
 	char	*var;
@@ -61,60 +60,46 @@ void	ft_replace_env(char **str)
 	
 	i = 0;
 	var = 0;
-	backslash = 0;
 	res = 0;
 	quote = 0;
 	if (!str || !*str)
 		return ;
 	while (i < (int) ft_strlen(*str) && (*str)[i])
 	{
-		if (backslash % 2 == 0)
+		if ((*str)[i] == '$' && ft_isquote((*str)[i + 1]) && !quote)
 		{
-			if ((*str)[i] == '$' && ft_isquote((*str)[i + 1]) && !quote)
+			i++;
+			continue ;
+		}
+			
+		if (!quote && ft_isquote((*str)[i]))
+			quote = (*str)[i];
+		else
+		if (quote && (*str)[i] == quote)
+			quote = 0;
+		else
+		if ((*str)[i] == '$' && (!quote || quote != '\''))
+		{
+			int j = i + 1;
+			t_env *variable = 0;
+			while ((*str)[j] && (ft_isalnum((*str)[j]) || (*str)[j] == '_'))
 			{
-				i++;
-				continue ;
-			}
-				
-			if (!quote && ft_isquote((*str)[i]))
-				quote = (*str)[i];
-			else
-			if (quote && (*str)[i] == quote)
-				quote = 0;
-			else
-			if ((*str)[i] == '$' && (!quote || quote != '\''))
-			{
-				int j = i + 1;
-				t_env *variable = 0;
-				while ((*str)[j] && (ft_isalnum((*str)[j]) || (*str)[j] == '_'))
-				{
-					ft_writechar_on(&var, (*str)[j]);
-					if (ft_getenv(var) != 0)
-						variable = ft_getenv(var);
-					j++;
-				}
-				if (var)
-				{
+				ft_writechar_on(&var, (*str)[j]);
+				if (ft_getenv(var) != 0)
 					variable = ft_getenv(var);
-					if (variable)
-						ft_writestr_on(&res, variable->value);
-					i += (int) ft_strlen(var) + 1;
-					var = 0;
-					continue ;	
-				}
+				j++;
+			}
+			if (var)
+			{
+				variable = ft_getenv(var);
+				if (variable)
+					ft_writestr_on(&res, variable->value);
+				i += (int) ft_strlen(var) + 1;
+				var = 0;
+				continue ;	
 			}
 		}
-		
-		if ((*str)[i] == '\\')
-			backslash++;
-		else
-			backslash = 0;
-			
-		if (backslash && (i + 1 >= (int) ft_strlen(*str) || ((*str)[i + 1] != '\\' && (*str)[i + 1] != '$')))
-			backslash = 0;
-			
-		if (backslash % 2 == 0)
-			ft_writechar_on(&res, (*str)[i]);
+		ft_writechar_on(&res, (*str)[i]);
 		i++;
 	}
 	free(*str);

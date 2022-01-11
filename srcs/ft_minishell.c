@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/06 17:31:55 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/11 17:03:13 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_act(char **str, char **envp)
 		printf("Quote error.\n");
 		return (1);
 	}
-
+	
 	// Remplacer les variables d'environnement sur la ligne de commande.
 	ft_replace_env(str);
 	

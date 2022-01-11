@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/05 17:28:22 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/11 16:28:41 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ static int		ft_readnext(char *str, int i, char **buffer)
 			
 		i++;
 	}
-	if (in_quote && in_quote % 2 != 0)
-		return (READ_QUOTE_ERR);
 	return (i);
 }
 
@@ -145,6 +143,7 @@ static t_elem	*ft_createelem(char *str, int type)
 	res->next = 0;
 	res->str = str;
 	res->type = type;
+	// printf("Created %s\n", str);
 	return (res);
 }
 
