@@ -6,17 +6,20 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/11 17:05:54 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:25:50 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
+/* Renvoie un tableau de t_env depuis l'envp. */
+
 t_env	**ft_init_env(char **envp)
 {
 	t_env	**res;
+	int		i;
 
-	int i = 0;
+	i = 0;
 	while (envp[i])
 		i++;
 	res = malloc(sizeof(t_env) * (i + 1));
@@ -28,14 +31,16 @@ t_env	**ft_init_env(char **envp)
 		res[i] = malloc(sizeof(t_env));
 		if (!res[i])
 			return (0);
-		res[i]->name = ft_before(envp[i], '=');
-		res[i]->value = ft_after(envp[i], '=');
-		// printf("'%30s' '%-100s'\n", res[i]->name, res[i]->value);
+		res[i]->name = ft_str_before(envp[i], '=');
+		res[i]->value = ft_str_after(envp[i], '=');
 		i++;
 	}
 	res[i] = 0;
 	return (res);
 }
+
+/* Récupère la variable d'environnement associé au nom str, ou un pointeur */
+/* sur nul sur la variable n'existe pas. */
 
 t_env	*ft_getenv(char *str)
 {
@@ -50,6 +55,8 @@ t_env	*ft_getenv(char *str)
 	}
 	return (0);
 }
+
+/* Remplace dans str les variables d'environnement */
 
 void	ft_replace_env(char **str)
 {
@@ -71,7 +78,6 @@ void	ft_replace_env(char **str)
 			i++;
 			continue ;
 		}
-			
 		if (!quote && ft_isquote((*str)[i]))
 			quote = (*str)[i];
 		else
@@ -84,7 +90,7 @@ void	ft_replace_env(char **str)
 			t_env *variable = 0;
 			while ((*str)[j] && (ft_isalnum((*str)[j]) || (*str)[j] == '_'))
 			{
-				ft_writechar_on(&var, (*str)[j]);
+				ft_char_writeon(&var, (*str)[j]);
 				if (ft_getenv(var) != 0)
 					variable = ft_getenv(var);
 				j++;
@@ -93,13 +99,13 @@ void	ft_replace_env(char **str)
 			{
 				variable = ft_getenv(var);
 				if (variable)
-					ft_writestr_on(&res, variable->value);
+					ft_str_writeon(&res, variable->value);
 				i += (int) ft_strlen(var) + 1;
 				var = 0;
 				continue ;	
 			}
 		}
-		ft_writechar_on(&res, (*str)[i]);
+		ft_char_writeon(&res, (*str)[i]);
 		i++;
 	}
 	free(*str);

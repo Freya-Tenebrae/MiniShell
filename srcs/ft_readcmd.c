@@ -6,11 +6,16 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/11 16:28:41 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:13:18 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
+
+static int		ft_addon(t_elem **list, char *str, int type);
+
+/* Écrit sur buffer le contenu du prochain élément à partir de l'index i */ 
+/* jusqu'au prochain opérateur. */
 
 static int		ft_readnext(char *str, int i, char **buffer)
 {
@@ -19,7 +24,7 @@ static int		ft_readnext(char *str, int i, char **buffer)
 	
 	if (!str)
 		return (READ_ERR);
-	while (str[i] && ft_iswhitespace(str[i]))
+	while (str[i] && ft_str_iswhitespace(str[i]))
 		i++;
 	
 	// Si débute par un opérateur, écris l'opérateur et renvoie.
@@ -31,7 +36,7 @@ static int		ft_readnext(char *str, int i, char **buffer)
 		{
 			if (j > 1 || str[i] != c)
 				return (i);
-			ft_writechar_on(buffer, str[i]);
+			ft_char_writeon(buffer, str[i]);
 			i++;
 			j++;
 		}
@@ -50,9 +55,9 @@ static int		ft_readnext(char *str, int i, char **buffer)
 		
 		// si il s'agit pas d'un whitespace, ou si c'est entre quote
 		// écrire.
-		if (!ft_iswhitespace(str[i]) || in_quote % 2 != 0)
+		if (!ft_str_iswhitespace(str[i]) || in_quote % 2 != 0)
 		{
-			if (/*(!quote || str[i] != quote) &&*/ !ft_writechar_on(buffer, str[i]))
+			if (/*(!quote || str[i] != quote) &&*/ !ft_char_writeon(buffer, str[i]))
 				return (READ_ALLOC_ERR);
 		} else {
 			break ;
@@ -74,88 +79,74 @@ static int		ft_readnext(char *str, int i, char **buffer)
 	return (i);
 }
 
-static int		ft_str_is(char *str1, char *str2)
-{
-	if (!str1 && !str2)
-		return (1);
-	if (!str1 || !str2)
-		return (0);
-	if (ft_strlen(str1) != ft_strlen(str2))
-		return (0);
-	int i = 0;
-	int len = ft_strlen(str1);
-	while (i < len && str1[i] == str2[i])
-		i++;
-	return (i == len);
-}
+/* Créer une liste de t_elem à partir de la commande str */
+/* et stocke le retour dans ret */
 
-static int		ft_gettype(char *str)
+t_elem	*ft_read_command(char *str, int *ret)
 {
+	int	i = 0;
+	char *buffer = 0;
+	t_elem *list = 0;
 	if (!str)
-		return (-1);
-	if (ft_str_is(str, "<"))
-		return (IN);
-	if (ft_str_is(str, "<<"))
-		return (DOUBLE_IN);
-	if (ft_str_is(str, ">"))
-		return (OUT);	
-	if (ft_str_is(str, ">>"))
-		return (DOUBLE_OUT);
-	if (ft_str_is(str, "|"))
-		return (PIPE);
-	if (ft_str_is(str, "||"))
-		return (DOUBLE_PIPE);
-	if (ft_str_is(str, "&"))
-		return (AND);
-	if (ft_str_is(str, "&&"))
-		return (DOUBLE_AND);
-	return (ARGUMENT);
+		return (0);
+	while ((i = ft_readnext(str, i, &buffer)) != -1 && (size_t) i < ft_strlen(str) && i >= 0)
+	{
+		// printf("%-3d [%s]\n", i, buffer);
+		if (!ft_addon(&list, ft_keepinside_quote(buffer), ft_get_operator_type(buffer)))
+			return (0);
+		buffer = 0;
+	}
+	if (i != -1)
+	{
+		// printf("%-3d [%s]\n", i, buffer);
+		if (!ft_addon(&list, ft_keepinside_quote(buffer), ft_get_operator_type(buffer)))
+			return (0);
+	}
+	if (i < 0)
+	{
+		*ret = i;
+		return (0);
+	}
+	*ret = READ_OK;
+	if (buffer)
+		free(buffer);
+	return (list);
 }
 
-int		ft_char_isoperator(char c)
-{
-	if (c == '<')
-		return (IN);
-	if (c == '>')
-		return (OUT);
-	if (c == '|')
-		return (PIPE);
-	if (c == '&')
-		return (AND);
-	return (0);
-}
-
-int		ft_str_isoperator(char *str)
-{
-	if (!str)
-		return (-1);
-	return (ft_gettype(str) != -1);
-}
+/* Créer un élément */
 
 static t_elem	*ft_createelem(char *str, int type)
 {
+	t_elem		*res;
+
 	if (!str)
 		str = ft_strdup("");
 
-	t_elem *res = malloc(sizeof(t_elem));
+	res = malloc(sizeof(t_elem));
 	if (!res)
 		return (0);
 	res->next = 0;
 	res->str = str;
 	res->type = type;
-	// printf("Created %s\n", str);
 	return (res);
 }
 
+/* Renvoie le dernier élément de la liste */
+
 static t_elem	*ft_lastelem(t_elem *list)
 {
+	t_elem		*cursor;
+
 	if (!list)
 		return (0);
-	t_elem *cursor = list;
+	cursor = list;
 	while (cursor->next != 0)
 		cursor = cursor->next;
 	return (cursor);
 }
+
+/* Ajoute un élément à la liste, prends un double pointeur pour créer la liste */
+/* si elle n'éxiste pas */
 
 static int		ft_addon(t_elem **list, char *str, int type)
 {
@@ -174,59 +165,4 @@ static int		ft_addon(t_elem **list, char *str, int type)
 		return (-1);
 	last->next = ft_createelem(str, type);
 	return (1);
-}
-
-char	*ft_keepinside_q(char *str)
-{
-	char *res;
-
-	res = 0;
-	if (!str)
-		return (0);
-	char q = 0;
-	for (size_t i = 0; i < ft_strlen(str); ++i)
-	{
-		if (ft_isquote(str[i]) && q == 0)
-		{
-			q = str[i];
-		} else
-		if (ft_isquote(str[i]) && q != 0 && str[i] == q)
-		{
-			q = 0;
-		} else
-		if (q == 0 || str[i] != q)
-			ft_writechar_on(&res, str[i]);
-	}
-	return (res);
-}
-
-t_elem	*ft_readcmd(char *str, int *ret)
-{
-	int	i = 0;
-	char *buffer = 0;
-	t_elem *list = 0;
-	if (!str)
-		return (0);
-	while ((i = ft_readnext(str, i, &buffer)) != -1 && (size_t) i < ft_strlen(str) && i >= 0)
-	{
-		// printf("%-3d [%s]\n", i, buffer);
-		if (!ft_addon(&list, ft_keepinside_q(buffer), ft_gettype(buffer)))
-			return (0);
-		buffer = 0;
-	}
-	if (i != -1)
-	{
-		// printf("%-3d [%s]\n", i, buffer);
-		if (!ft_addon(&list, ft_keepinside_q(buffer), ft_gettype(buffer)))
-			return (0);
-	}
-	if (i < 0)
-	{
-		*ret = i;
-		return (0);
-	}
-	*ret = READ_OK;
-	if (buffer)
-		free(buffer);
-	return (list);
 }

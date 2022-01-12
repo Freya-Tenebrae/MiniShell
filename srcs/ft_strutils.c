@@ -6,13 +6,16 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/07 16:22:54 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:14:11 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-char	*ft_before(char *str, char c)
+/* Récupère tout ce qui se trouve avant le premier caractère c dans */
+/* la chaine str. */
+
+char	*ft_str_before(char *str, char c)
 {
 	char	*dst;
 	int		l;
@@ -36,7 +39,10 @@ char	*ft_before(char *str, char c)
 	return (dst);
 }
 
-char	*ft_after(char *str, char c)
+/* Récupère tout ce qui se trouve après le premier caractère c dans */
+/* la chaine str. */
+
+char	*ft_str_after(char *str, char c)
 {
 	int i = 0;
 	if (!str)
@@ -62,7 +68,9 @@ char	*ft_after(char *str, char c)
 	return (res);
 }
 
-char		*ft_chartostring(char c)
+/* Concerti un caractère en chaine de caractère */
+
+char		*ft_char_tostring(char c)
 {
 	char *str = malloc(sizeof(char) * 2);
 	if (!str)
@@ -72,13 +80,16 @@ char		*ft_chartostring(char c)
 	return (str);
 }
 
-char		*ft_writechar_on(char **str, char c)
+/* Écris un caractère sur la chaine str (Free l'ancien str et remplace). */
+/* Si la chaine str n'existe pas elle sera allouée. */
+
+char		*ft_char_writeon(char **str, char c)
 {
 	if (!str)
 		return (0);
 	if (!(*str))
 	{
-		*str = ft_chartostring(c);
+		*str = ft_char_tostring(c);
 		return (*str);
 	}
 	char *res = malloc((sizeof(char) * ft_strlen(*str)) + 2);
@@ -97,7 +108,10 @@ char		*ft_writechar_on(char **str, char c)
 	return (res);
 }
 
-char		*ft_writestr_on(char **str, char *to_add)
+/* Écris une string sur la chaine str (Free l'ancien str et remplace). */
+/* Si la chaine str n'existe pas elle sera allouée. */
+
+char		*ft_str_writeon(char **str, char *to_add)
 {
 	if (!str)
 		return (0);
@@ -114,27 +128,40 @@ char		*ft_writestr_on(char **str, char *to_add)
 	return (res);
 }
 
-int		ft_iswhitespace(char c)
+/* Renvoie true si le caractère c est un whitespace. */
+
+int		ft_str_iswhitespace(char c)
 {
 	return (c == (char) 32 || c == '\n' || c == '\t'
 		|| c == '\v' || c == '\f' || c == '\r');
 }
 
-char *ft_str_substring(char *str, int begin, int end)
+/* Alloue une chaine de caractère qui se trouve entre begin et end, dans la chaine str. */
+
+char	*ft_str_substring(char *str, int begin, int end)
 {
-	char *res;
+	char	*res;
+	int		i;
 
 	res = 0;
-	int i = begin;
-	if (begin >= (int) ft_strlen(str))
+	i = begin;
+	if (!str)
+		return (0);
+	if (begin >= (int) ft_strlen(str) || end >= (int) ft_strlen(str)
+			|| begin < 0 || end < 0)
+		return (0);
+	if (begin > end)
 		return (0);
 	while (str[i] && i < end)
 	{
-		ft_writechar_on(&res, str[i]);
+		ft_char_writeon( & res, str[i]);
 		i++;
 	}
 	return (res);
 }
+
+/* Renvoie l'index de la première occurence du caractère c */
+/* dans la chaine str, ou -1 si aucun résultat. */
 
 int	ft_str_indexof(char *str, char c)
 {
@@ -147,6 +174,9 @@ int	ft_str_indexof(char *str, char c)
 	}
 	return (-1);
 }
+
+/* Renvoie l'index de la dernière occurence du caractère c */
+/* dans la chaine str, ou -1 si aucun résultat. */
 
 int	ft_str_lastindexof(char *str, int from, char c)
 {
@@ -163,7 +193,53 @@ int	ft_str_lastindexof(char *str, int from, char c)
 	return (res);
 }
 
-int		ft_isquote(char c)
+/* Free le tableau spécifié */
+
+void	ft_str_freetab(char **strs)
 {
-	return (c == '\'' || c == '"');
+	int	i;
+
+	i = 0;
+	if (!strs)
+		return ;
+	while (strs[i])
+		free(strs[i++]);
+	free(strs);
+}
+
+/* Clone le tableau spécifié. */
+
+char	**ft_str_clonetab(char **strs)
+{
+	int len = 0;
+	while (strs[len])
+		len++;
+	char **res = malloc(sizeof(char*) * (len + 1));
+	if (!res)
+		return (0);
+	int i = 0;
+	while (strs[i])
+	{
+		res[i] = ft_strdup(strs[i]);
+		i++;
+	}
+	res[i] = NULL;
+	return (res);
+}
+
+/* Renvoie true si str1 est égal à str2. */
+
+int		ft_str_is(char *str1, char *str2)
+{
+	if (!str1 && !str2)
+		return (1);
+	if (!str1 || !str2)
+		return (0);
+	if (ft_strlen(str1) != ft_strlen(str2))
+		return (0);
+	int i = 0;
+	int len = ft_strlen(str1);
+	while (i < len && str1[i] == str2[i])
+		i++;
+	return (i == len);
 }

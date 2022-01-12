@@ -6,7 +6,7 @@
 #    By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2022/01/06 17:32:20 by gadeneux         ###   ########.fr        #
+#    Updated: 2022/01/12 17:04:54 by gadeneux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_prompt.c \
 	ft_strutils.c \
 	ft_env.c \
-	ft_check_quote.c)
+	ft_check_quote.c \
+	ft_operator.c)
 OBJS=$(SRCS:.c=.o)
 
 FOLDER=srcs

@@ -6,13 +6,13 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/11 17:03:13 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:28:05 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-static int	ft_act(char **str, char **envp)
+static int	ft_act(char **str)
 {
 	int ret;
 	t_elem *list;
@@ -25,7 +25,7 @@ static int	ft_act(char **str, char **envp)
 	}
 	
 	//Verifier que les quotes et backslash sont bien fermés sur la ligne de commande.
-	if (!ft_check_q(*str))
+	if (!ft_check_quote(*str))
 	{
 		printf("Quote error.\n");
 		return (1);
@@ -35,19 +35,18 @@ static int	ft_act(char **str, char **envp)
 	ft_replace_env(str);
 	
 	ret = 0;
-	list = ft_readcmd(*str, &ret);
+	list = ft_read_command(*str, &ret);
 	if (ret == READ_OK)
 	{
-		(void) infile;
-		(void) envp;
 		while (list)
 		{
 			printf("%-3d ~%s~\n", list->type, list->str);
 			list = list->next;
 		}
+		// Éxecution de la ligne de commande ici via la fonction ft_runcmd_next
 		infile = NULL;
 		while (list)
-			list = ft_runcmd_next(list, envp, &infile);
+			list = ft_runcmd_next(list, &infile);
 		free(infile);
 	} else
 	{
@@ -58,7 +57,7 @@ static int	ft_act(char **str, char **envp)
 	return (0);
 }
 
-static void	ft_loop(char **envp)
+static void	ft_loop()
 {
 	int		res_gnl;
 	char	*str;
@@ -73,7 +72,7 @@ static void	ft_loop(char **envp)
 				free(str);
 			break;
 		}
-		if (ft_act(&str, envp) != 0)
+		if (ft_act(&str) != 0)
 			break;
 	}
 }
@@ -84,8 +83,8 @@ static int	ft_init_minishell_global(char **envp)
 	if (!minishell)
 		return (0);	
 	minishell->envp = envp;
-	minishell->path = ft_getpath(envp);
 	minishell->env = ft_init_env(envp);
+	minishell->path = ft_getenv("PATH")->value;
 	return (1);
 }
 
@@ -96,6 +95,6 @@ int	main(int ac, char **av, char **envp)
 	
 	ft_init_minishell_global(envp);
 	ft_init_signal_handling();
-	ft_loop(envp);
+	ft_loop();
 	return (0);
 }
