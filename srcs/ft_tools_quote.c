@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_quote.c                                   :+:      :+:    :+:   */
+/*   ft_tools_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:30:52 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/12 17:13:18 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:14:04 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
+
+/* Renvoie true si le char spécifié est une quote. */
+
+int		ft_isquote(char c)
+{
+	return (c == '\'' || c == '"');
+}
 
 /* Renvoie true si la chaine est valide, 0 s'il y a une erreur de quote. */
 
@@ -37,13 +44,6 @@ int	ft_check_quote(char *str)
 	if (in_quote && in_quote % 2 != 0)
 		return (0);
 	return (1);
-}
-
-/* Renvoie true si le char spécifié est une quote. */
-
-int		ft_isquote(char c)
-{
-	return (c == '\'' || c == '"');
 }
 
 /* Renvoie une nouvelle chaine de caractère qui prends uniquement le contenu de */

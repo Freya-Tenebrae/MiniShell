@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+         #
+#    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2022/01/12 17:04:54 by gadeneux         ###   ########.fr        #
+#    Updated: 2022/01/16 15:20:38 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,14 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_signal_handler.c\
 	ft_prompt.c \
 	ft_strutils.c \
-	ft_env.c \
-	ft_check_quote.c \
-	ft_operator.c)
+	ft_tools_env.c \
+	ft_tools_quote.c \
+	ft_operator.c\
+	ft_bi_cd.c\
+	ft_bi_echo.c\
+	ft_bi_env.c\
+	ft_bi_export.c\
+	ft_bi_pwd.c)
 OBJS=$(SRCS:.c=.o)
 
 FOLDER=srcs

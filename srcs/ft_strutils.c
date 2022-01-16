@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strutils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/12 17:14:11 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/16 15:30:48 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,7 @@ char	**ft_str_clonetab(char **strs)
 }
 
 /* Renvoie true si str1 est égal à str2. */
+// equivalent a strcmp ?
 
 int		ft_str_is(char *str1, char *str2)
 {
