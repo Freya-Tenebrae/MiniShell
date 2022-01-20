@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/16 15:30:48 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:06:23 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,16 +195,19 @@ int	ft_str_lastindexof(char *str, int from, char c)
 
 /* Free le tableau spécifié */
 
-void	ft_str_freetab(char **strs)
+void	ft_freestrs(char ***strs)
 {
-	int	i;
+	char	**strs_ptr;
 
-	i = 0;
-	if (!strs)
-		return ;
-	while (strs[i])
-		free(strs[i++]);
-	free(strs);
+	strs_ptr = *strs;
+	while (*strs_ptr != NULL)
+	{
+		free(*strs_ptr);
+		*strs_ptr = NULL;
+		strs_ptr++;
+	}
+	free(*strs);
+	*strs = NULL;
 }
 
 /* Clone le tableau spécifié. */

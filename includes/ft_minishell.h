@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/12 17:27:04 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:05:30 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int		main(int ac, char **av, char **envp);
 t_elem	*ft_read_command(char *str, int *ret);
 int		ft_execute_cmd(char *path, char **cmd_args);
 t_output	*ft_run_cmd(char *path, char **cmd_args, char *infile);
+t_elem	*ft_run_cmd_next_line(t_elem *elem, char **infile);
 t_elem	*ft_runcmd_next(t_elem *elem, char **infile);
 void	ft_replace_env(char **str);
 
@@ -110,7 +111,7 @@ int		ft_str_is(char *str1, char *str2);
 int		ft_str_iswhitespace(char c);
 
 char	**ft_str_clonetab(char **strs);
-void	ft_str_freetab(char **strs);
+void	ft_freestrs(char ***strs);
 
 char	*ft_str_writeon(char **str, char *to_add);
 char	*ft_char_writeon(char **str, char c);

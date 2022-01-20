@@ -13,3 +13,13 @@ This Repositorie contains my solution to the project `Minishell` of 42 (Paris).
 ```shell
 git clone --recurse-submodules https://github.com/Freya-Tenebrae/MiniShell.git
 ```
+
+### TODO
+
+> [ ] protect from malloc error (ex after using strdup)
+> [ ] leaks free
+> [ ] pipe implementation in main loop
+> [ ] redirection in (< and <<)
+> [ ] redirection out (> and >>)
+> [ ] implementation & and &&
+> [ ] correction signal management

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execcmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/12 17:16:05 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:05:44 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	ft_execute_cmd(char *path, char **cmd_args)
 		
 		if (execve(clone[0], clone, NULL) != -1)
 		{
-			ft_str_freetab(clone);
+			ft_freestrs(&clone);
 			free(paths);
 			return (1);
 		}
-		ft_str_freetab(clone);
+		ft_freestrs(&clone);
 		i++;
 	}
 	free(paths);

@@ -6,11 +6,30 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/16 15:24:53 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:11:02 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
+
+t_elem	*ft_run_cmd_next_line(t_elem *list, char **infile)
+{
+	if (list->type == ARGUMENT)
+		return (ft_runcmd_next(list, infile));
+	// if (list->type == OUT)
+	// 	;
+	// if (list->type == DOUBLE_OUT)
+	// 	;
+	// if (list->type == PIPE)
+	// 	;
+	// if (list->type == DOUBLE_PIPE)
+	// 	;
+	// if (list->type == AND)
+	// 	;
+	// if (list->type == DOUBLE_AND)
+	// 	;
+	return (NULL);
+}
 
 static int	ft_act(char **str)
 {
@@ -33,22 +52,21 @@ static int	ft_act(char **str)
 	
 	// Remplacer les variables d'environnement sur la ligne de commande.
 	ft_replace_env(str);
-	
+
 	ret = 0;
 	list = ft_read_command(*str, &ret);
 	if (ret == READ_OK)
 	{
-		while (list)
-		{
-			printf("%-3d ~%s~\n", list->type, list->str);
-			list = list->next;
-		}
-		// Éxecution de la ligne de commande ici via la fonction ft_runcmd_next
 		infile = NULL;
 		while (list)
-			list = ft_runcmd_next(list, &infile);
+		{
+			//printf("%-3d ~%s~\n", list->type, list->str);
+			//list = list->next;
+			list = ft_run_cmd_next_line(list, &infile);
+		}
 		free(infile);
-	} else
+	}
+	else
 	{
 		printf("Error.\n");
 		return (1);
@@ -96,5 +114,6 @@ int	main(int ac, char **av, char **envp)
 	ft_init_minishell_global(envp);
 	ft_init_signal_handling();
 	ft_loop();
+	//ft_free_global;
 	return (0);
 }
