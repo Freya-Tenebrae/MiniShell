@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:32:17 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/20 17:19:54 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:26:45 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 char	*ft_tools_get_in(char *path)
 {
-	return (NULL);// TODO
+	(void)path;// TODO
+	return (NULL);
 }
 
 char	*ft_tools_get_double_in(char *word)
 {
-	return (NULL);// TODO
+	(void)word;// TODO
+	return (NULL);
 }

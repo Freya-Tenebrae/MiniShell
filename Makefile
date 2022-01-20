@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2022/01/16 15:20:38 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/01/20 17:25:28 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_bi_echo.c\
 	ft_bi_env.c\
 	ft_bi_export.c\
-	ft_bi_pwd.c)
+	ft_bi_pwd.c\
+	ft_tools_redirection_in.c\
+	ft_tools_redirection_out.c)
 OBJS=$(SRCS:.c=.o)
 
 FOLDER=srcs

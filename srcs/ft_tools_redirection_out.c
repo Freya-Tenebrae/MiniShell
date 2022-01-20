@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:32:17 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/20 17:20:29 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:26:07 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 t_elem	*ft_tools_push_out(t_elem *list, char **infile)
 {
 	list = list->next;
-	return (list);// TODO
+	(void)infile;
+	return (list);
+	// TODO
 }
 
 t_elem	*ft_tools_push_double_out(t_elem *list, char **infile)
 {
-	return (list);// TODO
+	list = list->next;
+	(void)infile;
+	return (list);
+	// TODO
 }
 

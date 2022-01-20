@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/20 17:23:22 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:24:45 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_elem	*ft_run_cmd_next_line(t_elem *list, char **infile)
 	if (list->type == ARGUMENT)
 		return (ft_runcmd_next(list, infile));
 	if (list->type == OUT)
-		ft_tools_push_out(t_elem *list, char **infile);
+		ft_tools_push_out(list, infile);
 	if (list->type == DOUBLE_OUT)
-		ft_tools_push_double_out(t_elem *list, char **infile);
+		ft_tools_push_double_out(list, infile);
 	// if (list->type == PIPE)
 	// 	;
 	// if (list->type == DOUBLE_PIPE)
