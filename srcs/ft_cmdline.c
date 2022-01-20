@@ -6,15 +6,11 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/20 18:02:43 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 18:50:31 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-/* (Fonction test) Éxecute la prochaine à partir de l'élement spécifié */
-/* Ne marche que pour les pipes sans gérer aucune exception. */
-/* Cette ici que nous allons gérer les redirections, les build-in, les pipes etc. */
 
 static int	ft_lenght_args(t_elem *list)
 {
@@ -67,7 +63,10 @@ t_elem	*ft_runcmd_next(t_elem *list, char **infile)
 	t_output *out;
 
 	list = ft_put_args_in_cmd_args(list, &cmd_args);
-	out = ft_run_cmd(minishell->path, cmd_args, *infile);
+	if (ft_tools_is_build_in(cmd_args[0]) == 0)
+		out = ft_run_bi(minishell->path, cmd_args, *infile);
+	else
+		out = ft_run_cmd(minishell->path, cmd_args, *infile);
 	ft_freestrs(&cmd_args);
 	free(*infile);
 	if (out->output)

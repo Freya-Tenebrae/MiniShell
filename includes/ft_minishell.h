@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/20 17:54:52 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 18:48:16 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,9 @@ char	*ft_char_writeon(char **str, char c);
 char	*ft_char_tostring(char c);
 
 t_env	*ft_getenv(char *str);
+
+int		ft_tools_is_build_in(char *cmd);
+t_output	*ft_run_bi(char *path, char **cmd_args, char *infile);
 
 char	*ft_tools_get_in(char *path);
 char	*ft_tools_get_double_in(char *word);
