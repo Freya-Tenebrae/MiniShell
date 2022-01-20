@@ -6,9 +6,20 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:32:17 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/20 16:58:47 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:20:29 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
+
+t_elem	*ft_tools_push_out(t_elem *list, char **infile)
+{
+	list = list->next;
+	return (list);// TODO
+}
+
+t_elem	*ft_tools_push_double_out(t_elem *list, char **infile)
+{
+	return (list);// TODO
+}
 
