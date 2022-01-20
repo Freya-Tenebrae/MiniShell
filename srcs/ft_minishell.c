@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/20 17:24:45 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:57:49 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	ft_act(char **str)
 		while (listptr && listptr != NULL)
 			listptr = ft_run_cmd_next_line(listptr, &infile);
 		free(infile);
-		// free list
+		ft_tools_free_elem(&list);
 	}
 	else
 	{
@@ -113,6 +113,6 @@ int	main(int ac, char **av, char **envp)
 	ft_init_minishell_global(envp);
 	ft_init_signal_handling();
 	ft_loop();
-	//ft_free_global;
+	ft_tools_free_data(&minishell);
 	return (0);
 }

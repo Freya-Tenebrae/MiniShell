@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/20 17:18:55 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:54:52 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,10 @@ int		ft_str_iswhitespace(char c);
 
 char	**ft_str_clonetab(char **strs);
 void	ft_freestrs(char ***strs);
+void	ft_tools_free_elem(t_elem **elem);
+void	ft_tools_free_output(t_output **output);
+void	ft_tools_free_env(t_env **env);
+void	ft_tools_free_data(t_data **data);
 
 char	*ft_str_writeon(char **str, char *to_add);
 char	*ft_char_writeon(char **str, char c);

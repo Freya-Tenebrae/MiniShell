@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_readcmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/12 17:13:18 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/01/20 18:10:09 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ static int		ft_readnext(char *str, int i, char **buffer)
 		if (!ft_str_iswhitespace(str[i]) || in_quote % 2 != 0)
 		{
 			if (/*(!quote || str[i] != quote) &&*/ !ft_char_writeon(buffer, str[i]))
+			{
 				return (READ_ALLOC_ERR);
+			}
 		} else {
 			break ;
 		}
@@ -93,14 +95,22 @@ t_elem	*ft_read_command(char *str, int *ret)
 	{
 		// printf("%-3d [%s]\n", i, buffer);
 		if (!ft_addon(&list, ft_keepinside_quote(buffer), ft_get_operator_type(buffer)))
+		{
+			if (buffer)
+				free(buffer);
 			return (0);
+		}
 		buffer = 0;
 	}
 	if (i != -1)
 	{
 		// printf("%-3d [%s]\n", i, buffer);
 		if (!ft_addon(&list, ft_keepinside_quote(buffer), ft_get_operator_type(buffer)))
+		{
+			if (buffer)
+				free(buffer);
 			return (0);
+		}
 	}
 	if (i < 0)
 	{

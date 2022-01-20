@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:32:17 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/20 17:26:07 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:38:46 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,23 @@ t_elem	*ft_tools_push_out(t_elem *list, char **infile)
 {
 	list = list->next;
 	(void)infile;
+	// check if file exist and if it's writable (chmod write ok) with "acess(path, W_OK);"
+	// if it didn't exist created it
+	// open file and check error
+	// erased everything and write on it
+	// close file
 	return (list);
-	// TODO
 }
 
 t_elem	*ft_tools_push_double_out(t_elem *list, char **infile)
 {
 	list = list->next;
 	(void)infile;
+	// check if file exist and if it's writable (chmod write ok) with "acess(path, W_OK);"
+	// if it didn't exist created it
+	// open file and check error
+	// write on it after last line
+	// close file
 	return (list);
-	// TODO
 }
 
