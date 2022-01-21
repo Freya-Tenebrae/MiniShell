@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/21 16:16:40 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/21 16:23:48 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-
 
 # include "libft/libft.h"
 # include "Get_next_line/get_next_line.h"
@@ -47,27 +46,27 @@
 /* ************************************************************************** */
 /*                                  TYPEDEF                                   */
 /* ************************************************************************** */
-typedef struct	s_elem {
+typedef struct		s_elem {
 	struct s_elem	*next;
 	int				type;
 	char			*str;
-}				t_elem;
+}					t_elem;
 
-typedef struct	s_output {
-	char	*output;
-	char	*error;
-}				t_output;
+typedef struct		s_output {
+	char			*output;
+	char			*error;
+}					t_output;
 
-typedef struct	s_env {
-	char	*value;
-	char	*name;
-}				t_env;
+typedef struct		s_env {
+	char			*value;
+	char			*name;
+}					t_env;
 
-typedef struct s_data {
-	char		**envp;
-	char		*path;
-	t_env		**env;
-}				t_data;
+typedef struct		s_data {
+	char			**envp;
+	char			*path;
+	t_env			**env;
+}					t_data;
 
 /* ************************************************************************** */
 /*                                 VAR GLOBAL                                 */
