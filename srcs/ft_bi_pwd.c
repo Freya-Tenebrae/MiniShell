@@ -6,18 +6,13 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:32 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/14 16:01:31 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/21 15:10:08 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-// int	ft_bi_pwd()
+// t_output	*ft_run_bi_pwd(char **cmd_args, char *infile)
 // {
-// 	char	*pwd;
-
-// 	pwd = getcwp(pwd, 0);
-// 	ft_purstr(pwd);
-// 	free(pwd);
-// 	ft_putchar('\n');
+// 
 // }
