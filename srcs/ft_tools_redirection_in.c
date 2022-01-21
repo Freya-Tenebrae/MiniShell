@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 15:32:17 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/21 03:48:41 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/21 03:54:15 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*ft_tools_get_in(char *path)
 {
 	(void)path;// TODO
 	// check if file exist and if it's readable (chmod read ok) with "acess(path, R_OK);"
+	// if not put an erro and return
 	// open file and check error
 	// read all file and put in in a char *
 	// close file
