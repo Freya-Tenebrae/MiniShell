@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/21 03:48:52 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/21 14:33:56 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	ft_lenght_args(t_elem *list)
 {
 	int		i;
-	t_elem *pos_list;
+	t_elem	*pos_list;
 
 	i = 0;
 	pos_list = list;
@@ -60,14 +60,16 @@ static t_elem	*ft_put_args_in_cmd_args(t_elem *list, char ***cmd_args)
 
 t_elem	*ft_runcmd_next(t_elem *list, char **infile)
 {
-	char	**cmd_args;
-	t_output *out;
+	char		**cmd_args;
+	t_output	*out;
 
 	list = ft_put_args_in_cmd_args(list, &cmd_args);
 	if (ft_tools_is_build_in(cmd_args[0]) == 0)
 		out = ft_run_bi(minishell->path, cmd_args, *infile);
-	else
-		out = ft_run_cmd(minishell->path, cmd_args, *infile);
+	// else if (ft_tools_command_exist(cmd_args[0]) == 0) //TODO
+	out = ft_run_cmd(minishell->path, cmd_args, *infile);
+	// else
+	// 		return (ft_tools_put_cmd_not_found(cmd_args[0])); // TODO
 	ft_freestrs(&cmd_args);
 	free(*infile);
 	if (out->output)

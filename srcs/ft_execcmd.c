@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/21 03:22:04 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/21 14:20:17 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_output    *ft_run_cmd(char *path, char **cmd_args, char *infile)
         return (0);
     if (pipe(stderr) == -1)
         return (0);
-	
+
     int pid = fork();
     if (pid == 0)
     {
