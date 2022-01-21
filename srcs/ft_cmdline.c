@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/21 03:15:29 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/21 03:48:52 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static t_elem	*ft_put_args_in_cmd_args(t_elem *list, char ***cmd_args)
 			(*cmd_args)[i] = ft_tools_get_in(list->str);
 		else
 			(*cmd_args)[i] = ft_tools_get_double_in(list->str);
+		list = list->next;
 		i++;
 	}
 	(*cmd_args)[i] = NULL;
