@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/20 18:06:22 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/21 03:29:42 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ char		*ft_char_writeon(char **str, char c)
 		res[i] = (*str)[i];
 		i++;
 	}
+	free(*str);
 	res[i] = c;
 	res[i + 1] = '\0';
-	free(*str);
 	*str = res;
 	res = NULL;
 	return (*str);
@@ -122,9 +122,9 @@ char		*ft_str_writeon(char **str, char *to_add)
 		return (*str);
 	}
 	char *res = ft_strjoin(*str, to_add);
+	free(*str);
 	if (!res)
 		return (0);
-	free(*str);
 	*str = res;
 	return (res);
 }

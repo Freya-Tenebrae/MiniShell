@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/20 18:10:09 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/21 03:42:02 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ t_elem	*ft_read_command(char *str, int *ret)
 				free(buffer);
 			return (0);
 		}
+		if (buffer)
+			free(buffer);
 		buffer = 0;
 	}
 	if (i != -1)
@@ -115,6 +117,8 @@ t_elem	*ft_read_command(char *str, int *ret)
 	if (i < 0)
 	{
 		*ret = i;
+		if (buffer)
+			free(buffer);
 		return (0);
 	}
 	*ret = READ_OK;

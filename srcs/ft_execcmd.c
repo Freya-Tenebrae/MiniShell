@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/20 17:05:44 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/21 03:22:04 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_execute_cmd(char *path, char **cmd_args)
 		
 		if (!clone)
 		{
-			free(paths);
+			ft_freestrs(&paths);
 			return (0);
 		}
 		
@@ -44,13 +44,13 @@ int	ft_execute_cmd(char *path, char **cmd_args)
 		if (execve(clone[0], clone, NULL) != -1)
 		{
 			ft_freestrs(&clone);
-			free(paths);
+			ft_freestrs(&paths);
 			return (1);
 		}
 		ft_freestrs(&clone);
 		i++;
 	}
-	free(paths);
+	ft_freestrs(&paths);
 	return (0);
 }
 
@@ -116,6 +116,17 @@ t_output    *ft_run_cmd(char *path, char **cmd_args, char *infile)
 			ft_char_writeon(&res->output, c);
 		while (read(stderr[0], &c, sizeof(char)))
 			ft_char_writeon(&res->error, c);
+
+		// solution temporaire pour eviter les SGV lies a output et error vide
+		if (!res->output && !res->error)
+		{
+			res->output = ft_strdup("");
+		}
+		// fin de la solution temporaire
+		// il y a un bug qui fait que le systeme ne repaire pas si une fonction n'existe pas
+		// il est aussi necessaire de replir stdout d;une chaine de caractere vide lorsce que
+		// 		une fonction ne donne pas de sortie (ex "ls test", avec l'argument "test" un 
+		//		chemin vers un dossier vide)
     }
     waitpid(pid, 0, 0);
     close(stdout[0]);

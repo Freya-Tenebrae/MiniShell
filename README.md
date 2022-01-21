@@ -20,8 +20,9 @@ git clone --recurse-submodules https://github.com/Freya-Tenebrae/MiniShell.git
 - [ ] write redirection out (> and >>)
 - [ ] pipe implementation in main loop
 - [ ] make build-in
-- [ ] correct leaks when an "error" occured
-- [ ] correct the leaks created by the char * "buffer" in "ft_readnext" (in file "ft_readcmd.c")
+- [x] correct leaks when an "error" occured
+- [x] correct the leaks created by the char * "buffer" in "ft_readnext" (in file "ft_readcmd.c")
+- [ ] hard test leaks
 - [ ] signal adjustement
 - [ ] protect from malloc error (ex after using strdup)
 - [ ] regroup file's, fonction's and variable's name for more coherences

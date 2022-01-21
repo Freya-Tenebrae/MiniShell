@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/20 18:50:31 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/21 03:15:29 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_elem	*ft_runcmd_next(t_elem *list, char **infile)
 	if (out->error)
 	{
 		*infile = 0;
+		ft_tools_free_output(&out);
 		return (0);
 	}
 	*infile = ft_strdup(out->output);
