@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:30:52 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/21 02:38:59 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/22 18:26:38 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Renvoie true si le char spécifié est une quote. */
 
-int		ft_isquote(char c)
+int	ft_isquote(char c)
 {
 	return (c == '\'' || c == '"');
 }
@@ -46,28 +46,29 @@ int	ft_check_quote(char *str)
 	return (1);
 }
 
-/* Renvoie une nouvelle chaine de caractère qui prends uniquement le contenu de */
-/* ce qu'il y a entre quote dans str. */
+/* Renvoie une nouvelle chaine de caractère qui prends uniquement */
+/* le contenu de ce qu'il y a entre quote dans str. */
 
 char	*ft_keepinside_quote(char *str)
 {
-	char *res;
+	char	*res;
+	char	q;
+	int		i;
+	int		strlen;
 
-	res = 0;
 	if (!str)
 		return (0);
-	char q = 0;
-	for (size_t i = 0; i < ft_strlen(str); ++i)
+	res = NULL;
+	q = 0;
+	i = -1;
+	strlen = ft_strlen(str);
+	while (++i < strlen)
 	{
 		if (ft_isquote(str[i]) && q == 0)
-		{
 			q = str[i];
-		} else
-		if (ft_isquote(str[i]) && q != 0 && str[i] == q)
-		{
+		else if (ft_isquote(str[i]) && q != 0 && str[i] == q)
 			q = 0;
-		} else
-		if (q == 0 || str[i] != q)
+		else if (q == 0 || str[i] != q)
 			ft_char_writeon(&res, str[i]);
 	}
 	return (res);

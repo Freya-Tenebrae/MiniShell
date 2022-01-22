@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signal_handler.c                                :+:      :+:    :+:   */
+/*   ft_tools_checking_cmd.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/20 15:09:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/22 17:54:32 by cmaginot         ###   ########.fr       */
+/*   Created: 2022/01/22 15:35:05 by cmaginot          #+#    #+#             */
+/*   Updated: 2022/01/22 18:26:36 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-void	ft_signal_handler(int signal)
+// check if command exist (return 1 if not)
+int	ft_tools_command_exist(char *cmd)
 {
-	if (signal == SIGINT)
-	{
-		ft_putstr_fd("\b\b  ", 1);
-		ft_putstr("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		ft_put_prompt();
-	}
-	else if (signal == SIGQUIT)
-		ft_putstr_fd("\b\b  \b\b", 1);
+	(void)cmd;
+	return (0);
 }
 
-void	ft_init_signal_handling(void)
+// put an error message with the name of the cmd, then return error
+t_elem	*ft_tools_put_cmd_not_found(char *cmd)
 {
-	signal(SIGINT, ft_signal_handler);
-	signal(SIGQUIT, ft_signal_handler);
+	(void)cmd;
+	return (NULL);
 }

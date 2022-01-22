@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmdline.c                                       :+:      :+:    :+:   */
+/*   ft_run_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/21 16:48:52 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/22 17:02:14 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_elem	*ft_put_args_in_cmd_args(t_elem *list, char ***cmd_args)
 	i = ft_lenght_args(list);
 	*cmd_args = malloc(sizeof(char *) * (i + 1));
 	if (!*cmd_args)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (list && list->type == ARGUMENT)
 	{
@@ -58,31 +58,41 @@ static t_elem	*ft_put_args_in_cmd_args(t_elem *list, char ***cmd_args)
 	return (list);
 }
 
-t_elem	*ft_runcmd_next(t_elem *list, char **infile)
+static void	ft_redirection_cmd(t_output	**out, t_elem **list, char **infile)
 {
 	char		**cmd_args;
+
+	*list = ft_put_args_in_cmd_args(*list, &cmd_args);
+	if (ft_tools_is_build_in(cmd_args[0]) == 0)
+		*out = ft_run_bi(minishell->path, cmd_args, *infile);
+	else if (ft_tools_command_exist(cmd_args[0]) == 0)
+		*out = ft_exec_cmd(minishell->path, cmd_args, *infile);
+	else
+		*list = ft_tools_put_cmd_not_found(cmd_args[0]);
+	ft_freestrs(&cmd_args);
+}
+
+t_elem	*ft_run_cmd(t_elem *list, char **infile)
+{
 	t_output	*out;
 
-	list = ft_put_args_in_cmd_args(list, &cmd_args);
-	if (ft_tools_is_build_in(cmd_args[0]) == 0)
-		out = ft_run_bi(minishell->path, cmd_args, *infile);
-	else // if (ft_tools_command_exist(cmd_args[0]) == 0) //TODO
-		out = ft_run_cmd(minishell->path, cmd_args, *infile);
-	// else
-	// 		return (ft_tools_put_cmd_not_found(cmd_args[0])); // TODO
-	ft_freestrs(&cmd_args);
+	ft_redirection_cmd(&out, &list, infile);
 	free(*infile);
 	if (out->output)
-		ft_putstr_fd(out->output, STDOUT_FILENO);
-	else
-		ft_putstr_fd(out->error, STDOUT_FILENO);
-	if (out->error)
 	{
-		*infile = 0;
-		ft_tools_free_output(&out);
-		return (0);
+		ft_putstr_fd(out->output, STDOUT_FILENO);
+		*infile = ft_strdup(out->output);
+		if (!infile)
+		{
+			infile = NULL;
+			return (NULL);
+		}
 	}
-	*infile = ft_strdup(out->output);
+	else
+	{
+		ft_putstr_fd(out->error, STDOUT_FILENO);
+		infile = NULL;
+	}
 	ft_tools_free_output(&out);
 	return (list);
 }

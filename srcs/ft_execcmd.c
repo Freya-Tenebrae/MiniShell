@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/21 14:20:17 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/22 15:44:31 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_execute_cmd(char *path, char **cmd_args)
 /* Éxecute une commande en prenant (ou non) un input d'une commande précédente */
 /* Il renvoie un t_output qui contient la sortie stdout et stderr. */
 
-t_output    *ft_run_cmd(char *path, char **cmd_args, char *infile)
+t_output    *ft_exec_cmd(char *path, char **cmd_args, char *infile)
 {
 	t_output	*res;
 	

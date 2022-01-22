@@ -16,16 +16,14 @@ git clone --recurse-submodules https://github.com/Freya-Tenebrae/MiniShell.git
 
 ### TODO
 
-- [ ] check if function exists, and make redirection for bi
-- [ ] pipe implementation in main loop
+- [ ] norm
+- [ ] protect from malloc error (ex after using strdup) in ft_readcmd.c, ft_execcmd.c, and ft_tools_str*.c
+- [ ] regroup file's, fonction's and variable's name for more coherences
+- [ ] delete duplicated funciton
+- [ ] check if function exists
+- [ ] pipe function
 - [ ] signal adjustement ('ctrl+\')
 - [ ] write redirection out (> and >>)
 - [ ] write redirection in (< and <<)
 - [ ] make build-in
-- [ ] protect from malloc error (ex after using strdup)
-- [ ] regroup file's, fonction's and variable's name for more coherences
-- [ ] delete duplicated funciton
-- [ ] norm
-- [x] correct leaks when an "error" occured
-- [x] correct the leaks created by the char * "buffer" in "ft_readnext" (in file "ft_readcmd.c")
 - [ ] hard test leaks

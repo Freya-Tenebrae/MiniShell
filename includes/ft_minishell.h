@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/21 16:23:48 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/22 18:13:13 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,14 @@ t_data *minishell;
 /*                                  FONCTION                                  */
 /* ************************************************************************** */
 int		main(int ac, char **av, char **envp);
+int		ft_run_line(char **str);
+int		ft_tools_command_exist(char *cmd);
+t_elem	*ft_tools_put_cmd_not_found(char *cmd);
 t_elem	*ft_read_command(char *str, int *ret);
 int		ft_execute_cmd(char *path, char **cmd_args);
-t_output	*ft_run_cmd(char *path, char **cmd_args, char *infile);
-t_elem	*ft_run_cmd_next_line(t_elem *elem, char **infile);
-t_elem	*ft_runcmd_next(t_elem *elem, char **infile);
+t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile);
+t_elem	*ft_run_cmd(t_elem *elem, char **infile);
+t_elem	*ft_run_pipe(t_elem *list, char **infile);
 void	ft_replace_env(char **str);
 
 /* ************************************************************************** */
@@ -106,7 +109,6 @@ char	*ft_str_after(char *str, char c);
 char	*ft_str_substring(char *str, int begin, int end);
 int		ft_str_indexof(char *str, char c);
 int		ft_str_lastindexof(char *str, int from, char c);
-int		ft_str_is(char *str1, char *str2);
 int		ft_str_iswhitespace(char c);
 
 char	**ft_str_clonetab(char **strs);

@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2022/01/20 18:47:14 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/01/22 18:34:01 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,14 @@ NAME=minishell
 
 SRCS=$(addprefix ${FOLDER}/, \
 	ft_minishell.c \
+	ft_run_line.c \
 	ft_readcmd.c \
 	ft_execcmd.c \
-	ft_cmdline.c \
+	ft_run_cmd.c \
+	ft_run_pipe.c \
+	ft_tools_checking_cmd.c \
 	ft_signal_handler.c\
 	ft_prompt.c \
-	ft_strutils.c \
 	ft_tools_env.c \
 	ft_tools_quote.c \
 	ft_operator.c\
@@ -30,7 +32,13 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_bi_export.c\
 	ft_bi_pwd.c\
 	ft_tools_redirection_in.c\
-	ft_tools_redirection_out.c)
+	ft_tools_redirection_out.c\
+	ft_tools_free_lsts.c\
+	ft_tools_char.c\
+	ft_tools_str_create.c\
+	ft_tools_str_get_index.c\
+	ft_tools_str_replace.c\
+	ft_tools_strs.c)
 OBJS=$(SRCS:.c=.o)
 
 FOLDER=srcs

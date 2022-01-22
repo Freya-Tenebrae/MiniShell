@@ -6,13 +6,13 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:29:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2021/12/22 16:23:52 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/22 16:30:03 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-void	ft_put_prompt()
+void	ft_put_prompt(void)
 {
 	ft_putstr("minishell~ ");
 }
