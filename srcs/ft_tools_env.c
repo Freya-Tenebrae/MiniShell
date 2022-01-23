@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/22 18:26:37 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/23 02:06:37 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ t_env	*ft_getenv(char *str)
 	if (!str)
 		return (0);
 	i = 0;
-	while (minishell->env[i])
+	while (g_minishell->env[i])
 	{
-		if (ft_strcmp(minishell->env[i]->name, str) == 0)
-			return (minishell->env[i]);
+		if (ft_strcmp(g_minishell->env[i]->name, str) == 0)
+			return (g_minishell->env[i]);
 		i++;
 	}
 	return (0);

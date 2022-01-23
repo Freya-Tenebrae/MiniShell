@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/22 17:02:14 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/23 02:06:12 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static void	ft_redirection_cmd(t_output	**out, t_elem **list, char **infile)
 
 	*list = ft_put_args_in_cmd_args(*list, &cmd_args);
 	if (ft_tools_is_build_in(cmd_args[0]) == 0)
-		*out = ft_run_bi(minishell->path, cmd_args, *infile);
+		*out = ft_run_bi(g_minishell->path, cmd_args, *infile);
 	else if (ft_tools_command_exist(cmd_args[0]) == 0)
-		*out = ft_exec_cmd(minishell->path, cmd_args, *infile);
+		*out = ft_exec_cmd(g_minishell->path, cmd_args, *infile);
 	else
 		*list = ft_tools_put_cmd_not_found(cmd_args[0]);
 	ft_freestrs(&cmd_args);
