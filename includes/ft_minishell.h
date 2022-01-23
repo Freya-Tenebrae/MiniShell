@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/22 18:13:13 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/23 01:46:17 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,10 @@ char	*ft_char_writeon(char **str, char c);
 char	*ft_char_tostring(char c);
 
 t_env	*ft_getenv(char *str);
+
+t_elem	*ft_tools_elem_create(char *str);
+t_elem	*ft_tools_elem_last(t_elem *list);
+int		ft_tools_elem_add(t_elem **list, char *str);
 
 int		ft_tools_is_build_in(char *cmd);
 t_output	*ft_run_bi(char *path, char **cmd_args, char *infile);

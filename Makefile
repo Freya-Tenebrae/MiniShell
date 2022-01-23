@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2022/01/22 18:34:01 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/01/23 01:21:27 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_bi_env.c\
 	ft_bi_export.c\
 	ft_bi_pwd.c\
+	ft_tools_elem.c\
 	ft_tools_redirection_in.c\
 	ft_tools_redirection_out.c\
 	ft_tools_free_lsts.c\
