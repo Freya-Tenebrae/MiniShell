@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 01:20:46 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/23 01:46:48 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:16:24 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@
 t_elem	*ft_tools_elem_create(char *str)
 {
 	t_elem	*list_new;
+	int		type;
 
+	type = ft_get_operator_type(str);
+	if (type == -1)
+		return (NULL);
 	if (!str)
 	{
 		str = ft_strdup("");
@@ -29,7 +33,7 @@ t_elem	*ft_tools_elem_create(char *str)
 		return (NULL);
 	list_new->next = NULL;
 	list_new->str = str;
-	list_new->type = ft_get_operator_type(str);
+	list_new->type = type;
 	return (list_new);
 }
 

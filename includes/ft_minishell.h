@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/23 02:09:58 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:29:43 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_data		*g_minishell;
 /* ************************************************************************** */
 int			main(int ac, char **av, char **envp);
 int			ft_run_line(char **str);
-int			ft_tools_command_exist(char *cmd);
+int			ft_tools_check_if_all_commands_exists(t_elem *list);
 int			ft_execute_cmd(char *path, char **cmd_args);
 int			ft_isquote(char c);
 int			ft_check_quote(char *str);
@@ -109,7 +109,6 @@ char		*ft_char_tostring(char c);
 char		*ft_tools_get_in(char *path);
 char		*ft_tools_get_double_in(char *word);
 char		**ft_str_clonetab(char **strs);
-t_elem		*ft_tools_put_cmd_not_found(char *cmd);
 t_elem		*ft_read_command(char *str, int *ret);
 t_elem		*ft_run_cmd(t_elem *elem, char **infile);
 t_elem		*ft_run_pipe(t_elem *list, char **infile);

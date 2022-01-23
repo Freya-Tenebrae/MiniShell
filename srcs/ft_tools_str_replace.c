@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/22 18:38:49 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/23 16:26:37 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_char_writeon(char **str, char c)
 	int		i;
 
 	if (!str)
-		return (0);
+		return (NULL);
 	if (!(*str))
 	{
 		*str = ft_char_tostring(c);
@@ -29,7 +29,7 @@ char	*ft_char_writeon(char **str, char c)
 	}
 	res = malloc((sizeof(char) * ft_strlen(*str)) + 2);
 	if (!res)
-		return (0);
+		return (NULL);
 	i = 0;
 	while ((*str)[i] != '\0')
 	{

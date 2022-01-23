@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:38:48 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/22 18:12:22 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:13:15 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,50 @@
 
 /* Renvoie un int qui représente l'opérateur en question */
 
+static int	ft_put_operator_error(char *str)
+{
+	char	c;
+
+	if (str[1] != str[0])
+		c = str[1];
+	else if (ft_strlen(str) > 2)
+		c = str[2];
+	else
+	{
+		ft_putstr("Erreur de syntaxe");
+		return (-1);
+	}
+	ft_putstr("Erreur de syntaxe près du symbole inattendu « ");
+	ft_putchar(c);
+	ft_putstr(" »\n");
+	return (-1);
+}
+
 int	ft_get_operator_type(char *str)
 {
 	if (!str)
 		return (-1);
-	if (ft_strcmp(str, "<") == 0)
-		return (IN);
-	if (ft_strcmp(str, "<<") == 0)
-		return (DOUBLE_IN);
-	if (ft_strcmp(str, ">") == 0)
-		return (OUT);
-	if (ft_strcmp(str, ">>") == 0)
-		return (DOUBLE_OUT);
-	if (ft_strcmp(str, "|") == 0)
-		return (PIPE);
-	if (ft_strcmp(str, "||") == 0)
-		return (DOUBLE_PIPE);
-	if (ft_strcmp(str, "&") == 0)
-		return (AND);
-	if (ft_strcmp(str, "&&") == 0)
-		return (DOUBLE_AND);
+	if (ft_strlen(str) != 0 && ft_char_isoperator(str[0]))
+	{
+		if (ft_strcmp(str, "<") == 0)
+			return (IN);
+		else if (ft_strcmp(str, "<<") == 0)
+			return (DOUBLE_IN);
+		else if (ft_strcmp(str, ">") == 0)
+			return (OUT);
+		else if (ft_strcmp(str, ">>") == 0)
+			return (DOUBLE_OUT);
+		else if (ft_strcmp(str, "|") == 0)
+			return (PIPE);
+		else if (ft_strcmp(str, "||") == 0)
+			return (DOUBLE_PIPE);
+		else if (ft_strcmp(str, "&") == 0)
+			return (AND);
+		else if (ft_strcmp(str, "&&") == 0)
+			return (DOUBLE_AND);
+		else
+			return (ft_put_operator_error(str));
+	}
 	return (ARGUMENT);
 }
 
@@ -50,13 +74,4 @@ int	ft_char_isoperator(char c)
 	if (c == '&')
 		return (AND);
 	return (0);
-}
-
-/* Renvoie true si le str spécifié est un opérateur */
-
-int	ft_str_isoperator(char *str)
-{
-	if (!str)
-		return (-1);
-	return (ft_get_operator_type(str) != -1);
 }

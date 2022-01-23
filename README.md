@@ -16,14 +16,15 @@ git clone --recurse-submodules https://github.com/Freya-Tenebrae/MiniShell.git
 
 ### TODO
 
+- [ ] check if commands exists
 - [ ] norm
 - [ ] protect from malloc error (ex after using strdup) in ft_readcmd.c, ft_execcmd.c, and ft_tools_str*.c
 - [ ] regroup file's, fonction's and variable's name for more coherences
-- [ ] delete duplicated funciton
-- [ ] check if function exists
+- [x] delete duplicated funciton
 - [ ] pipe function
 - [ ] signal adjustement ('ctrl+\')
 - [ ] write redirection out (> and >>)
 - [ ] write redirection in (< and <<)
 - [ ] make build-in
 - [ ] hard test leaks
+- [ ] revoir les sorties (stdout = 1, stderr = 2)

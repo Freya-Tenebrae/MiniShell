@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/22 18:26:38 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/23 19:07:20 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,18 @@ void	ft_tools_free_elem(t_elem **elem)
 {
 	t_elem	*elem_ptr;
 
-	elem_ptr = *elem;
-	while (elem_ptr != NULL)
+	if (elem && *elem)
 	{
-		elem_ptr = elem_ptr->next;
-		if ((*elem)->str != NULL)
-			free((*elem)->str);
-		free(*elem);
-		*elem = elem_ptr;
-	}	
+		elem_ptr = *elem;
+		while (elem_ptr != NULL)
+		{
+			elem_ptr = elem_ptr->next;
+			if ((*elem)->str != NULL)
+				free((*elem)->str);
+			free(*elem);
+			*elem = elem_ptr;
+		}
+	}
 }
 
 void	ft_tools_free_output(t_output **output)

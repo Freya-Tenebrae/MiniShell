@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/22 17:58:22 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:30:05 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ static t_elem	*ft_run_cmd_next_line(t_elem *list, char **infile)
 	return (NULL);
 }
 
-static int	ft_exec_line(int *ret, t_elem **list)
+static int	ft_exec_line(int *ret, t_elem *list)
 {
 	t_elem	*listptr;
 	char	*infile;
 
 	if (*ret != READ_OK)
 	{
-		printf("Error.\n");
+		ft_putstr("Error.\n");
 		return (1);
 	}
 	infile = NULL;
-	listptr = *list;
+	listptr = list;
 	while (listptr && listptr != NULL)
 		listptr = ft_run_cmd_next_line(listptr, &infile);
 	if (infile && infile != NULL)
@@ -48,26 +48,31 @@ static int	ft_pars_line(char **str, int *ret, t_elem **list)
 {
 	if (!ft_check_quote(*str))
 	{
-		printf("Quote error.\n");
+		ft_putstr("Quote error.\n");
 		return (1);
 	}
 	ft_replace_env(str);
 	*ret = 0;
 	*list = ft_read_command(*str, ret);
+	if (*list == NULL)
+		return (1);
 	return (0);
 }
 
 int	ft_run_line(char **str)
 {
 	int		ret;
-	int		res_exec_line;
+	int		res_pars_line;
 	t_elem	*list;
 
 	if (ft_strcmp("exit", *str) == 0)
-		return (1);
-	if (ft_pars_line(str, &ret, &list) != 0)
-		return (1);
-	res_exec_line = ft_exec_line(&ret, &list);
-	ft_tools_free_elem(&list);
-	return (res_exec_line);
+		return (-1);
+	res_pars_line = ft_pars_line(str, &ret, &list);
+	if (res_pars_line == 0)
+	{
+		if (ft_tools_check_if_all_commands_exists(list) == 0)
+			ft_exec_line(&ret, list);
+		ft_tools_free_elem(&list);
+	}
+	return (0);
 }
