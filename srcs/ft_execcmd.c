@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/23 02:20:45 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/24 17:37:56 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 		dup2(stderr[1], STDERR_FILENO);
 		close(stderr[1]);
 		ft_execute_cmd(path, cmd_args);
+		// if ft_execute_cmd == 0 put an error command not found
+		//else continue
 		exit(0);
 		return (0);
 	}

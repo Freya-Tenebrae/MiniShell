@@ -16,15 +16,26 @@ git clone --recurse-submodules https://github.com/Freya-Tenebrae/MiniShell.git
 
 ### TODO
 
-- [ ] check if commands exists
-- [ ] norm
-- [ ] protect from malloc error (ex after using strdup) in ft_readcmd.c, ft_execcmd.c, and ft_tools_str*.c
-- [ ] regroup file's, fonction's and variable's name for more coherences
-- [x] delete duplicated funciton
-- [ ] pipe function
-- [ ] signal adjustement ('ctrl+\')
-- [ ] write redirection out (> and >>)
-- [ ] write redirection in (< and <<)
+GAUTHIER
 - [ ] make build-in
-- [ ] hard test leaks
+
+CELIA - avant le demenagement
 - [ ] revoir les sorties (stdout = 1, stderr = 2)
+- [ ] refaire runline et checksyntaxe pour ressembler au shell (faire les etapes une par une)
+- [ ] faire passer les erreur d'execline a runline 
+- [ ] pipe function
+- [ ] regroup file's, fonction's and variable's name for more coherences
+- [ ] signal adjustement ('ctrl+\')
+
+CELIA - apres le demenagement
+- [ ] redirection >
+- [ ] redirection >>
+- [ ] delete global
+- [ ] protect from malloc error (ex after using strdup) in ft_readcmd.c, ft_execcmd.c, and ft_tools_str*.c
+- [ ] norm
+
+A REPARTIR
+- [ ] modifier execcmd pour fonctionner avec les redirection in
+- [ ] redirection <
+- [ ] redirection <<
+- [ ] make history

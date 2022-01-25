@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/23 20:29:43 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/24 18:38:18 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@
 # define DOUBLE_PIPE 7
 # define AND 8
 # define DOUBLE_AND 9
+
+# define GENERIC_ERROR 0
+# define ERREUR_OPERATOR 1
+# define ERREUR_CMD_NOT_FOUND 2
 
 # define READ_OK 0
 # define READ_ERR -1
@@ -78,7 +82,6 @@ t_data		*g_minishell;
 /* ************************************************************************** */
 int			main(int ac, char **av, char **envp);
 int			ft_run_line(char **str);
-int			ft_tools_check_if_all_commands_exists(t_elem *list);
 int			ft_execute_cmd(char *path, char **cmd_args);
 int			ft_isquote(char c);
 int			ft_check_quote(char *str);
@@ -90,10 +93,10 @@ int			ft_str_lastindexof(char *str, int from, char c);
 int			ft_str_iswhitespace(char c);
 int			ft_tools_elem_add(t_elem **list, char *str);
 int			ft_tools_is_build_in(char *cmd);
+int			ft_tools_put_error(int i, char *str);
 void		ft_replace_env(char **str);
 void		ft_signal_handler(int signal);
 void		ft_init_signal_handling(void);
-void		ft_put_prompt(void);
 void		ft_freestrs(char ***strs);
 void		ft_tools_free_elem(t_elem **elem);
 void		ft_tools_free_output(t_output **output);
