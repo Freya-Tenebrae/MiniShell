@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2022/01/24 18:41:50 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/01/25 03:25:35 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_readcmd.c \
 	ft_execcmd.c \
 	ft_run_cmd.c \
-	ft_run_pipe.c \
 	ft_tools_checking_syntaxe.c \
 	ft_signal_handler.c\
 	ft_tools_error.c\

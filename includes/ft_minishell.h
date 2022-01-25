@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/24 18:38:18 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/25 03:25:09 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ char		*ft_tools_get_double_in(char *word);
 char		**ft_str_clonetab(char **strs);
 t_elem		*ft_read_command(char *str, int *ret);
 t_elem		*ft_run_cmd(t_elem *elem, char **infile);
-t_elem		*ft_run_pipe(t_elem *list, char **infile);
 t_elem		*ft_tools_push_out(t_elem *list, char **infile);
 t_elem		*ft_tools_push_double_out(t_elem *list, char **infile);
 t_elem		*ft_tools_elem_create(char *str);
