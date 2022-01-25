@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 18:45:07 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/22 15:15:16 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/25 16:27:57 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ t_output	*ft_run_bi(char *path, char **cmd_args, char *infile)
 		return (ft_run_bi_env(path, cmd_args, infile));
 	else if (ft_strcmp(cmd_args[0], "env") == 0)
 		return (ft_run_bi_env(path, cmd_args, infile));
-	else
-		return (NULL);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/25 03:16:44 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/25 18:42:03 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ static int	ft_tools_check_syntaxe_operator(t_elem *list)
 	return (0);
 }
 
-// la fonction va tester si toutes les arguments associes a > >> <
-//		sont accesible (R_OK for <) (W_OK for > and >>)
 static int	ft_tools_check_access_ok(t_elem *list)
 {
 	(void)list;
+	// la fonction va tester si toutes les arguments associes a > >> <
+	// 		sont accesible et existemt (R_OK for <)
+	//		sont accesible (W_OK for > and >>)
 	return (0);
 }
 

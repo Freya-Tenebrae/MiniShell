@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2022/01/25 03:25:35 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/01/25 18:50:27 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,11 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_minishell.c \
 	ft_run_line.c \
 	ft_readcmd.c \
-	ft_execcmd.c \
-	ft_run_cmd.c \
-	ft_tools_checking_syntaxe.c \
+	ft_run_cmd_1.c \
+	ft_run_cmd_2.c \
+	ft_run_execve.c \
 	ft_signal_handler.c\
 	ft_tools_error.c\
-	ft_prompt.c \
 	ft_tools_env.c \
 	ft_tools_quote.c \
 	ft_operator.c\
@@ -60,7 +59,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make -C $(LIBFT) bonus
-	make -C $(GNL)
+	make -C $(GNL) bonus
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)/libft.a $(GNL)/get_next_line.a -lreadline
 
 %.o: %.c

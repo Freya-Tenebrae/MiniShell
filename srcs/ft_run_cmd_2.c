@@ -1,56 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execcmd.c                                       :+:      :+:    :+:   */
+/*   ft_run_cmd_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/24 17:37:56 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/25 18:12:05 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-/* Éxecute une commande */
-
-int	ft_execute_cmd(char *path, char **cmd_args)
-{
-	int		i;
-	char	**paths;
-	char	**clone;
-	char	*label;
-
-	i = 0;
-	paths = ft_split(path, ':');
-	if (!paths)
-		return (0);
-	while (paths[i])
-	{
-		clone = ft_str_clonetab(cmd_args);
-		label = 0;
-		if (!clone)
-		{
-			ft_freestrs(&paths);
-			return (0);
-		}
-		ft_str_writeon(&label, paths[i]);
-		ft_char_writeon(&label, '/');
-		ft_str_writeon(&label, cmd_args[0]);
-		free(clone[0]);
-		clone[0] = label;
-		if (execve(clone[0], clone, NULL) != -1)
-		{
-			ft_freestrs(&clone);
-			ft_freestrs(&paths);
-			return (1);
-		}
-		ft_freestrs(&clone);
-		i++;
-	}
-	ft_freestrs(&paths);
-	return (0);
-}
 
 /* Éxecute une commande en prenant (ou non) un input d'une commande */
 /* précédente */
@@ -101,9 +61,11 @@ t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 		close(stdout[1]);
 		dup2(stderr[1], STDERR_FILENO);
 		close(stderr[1]);
-		ft_execute_cmd(path, cmd_args);
-		// if ft_execute_cmd == 0 put an error command not found
-		//else continue
+		ft_run_execve_with_all_path(path, cmd_args);
+		// if res of ft_run_execve_with_all_path is -2 malloc error
+		// if res of ft_run_execve_with_all_path is -1 unkmown error
+		// if res of ft_run_execve_with_all_path is 0 command not found
+		// if res of ft_run_execve_with_all_path is 1 fonction executed
 		exit(0);
 		return (0);
 	}
@@ -133,3 +95,10 @@ t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 	close(stderr[0]);
 	return (res);
 }
+
+//	pour les output : 
+//		si il n'y a pas d'erreur, out->output ne devra ni etre non attribuer 
+//			ni nul et out->error devra etre NULL
+//		si il y a une erreur elle devra etre mise dans out->error
+//			(argument, fonction didn't exist, ...) et out->output devra etre 
+//			set a NULL;

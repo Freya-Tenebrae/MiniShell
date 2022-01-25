@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:36:11 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/25 03:05:43 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/01/25 18:06:04 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_tools_put_error(int i, char *str)
 {
 	if (i == GENERIC_ERROR)
 	{
+		ft_putstr_fd("minishell : ", 2);
 		ft_putstr_fd(str, 2);
 		ft_putchar_fd('\n', 2);
 	}
