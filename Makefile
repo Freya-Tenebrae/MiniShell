@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2022/01/25 18:50:27 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/02/01 18:47:19 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_run_cmd_1.c \
 	ft_run_cmd_2.c \
 	ft_run_execve.c \
-	ft_signal_handler.c\
-	ft_tools_error.c\
+	ft_signal_handler.c \
+	ft_tools_error.c \
 	ft_tools_env.c \
 	ft_tools_quote.c \
 	ft_operator.c\
@@ -35,6 +35,7 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_tools_redirection_out.c\
 	ft_tools_free_lsts.c\
 	ft_tools_char.c\
+	ft_tools_file_to_str.c\
 	ft_tools_str_create.c\
 	ft_tools_str_get_index.c\
 	ft_tools_str_replace.c\

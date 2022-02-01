@@ -24,10 +24,10 @@ CELIA
 - [x] include pipe
 - [x] gerer les output de run_cmd_2.c correctement
 - [ ] redirection > et >>
-- [ ] redirection < et <<
+- [x] redirection < et <<
 - [ ] delete global et put in each function when needed
 - [ ] revoir les sorties (stdout = 1, stderr = 2)
-- [ ] normer run_cmd_2.c
+- [x] normer run_cmd_2.c
 - [ ] normer readcmd.c
 - [ ] protect all memory allocation when using function like ft_strdup
 - [ ] regroup file's, fonction's and variable's name for more coherences

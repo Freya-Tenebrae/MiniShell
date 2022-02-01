@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/25 17:45:54 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/01 19:57:36 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ typedef struct s_output {
 	char			*error;
 }					t_output;
 
+typedef struct s_stdoutanderr {
+	int				stdout[2];
+	int				stderr[2];
+}					t_stdoutanderr;
+
 typedef struct s_env {
 	char			*value;
 	char			*name;
@@ -95,6 +100,8 @@ int			ft_tools_elem_add(t_elem **list, char *str);
 int			ft_tools_is_build_in(char *cmd);
 int			ft_tools_put_error(int i, char *str);
 int			ft_run_execve_with_all_path(char *path, char **cmd_args);
+int			ft_tools_put_file_in_str(int fd, char **str);
+int			ft_tools_put_double_in_str(char *word, char **str);
 void		ft_replace_env(char **str);
 void		ft_signal_handler(int signal);
 void		ft_init_signal_handling(void);

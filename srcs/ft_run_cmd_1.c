@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/01 17:29:25 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/01 19:46:23 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ static void	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
 	{
 		if (list->type == IN || list->type == DOUBLE_IN)
 		{
-			list = list->next;
-			if (list->type == IN)
-				*is_double_in = 0;
-			else
+			if (list->type == DOUBLE_IN)
 				*is_double_in = 1;
+			else
+				*is_double_in = 0;
 			if (*file_in != NULL)
 				free(file_in);
+			list = list->next;
 			*file_in = ft_strdup(list->str);
 			if (*file_in == NULL)
 				ft_tools_put_error(GENERIC_ERROR, "malloc error");
@@ -57,19 +57,25 @@ static void	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
 
 static void	ft_in_on_infile(char *file_in, int is_double_in, char **infile)
 {
-	(void)file_in;
+	int	fd;
+
 	if (*infile != NULL)
 		free(infile);
 	if (is_double_in == 0)
 	{
-		(void)file_in;
-		// mettre le contenu de file_in dans infile
+		fd = open(file_in, O_RDONLY);
+		if (fd != -1)
+		{
+			if (ft_tools_put_file_in_str(fd, infile) != 0)
+				*infile = NULL;
+		}
+		else
+			*infile = NULL;
 	}
 	else if (is_double_in == 1)
 	{
-		(void)file_in;
-		// appeler une fonction pour recuperer l'entree standard jusqu'a avoir
-		// une ligne egale a file_in, et mettre le contenu dans in_file
+		if (ft_tools_put_double_in_str(file_in, infile) != 0)
+			*infile = NULL;
 	}
 }
 
@@ -131,7 +137,7 @@ static void	ft_redirection_cmd(t_output	**out, t_elem **list, char **infile)
 	if (file_in != NULL)
 	{
 		ft_in_on_infile(file_in, is_double_in, infile);
-		free(&file_in);
+		free(file_in);
 	}
 	*list = ft_put_args_in_cmd_args(*list, &cmd_args);
 	if (ft_tools_is_build_in(cmd_args[0]) == 0)
