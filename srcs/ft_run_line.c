@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/01/25 18:42:03 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/01 17:18:35 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	ft_tools_check_syntaxe_operator(t_elem *list)
 			return (ft_tools_put_error(ERREUR_OPERATOR, "/n"));
 		list_ptr = list;
 		list = list->next;
+		// attention crash quand < << > or >> is first
 	}
 	return (0);
 }

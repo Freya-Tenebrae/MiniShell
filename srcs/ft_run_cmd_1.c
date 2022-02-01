@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/01 14:41:02 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/01 17:29:25 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	ft_redirection_out(t_elem *list, char **file_out)
 {
 	*file_out = NULL;
-
 	while (list != NULL && list->type != PIPE)
 	{
 		if (list->type == OUT || list->type == DOUBLE_OUT)
@@ -36,7 +35,6 @@ static void	ft_redirection_out(t_elem *list, char **file_out)
 
 static void	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
 {
-
 	*file_in = NULL;
 	while (list != NULL && list->type != PIPE)
 	{
@@ -64,12 +62,14 @@ static void	ft_in_on_infile(char *file_in, int is_double_in, char **infile)
 		free(infile);
 	if (is_double_in == 0)
 	{
-		;// 	mettre le contenu de file_in dans infile
+		(void)file_in;
+		// mettre le contenu de file_in dans infile
 	}
 	else if (is_double_in == 1)
 	{
-		;// 	appeler une fonction pour recuperer l'entree standard jusqu'a avoir une 
-		;// 	ligne egale a file_in, et mettre le contenu dans in_file
+		(void)file_in;
+		// appeler une fonction pour recuperer l'entree standard jusqu'a avoir
+		// une ligne egale a file_in, et mettre le contenu dans in_file
 	}
 }
 
@@ -152,7 +152,10 @@ t_elem	*ft_run_cmd(t_elem *list, char **infile)
 	free(*infile);
 	*infile = NULL;
 	if (out == NULL)
+	{
+		ft_tools_put_error(GENERIC_ERROR, "output error");
 		return (NULL);
+	}
 	if (out->output == NULL && out->error == NULL)
 	{
 		ft_tools_put_error(GENERIC_ERROR, "output error");
@@ -175,7 +178,7 @@ t_elem	*ft_run_cmd(t_elem *list, char **infile)
 		{
 			*infile = ft_strdup(out->output);
 			list = list->next;
-			if (!infile)
+			if (!*infile)
 			{
 				ft_tools_put_error(GENERIC_ERROR, "malloc error");
 				ft_tools_free_output(&out);
@@ -186,8 +189,8 @@ t_elem	*ft_run_cmd(t_elem *list, char **infile)
 	else
 	{
 		ft_putstr_fd(out->error, STDOUT_FILENO);
-		infile = NULL;
-		if (list->type == PIPE)
+		*infile = ft_strdup("");
+		if (list != NULL && list->type == PIPE)
 			list = list->next;
 	}
 	ft_tools_free_output(&out);

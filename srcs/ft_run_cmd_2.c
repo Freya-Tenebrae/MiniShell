@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/25 18:12:05 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/01 17:53:36 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@
 /* précédente */
 /* Il renvoie un t_output qui contient la sortie stdout et stderr. */
 
+static int	ft_init_var(t_output **res, int (*stdout)[2], int (*stderr)[2])
+{
+	*res = malloc(sizeof(t_output));
+	if (!*res)
+		return (-1);
+	(*res)->output = NULL;
+	(*res)->error = NULL;
+	if (pipe(*stdout) == -1)
+		return (-1);
+	if (pipe(*stderr) == -1)
+		return (-1);
+	return (0);
+}
+
 t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 {
 	t_output	*res;
@@ -24,23 +38,17 @@ t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 	int			input[2];
 	int			pid;
 	int			pid2;
+	int			result_execve;
 	char		c;
 
-	res = malloc(sizeof(t_output));
-	if (!res)
-		return (0);
-	res->output = 0;
-	res->error = 0;
-	if (pipe(stdout) == -1)
-		return (0);
-	if (pipe(stderr) == -1)
-		return (0);
+	if (ft_init_var(&res, &stdout, &stderr) != 0)
+		return (NULL);
 	pid = fork();
 	if (pid == 0)
 	{
 		close(stdout[0]);
 		close(stderr[0]);
-		if (infile)
+		if (infile != NULL)
 		{
 			if (pipe(input) == -1)
 				return (0);
@@ -49,7 +57,7 @@ t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 			{
 				close(stdout[1]);
 				close(stderr[1]);
-				write(input[1], infile, ft_strlen(infile));
+				ft_putstr_fd(infile, input[1]);
 				exit(0);
 			}
 			close(input[1]);
@@ -60,14 +68,18 @@ t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 		dup2(stdout[1], STDOUT_FILENO);
 		close(stdout[1]);
 		dup2(stderr[1], STDERR_FILENO);
+		result_execve = ft_run_execve_with_all_path(path, cmd_args);
+		if (result_execve == 0)
+		{
+			ft_putstr_fd("minishell : ", stderr[1]);
+			ft_putstr_fd(cmd_args[0], stderr[1]);
+			ft_putstr_fd(" : commande introuvable\n", stderr[1]);
+		}
+		else if (result_execve == -1)
+			ft_putstr_fd("malloc error", stderr[1]);
+		dup2(stderr[1], STDERR_FILENO);
 		close(stderr[1]);
-		ft_run_execve_with_all_path(path, cmd_args);
-		// if res of ft_run_execve_with_all_path is -2 malloc error
-		// if res of ft_run_execve_with_all_path is -1 unkmown error
-		// if res of ft_run_execve_with_all_path is 0 command not found
-		// if res of ft_run_execve_with_all_path is 1 fonction executed
 		exit(0);
-		return (0);
 	}
 	else
 	{
@@ -77,18 +89,8 @@ t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 			ft_char_writeon(&res->output, c);
 		while (read(stderr[0], &c, sizeof(char)))
 			ft_char_writeon(&res->error, c);
-		// solution temporaire pour eviter les SGV lies a output et error vide
 		if (!res->output && !res->error)
-		{
 			res->output = ft_strdup("");
-		}
-		// fin de la solution temporaire
-		// il y a un bug qui fait que le systeme ne repaire pas si une fonction 
-		// 		n'existe pas
-		// il est aussi necessaire de replir stdout d;une chaine de caractere
-		// 		vide lorsce que une fonction ne donne pas de sortie
-		//		(ex "ls test",avec l'argument "test" un chemin vers un
-		//		dossier vide)
 	}
 	waitpid(pid, 0, 0);
 	close(stdout[0]);
