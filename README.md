@@ -19,27 +19,24 @@ git clone --recurse-submodules https://github.com/Freya-Tenebrae/MiniShell.git
 GAUTHIER
 - [ ] make build-in
 
-CELIA - pre demenagement
+CELIA
 - [x] refaire runline et checksyntaxe pour ressembler au shell (faire les etapes une par une)
 - [x] include pipe
-- [ ] normer run_cmd_2.c
 - [ ] gerer les output de run_cmd_2.c correctement
 - [ ] redirection > et >>
 - [ ] redirection < et <<
-
-CELIA - post demenagement
 - [ ] delete global et put in each function when needed
 - [ ] revoir les sorties (stdout = 1, stderr = 2)
 - [ ] refaire les signaux
+- [ ] normer run_cmd_2.c
+- [ ] normer readcmd.c
 - [ ] protect all memory allocation when using function like ft_strdup
 - [ ] regroup file's, fonction's and variable's name for more coherences
-- [ ] normer readcmd.c
 - [ ] check complet norme
 
 A REPARTIR
 - [ ] faire ft_tools_check_access_ok
-- [ ] modifier execcmd pour fonctionner avec les redirection in
-- [ ] make a working history
+- [ ] make a working history (with arrow up and down)
 - [ ] passer des testeur
 - [ ] check complet a 42, push du projet sur le github de l'intra, et testeur a 42
 

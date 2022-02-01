@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/25 18:48:50 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/01 14:41:02 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,18 @@ static void	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
 
 static void	ft_in_on_infile(char *file_in, int is_double_in, char **infile)
 {
+	(void)file_in;
 	if (*infile != NULL)
 		free(infile);
-	(void)file_in;
-	(void)is_double_in;
-	// if is_double_in == 0 
-	// 	mettre le contenu de file_in dans infile
-	// else if is_double_in == 1 
-	// 	appeler une fonction pour recuperer l'entree standard jusqu'a avoir une 
-	// 	ligne egale a file_in, et mettre le contenu dans in_file
+	if (is_double_in == 0)
+	{
+		;// 	mettre le contenu de file_in dans infile
+	}
+	else if (is_double_in == 1)
+	{
+		;// 	appeler une fonction pour recuperer l'entree standard jusqu'a avoir une 
+		;// 	ligne egale a file_in, et mettre le contenu dans in_file
+	}
 }
 
 static int	ft_lenght_args(t_elem *list)
@@ -142,11 +145,12 @@ t_elem	*ft_run_cmd(t_elem *list, char **infile)
 {
 	t_output	*out;
 	char		*file_out;
+	int			fd;
 
 	ft_redirection_out(list, &file_out);
 	ft_redirection_cmd(&out, &list, infile);
 	free(*infile);
-	infile = NULL;
+	*infile = NULL;
 	if (out == NULL)
 		return (NULL);
 	if (out->output == NULL && out->error == NULL)
@@ -159,6 +163,7 @@ t_elem	*ft_run_cmd(t_elem *list, char **infile)
 	{
 		if (file_out != NULL)
 		{
+			(void) fd;
 			// open file_out et mettre le fd dans une variable fd
 			// ft_putstr_fd(out->output, fd);
 		}
