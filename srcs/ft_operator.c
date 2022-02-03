@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:38:48 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/01/23 20:13:15 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:00:43 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static int	ft_put_operator_error(char *str)
 		c = str[2];
 	else
 	{
-		ft_putstr("Erreur de syntaxe");
+		ft_putstr("Erreur de syntaxe");// check fd
 		return (-1);
 	}
-	ft_putstr("Erreur de syntaxe près du symbole inattendu « ");
-	ft_putchar(c);
-	ft_putstr(" »\n");
+	ft_putstr("Erreur de syntaxe près du symbole inattendu « ");// check fd
+	ft_putchar(c);// check fd
+	ft_putstr(" »\n");// check fd
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/01 18:46:04 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/03 15:00:44 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	ft_loop(void)
 
 	while (42 == 42)
 	{
-		ft_putstr("minishell~ ");
+		ft_putstr("minishell~ ");// check fd
 		res_gnl = get_next_line(0, &str);
 		if (res_gnl <= 0)
 		{
