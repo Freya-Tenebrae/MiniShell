@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/03 15:00:55 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:25:51 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**ft_str_clonetab(char **strs)
 		len++;
 	res = malloc(sizeof(char *) * (len + 1));
 	if (!res)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (strs[i])
 	{

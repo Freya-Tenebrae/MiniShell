@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/03 18:04:25 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:33:25 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ static int	ft_init_minishell_data(t_data **data, char **envp)
 {
 	*data = malloc(sizeof(t_data));
 	if (!*data)
-		return (0);
-	(*data)->envp = envp;
+		return (-1);
+	(*data)->envp = ft_str_clonetab(envp);
+	if ((*data)->envp == NULL)
+		return (ft_tools_put_error(GENERIC_ERROR, "malloc error"));
 	(*data)->env = ft_init_env(envp);
 	(*data)->path = ft_getenv(data, "PATH")->value;
-	return (1);
+	return (0);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -57,7 +59,8 @@ int	main(int ac, char **av, char **envp)
 
 	(void) ac;
 	(void) av;
-	ft_init_minishell_data(&data, envp);
+	if (ft_init_minishell_data(&data, envp) != 0)
+		return (-1);
 	ft_init_signal_handling();
 	ft_loop(&data);
 	ft_tools_free_data(&data);
