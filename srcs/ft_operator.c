@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:38:48 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/03 15:00:43 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/03 17:34:22 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,23 @@
 static int	ft_put_operator_error(char *str)
 {
 	char	c;
+	char	*cstr;
 
 	if (str[1] != str[0])
 		c = str[1];
 	else if (ft_strlen(str) > 2)
 		c = str[2];
 	else
+		return (ft_tools_put_error(GENERIC_ERROR, "Erreur de syntaxe"));
+	cstr = ft_char_tostring(c);
+	if (cstr)
 	{
-		ft_putstr("Erreur de syntaxe");// check fd
+		ft_tools_put_error(ERREUR_OPERATOR, cstr);
+		free(cstr);
 		return (-1);
 	}
-	ft_putstr("Erreur de syntaxe près du symbole inattendu « ");// check fd
-	ft_putchar(c);// check fd
-	ft_putstr(" »\n");// check fd
-	return (-1);
+	else
+		return (ft_tools_put_error(GENERIC_ERROR, "Erreur de syntaxe"));
 }
 
 int	ft_get_operator_type(char *str)

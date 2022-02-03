@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:36:11 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/03 15:00:49 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/03 17:38:00 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,22 @@ int	ft_tools_put_error(int i, char *str)
 {
 	if (i == GENERIC_ERROR)
 	{
-		ft_putstr_fd("minishell : ", 2);// check fd
-		ft_putstr_fd(str, 2);// check fd
-		ft_putchar_fd('\n', 2);// check fd
+		ft_putstr_fd("minishell : ", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putchar_fd('\n', STDERR_FILENO);
 	}
 	else if (i == ERREUR_OPERATOR)
 	{
-		ft_putstr_fd("minishell : erreur de syntaxe près du ", 2);// check fd
-		ft_putstr_fd("symbole inattendu « ", 2);// check fd
-		ft_putstr_fd(str, 2);// check fd
-		ft_putstr_fd(" »\n", 2);// check fd
+		ft_putstr_fd("minishell : erreur de syntaxe près du ", STDERR_FILENO);
+		ft_putstr_fd("symbole inattendu « ", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd(" »\n", STDERR_FILENO);
 	}
 	else if (i == ERREUR_CMD_NOT_FOUND)
 	{
-		ft_putstr_fd("minishell : ", 2);// check fd
-		ft_putstr_fd(str, 2);// check fd
-		ft_putstr_fd(" : commande introuvable\n", 2);// check fd
+		ft_putstr_fd("minishell : ", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd(" : commande introuvable\n", STDERR_FILENO);
 	}
 	return (-1);
 }

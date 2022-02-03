@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2022/02/03 15:00:37 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/02/03 17:48:45 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,27 +16,29 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_minishell.c \
 	ft_run_line.c \
 	ft_readcmd.c \
-	ft_run_cmd_1.c \
-	ft_run_cmd_2.c \
+	ft_run_cmd.c \
+	ft_exec_cmd.c \
 	ft_run_execve.c \
 	ft_signal_handler.c \
 	ft_tools_error.c \
 	ft_tools_env.c \
 	ft_tools_quote.c \
-	ft_operator.c\
-	ft_bi.c\
-	ft_bi_cd.c\
-	ft_bi_echo.c\
-	ft_bi_env.c\
-	ft_bi_export.c\
-	ft_bi_pwd.c\
-	ft_tools_elem.c\
-	ft_tools_free_lsts.c\
-	ft_tools_char.c\
-	ft_tools_file_to_str.c\
-	ft_tools_str_create.c\
-	ft_tools_str_get_index.c\
-	ft_tools_str_replace.c\
+	ft_operator.c \
+	ft_bi.c \
+	ft_bi_cd.c \
+	ft_bi_echo.c \
+	ft_bi_env.c \
+	ft_bi_export.c \
+	ft_bi_pwd.c \
+	ft_tools_elem.c \
+	ft_tools_free_lsts.c \
+	ft_tools_char.c \
+	ft_tools_file_to_str.c \
+	ft_tools_str_create.c \
+	ft_tools_str_get_index.c \
+	ft_tools_str_replace.c \
+	ft_tools_redirection.c \
+	ft_tools_arguments_to_strs.c \
 	ft_tools_strs.c)
 OBJS=$(SRCS:.c=.o)
 

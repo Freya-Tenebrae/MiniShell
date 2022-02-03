@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/03 15:01:38 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:01:45 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,12 @@ typedef struct s_data {
 /* ************************************************************************** */
 /*                                   GLOBAL                                   */
 /* ************************************************************************** */
-t_data		*g_minishell;
 
 /* ************************************************************************** */
 /*                                  FONCTION                                  */
 /* ************************************************************************** */
 int			main(int ac, char **av, char **envp);
-int			ft_run_line(char **str);
+int			ft_run_line(char **str, t_data **data);
 int			ft_execute_cmd(char *path, char **cmd_args);
 int			ft_isquote(char c);
 int			ft_check_quote(char *str);
@@ -102,7 +101,10 @@ int			ft_tools_put_error(int i, char *str);
 int			ft_run_execve_with_all_path(char *path, char **cmd_args);
 int			ft_tools_put_file_in_str(int fd, char **str);
 int			ft_tools_put_double_in_str(char *word, char **str);
-void		ft_replace_env(char **str);
+int			ft_redirection_out(t_elem *list);
+void		ft_redirection_in(t_elem *list, char **file_in, int *is_double_in);
+void		ft_in_on_infile(char *file_in, int is_double_in, char **infile);
+void		ft_replace_env(t_data **data, char **str);
 void		ft_signal_handler(int signal);
 void		ft_init_signal_handling(void);
 void		ft_freestrs(char ***strs);
@@ -119,10 +121,11 @@ char		*ft_char_writeon(char **str, char c);
 char		*ft_char_tostring(char c);
 char		**ft_str_clonetab(char **strs);
 t_elem		*ft_read_command(char *str, int *ret);
-t_elem		*ft_run_cmd(t_elem *elem, char **infile);
+t_elem		*ft_run_cmd(t_data **data, t_elem *elem, char **infile);
 t_elem		*ft_tools_elem_create(char *str);
 t_elem		*ft_tools_elem_last(t_elem *list);
-t_env		*ft_getenv(char *str);
+t_elem		*ft_put_args_in_cmd_args(t_elem *list, char ***cmd_args);
+t_env		*ft_getenv(t_data **data, char *str);
 t_env		**ft_init_env(char **envp);
 t_output	*ft_run_bi(char *path, char **cmd_args, char *infile);
 t_output	*ft_run_bi_cd(char *path, char **cmd_args, char *infile);

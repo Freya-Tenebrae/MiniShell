@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/03 15:00:50 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:03:10 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ t_env	**ft_init_env(char **envp)
 /* Récupère la variable d'environnement associé au nom str, ou un pointeur */
 /* sur nul sur la variable n'existe pas. */
 
-t_env	*ft_getenv(char *str)
+t_env	*ft_getenv(t_data **data, char *str)
 {
 	int	i;
 
 	if (!str)
 		return (0);
 	i = 0;
-	while (g_minishell->env[i])
+	while ((*data)->env[i])
 	{
-		if (ft_strcmp(g_minishell->env[i]->name, str) == 0)
-			return (g_minishell->env[i]);
+		if (ft_strcmp((*data)->env[i]->name, str) == 0)
+			return ((*data)->env[i]);
 		i++;
 	}
 	return (0);
@@ -60,7 +60,8 @@ t_env	*ft_getenv(char *str)
 
 /* Remplace dans str les variables d'environnement */
 
-static void	ft_replace_env_p2(char *str, int *i, char **res)
+static void	ft_replace_env_p2(t_data **data, char *str, int *i, \
+																	char **res)
 {
 	char	*var;
 	t_env	*variable;
@@ -72,13 +73,13 @@ static void	ft_replace_env_p2(char *str, int *i, char **res)
 	while ((str)[j] && (ft_isalnum((str)[j]) || (str)[j] == '_'))
 	{
 		ft_char_writeon(&var, (str)[j]);
-		if (ft_getenv(var) != 0)
-			variable = ft_getenv(var);
+		if (ft_getenv(data, var) != 0)
+			variable = ft_getenv(data, var);
 		j++;
 	}
 	if (var)
 	{
-		variable = ft_getenv(var);
+		variable = ft_getenv(data, var);
 		if (variable)
 			ft_str_writeon(res, variable->value);
 		*i += (int) ft_strlen(var) + 1;
@@ -86,7 +87,8 @@ static void	ft_replace_env_p2(char *str, int *i, char **res)
 	}
 }
 
-static void	ft_replace_env_p1(char *str, int *i, char **res)
+static void	ft_replace_env_p1(t_data **data, char *str, int *i, \
+																	char **res)
 {
 	char	quote;
 
@@ -99,13 +101,13 @@ static void	ft_replace_env_p1(char *str, int *i, char **res)
 		quote = 0;
 	else if ((str)[*i] == '$' && (!quote || quote != '\''))
 	{
-		ft_replace_env_p2(str, i, res);
+		ft_replace_env_p2(data, str, i, res);
 	}
 	ft_char_writeon(res, (str)[*i]);
 	*i += 1;
 }
 
-void	ft_replace_env(char **str)
+void	ft_replace_env(t_data **data, char **str)
 {
 	int		i;
 	int		strlen;
@@ -117,7 +119,7 @@ void	ft_replace_env(char **str)
 	strlen = ft_strlen(*str);
 	res = NULL;
 	while (i < strlen && (*str)[i])
-		ft_replace_env_p1(*str, &i, &res);
+		ft_replace_env_p1(data, *str, &i, &res);
 	free(*str);
 	*str = res;
 }

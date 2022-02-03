@@ -27,8 +27,9 @@ CELIA
 - [x] normer run_cmd_2.c
 - [x] redirection > et >>
 - [ ] check if file access (ft_tools_check_access_ok)
-- [ ] delete global et put in each function when needed
-- [ ] revoir les sorties (stdout = 1, stderr = 2)
+- [x] delete global et put in each function when needed
+- [ ] corriger les leaks de la variable "data" dans main.c
+- [x] revoir les sorties (stdout = 1, stderr = 2)
 - [ ] normer readcmd.c
 - [ ] protect all memory allocation when using function like ft_strdup
 - [ ] regroup file's, fonction's and variable's name for more coherences

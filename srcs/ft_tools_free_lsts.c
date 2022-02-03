@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/03 15:00:51 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:10:24 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,5 @@ void	ft_tools_free_data(t_data **data)
 		if ((*data)->path != NULL)
 			free((*data)->path);
 	}
+	free(*data);
 }
