@@ -6,11 +6,17 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/03 18:33:25 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 06:02:55 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
+
+static void	ft_freestr(char **str)
+{
+	if (*str)
+		free(*str);
+}
 
 static void	ft_loop(t_data **data)
 {
@@ -24,19 +30,18 @@ static void	ft_loop(t_data **data)
 		if (res_gnl <= 0)
 		{
 			if (res_gnl == 0)
-				if (str)
-					free(str);
+				ft_freestr(&str);
+			ft_putstr_fd("exit", STDOUT_FILENO);
 			break ;
 		}
 		if (ft_run_line(&str, data) != 0)
 		{
-			if (str)
-				free(str);
+			ft_freestr(&str);
+			ft_putstr_fd("exit", STDOUT_FILENO);
 			break ;
 		}
 		else
-			if (str)
-				free(str);
+			ft_freestr(&str);
 	}
 }
 
