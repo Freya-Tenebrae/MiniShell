@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_operator.c                                      :+:      :+:    :+:   */
+/*   ft_tools_operator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:38:48 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/03 17:34:22 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:43:33 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ static int	ft_put_operator_error(char *str)
 	else if (ft_strlen(str) > 2)
 		c = str[2];
 	else
-		return (ft_tools_put_error(GENERIC_ERROR, "Erreur de syntaxe"));
+		return (ft_put_error(GENERIC_ERROR, "Erreur de syntaxe"));
 	cstr = ft_char_tostring(c);
 	if (cstr)
 	{
-		ft_tools_put_error(ERREUR_OPERATOR, cstr);
+		ft_put_error(OPERATOR_ERROR, cstr);
 		free(cstr);
 		return (-1);
 	}
 	else
-		return (ft_tools_put_error(GENERIC_ERROR, "Erreur de syntaxe"));
+		return (ft_put_error(GENERIC_ERROR, "Erreur de syntaxe"));
 }
 
 int	ft_get_operator_type(char *str)

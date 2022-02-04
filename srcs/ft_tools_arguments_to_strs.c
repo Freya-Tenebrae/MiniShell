@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:48:13 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/03 17:18:34 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:37:53 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_elem	*ft_put_args_in_cmd_args(t_elem *list, char ***cmd_args)
 			(*cmd_args)[i++] = ft_strdup(list->str);
 			if ((*cmd_args)[i - 1] == NULL)
 			{
-				ft_tools_put_error(GENERIC_ERROR, "malloc error");
+				ft_put_error(GENERIC_ERROR, "malloc error");
 				return (NULL);
 			}
 			list = list->next;

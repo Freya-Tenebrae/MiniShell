@@ -6,65 +6,11 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 05:25:40 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:32:14 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-static int	ft_tools_check_syntaxe_operator(t_elem *list)
-{
-	t_elem	*list_ptr;
-
-	list_ptr = NULL;
-	while (list != NULL)
-	{
-		if (list->type == PIPE && \
-			(list_ptr == NULL || list_ptr->type != ARGUMENT))
-			return (ft_tools_put_error(ERREUR_OPERATOR, list->str));
-		else if ((list->type == OUT || list->type == DOUBLE_OUT || \
-					list->type == IN || list->type == DOUBLE_IN) && \
-					(list_ptr != NULL && list_ptr->type != PIPE && \
-					list_ptr->type != ARGUMENT))
-			return (ft_tools_put_error(ERREUR_OPERATOR, list->str));
-		else if ((list->type == IN || list->type == DOUBLE_IN || \
-			list->type == OUT || list->type == DOUBLE_OUT || \
-			list->type == PIPE) && list->next == NULL)
-			return (ft_tools_put_error(ERREUR_OPERATOR, "/n"));
-		list_ptr = list;
-		list = list->next;
-	}
-	return (0);
-}
-
-static int	ft_tools_check_access_ok(t_elem *list)
-{
-	while (list != NULL)
-	{
-		if (list->type == IN)
-		{
-			list = list->next;
-			if (access(list->str, F_OK) != 0)
-				return (ft_tools_put_error(GENERIC_ERROR, \
-					"Aucun fichier ou dossier de ce type"));
-			else if (access(list->str, R_OK) != 0)
-				return (ft_tools_put_error(GENERIC_ERROR, \
-					"Permission non accordée"));
-		}
-		if (list->type == OUT || list->type == DOUBLE_OUT)
-		{
-			list = list->next;
-			if (access(list->str, F_OK) == 0)
-			{
-				if (access(list->str, W_OK) != 0)
-					return (ft_tools_put_error(GENERIC_ERROR, \
-						"Permission non accordée"));
-			}
-		}
-		list = list->next;
-	}
-	return (0);
-}
 
 static void	ft_exec_line(t_data **data, t_elem *list)
 {
@@ -83,7 +29,7 @@ static int	ft_pars_line(t_data **data, char **str, int *ret, \
 																t_elem **list)
 {
 	if (!ft_check_quote(*str))
-		return (ft_tools_put_error(GENERIC_ERROR, "Quote error"));
+		return (ft_put_error(GENERIC_ERROR, "Quote error"));
 	ft_replace_env(data, str);
 	*ret = 0;
 	*list = ft_read_command(*str, ret);
@@ -103,10 +49,9 @@ int	ft_run_line(char **str, t_data **data)
 	res_pars_line = ft_pars_line(data, str, &ret, &list);
 	if (res_pars_line == 0)
 	{
-		if (ft_tools_check_syntaxe_operator(list) == 0 && \
-			ft_tools_check_access_ok(list) == 0)
+		if (ft_check_syntaxe_operator(list) == 0)
 			ft_exec_line(data, list);
-		ft_tools_free_elem(&list);
+		ft_free_elem(&list);
 	}
 	return (0);
 }

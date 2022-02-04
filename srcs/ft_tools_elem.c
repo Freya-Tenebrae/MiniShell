@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 01:20:46 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/03 15:00:48 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:37:53 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Créer un élément */
 
-t_elem	*ft_tools_elem_create(char *str)
+t_elem	*ft_elem_create(char *str)
 {
 	t_elem	*list_new;
 	int		type;
@@ -39,7 +39,7 @@ t_elem	*ft_tools_elem_create(char *str)
 
 /* Renvoie le dernier élément de la liste */
 
-t_elem	*ft_tools_elem_last(t_elem *list)
+t_elem	*ft_elem_last(t_elem *list)
 {
 	t_elem		*list_ptr;
 
@@ -54,21 +54,21 @@ t_elem	*ft_tools_elem_last(t_elem *list)
 /* Ajoute un élément à la liste, prends un double pointeur */
 /* pour créer la liste si elle n'éxiste pas */
 
-int	ft_tools_elem_add(t_elem **list, char *str)
+int	ft_elem_add(t_elem **list, char *str)
 {
 	t_elem	*list_new;
 	t_elem	*list_ptr;
 
 	if (!list)
 		return (-1);
-	list_new = ft_tools_elem_create(str);
+	list_new = ft_elem_create(str);
 	if (list_new == NULL)
 		return (-1);
 	if (!(*list) || *list == NULL)
 		*list = list_new;
 	else
 	{
-		list_ptr = ft_tools_elem_last(*list);
+		list_ptr = ft_elem_last(*list);
 		list_ptr->next = list_new;
 	}
 	return (1);

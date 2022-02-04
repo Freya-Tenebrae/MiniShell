@@ -6,13 +6,13 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/04 05:03:25 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:37:57 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-void	ft_tools_free_elem(t_elem **elem)
+void	ft_free_elem(t_elem **elem)
 {
 	t_elem	*elem_ptr;
 
@@ -30,7 +30,7 @@ void	ft_tools_free_elem(t_elem **elem)
 	}
 }
 
-void	ft_tools_free_output(t_output **output)
+void	ft_free_output(t_output **output)
 {
 	if (output != NULL && *output != NULL)
 	{
@@ -42,7 +42,7 @@ void	ft_tools_free_output(t_output **output)
 	}
 }
 
-void	ft_tools_free_env(t_env **env)
+void	ft_free_env(t_env **env)
 {
 	if (env != NULL && *env != NULL)
 	{
@@ -54,7 +54,7 @@ void	ft_tools_free_env(t_env **env)
 	}
 }
 
-void	ft_tools_free_data(t_data **data)
+void	ft_free_data(t_data **data)
 {
 	int	i;
 
@@ -64,7 +64,7 @@ void	ft_tools_free_data(t_data **data)
 		{
 			i = 0;
 			while ((*data)->env[i] != NULL)
-				ft_tools_free_env(&((*data)->env[i++]));
+				ft_free_env(&((*data)->env[i++]));
 			free((*data)->env);
 		}
 		if ((*data)->envp != NULL)

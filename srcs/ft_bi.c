@@ -6,13 +6,13 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 18:45:07 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 05:03:08 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:37:42 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-int	ft_tools_is_build_in(char *cmd)
+int	ft_is_build_in(char *cmd)
 {
 	if (cmd == NULL)
 		return (0);
@@ -31,15 +31,15 @@ static t_output	*ft_put_empty_output(void)
 	out = malloc(sizeof(t_output));
 	if (!out)
 	{
-		ft_tools_put_error(GENERIC_ERROR, "Malloc error");
+		ft_put_error(GENERIC_ERROR, "Malloc error");
 		return (NULL);
 	}
 	out->error = NULL;
 	out->output = ft_strdup("");
 	if (!out->output)
 	{
-		ft_tools_put_error(GENERIC_ERROR, "Malloc error");
-		ft_tools_free_output(&out);
+		ft_put_error(GENERIC_ERROR, "Malloc error");
+		ft_free_output(&out);
 		return (NULL);
 	}
 	return (out);

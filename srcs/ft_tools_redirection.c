@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/03 17:18:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:21:54 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_redirection_out(t_elem *list)
 			list = list->next;
 			file_out = ft_strdup(list->str);
 			if (file_out == NULL)
-				return (ft_tools_put_error(GENERIC_ERROR, "malloc error"));
+				return (ft_put_error(GENERIC_ERROR, "malloc error"));
 			ft_open_fd(&fd, file_out, is_double_out);
 			free(file_out);
 			if (fd == -1)
@@ -69,7 +69,7 @@ void	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
 			list = list->next;
 			*file_in = ft_strdup(list->str);
 			if (*file_in == NULL)
-				ft_tools_put_error(GENERIC_ERROR, "malloc error");
+				ft_put_error(GENERIC_ERROR, "malloc error");
 		}
 		list = list->next;
 	}
@@ -79,14 +79,12 @@ void	ft_in_on_infile(char *file_in, int is_double_in, char **infile)
 {
 	int	fd;
 
-	if (*infile != NULL)
-		free(infile);
 	if (is_double_in == 0)
 	{
 		fd = open(file_in, O_RDONLY);
 		if (fd != -1)
 		{
-			if (ft_tools_put_file_in_str(fd, infile) != 0)
+			if (ft_put_file_in_str(fd, infile) != 0)
 				*infile = NULL;
 		}
 		else
@@ -94,7 +92,7 @@ void	ft_in_on_infile(char *file_in, int is_double_in, char **infile)
 	}
 	else if (is_double_in == 1)
 	{
-		if (ft_tools_put_double_in_str(file_in, infile) != 0)
+		if (ft_put_double_in_str(file_in, infile) != 0)
 			*infile = NULL;
 	}
 }

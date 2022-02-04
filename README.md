@@ -32,8 +32,8 @@ CELIA
 - [x] revoir les sorties (stdout = 1, stderr = 2)
 - [ ] normer readcmd.c
 - [ ] protect all memory allocation when using function like ft_strdup
-- [ ] regroup file's, fonction's and variable's name for more coherences
-- [ ] organised .h file
+- [x] regroup file's, fonction's and variable's name for more coherences
+- [x] organised .h file
 - [ ] refaire les signaux
 - [ ] check complet norme
 

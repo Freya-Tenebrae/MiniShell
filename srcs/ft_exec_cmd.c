@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/03 16:51:01 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:37:47 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 		ft_exec_cmd_child(path, cmd_args, infile, &std_out_err);
 	close(std_out_err->stdout[1]);
 	close(std_out_err->stderr[1]);
-	if (ft_tools_put_file_in_str(std_out_err->stdout[0], &res->output) != 0)
+	if (ft_put_file_in_str(std_out_err->stdout[0], &res->output) != 0)
 		return (NULL);
-	if (ft_tools_put_file_in_str(std_out_err->stderr[0], &res->error) != 0)
+	if (ft_put_file_in_str(std_out_err->stderr[0], &res->error) != 0)
 		return (NULL);
 	if (!res->output && !res->error)
 		res->output = ft_strdup("");

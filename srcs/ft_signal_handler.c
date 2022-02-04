@@ -6,13 +6,13 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:09:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 05:57:37 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:13:42 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-void	ft_signal_handler(int signal)
+static void	ft_signal_handler(int signal)
 {
 	if (signal == SIGINT)
 	{

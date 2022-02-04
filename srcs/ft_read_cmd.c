@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_readcmd.c                                       :+:      :+:    :+:   */
+/*   ft_read_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/03 15:00:45 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 14:37:50 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ t_elem	*ft_read_command(char *str, int *ret)
 	{
 		if (buffer == NULL)
 		{
-			ft_tools_free_elem(&list);
+			ft_free_elem(&list);
 			return (NULL);
 		}
-		if (ft_tools_elem_add(&list, buffer) == -1)
+		if (ft_elem_add(&list, buffer) == -1)
 		{
 			free(buffer);
-			ft_tools_free_elem(&list);
+			ft_free_elem(&list);
 			return (NULL);
 		}
 		buffer = NULL;
@@ -114,14 +114,14 @@ t_elem	*ft_read_command(char *str, int *ret)
 	{
 		if (buffer == NULL)
 		{
-			ft_tools_free_elem(&list);
+			ft_free_elem(&list);
 			return (NULL);
 		}
-		if (ft_tools_elem_add(&list, buffer) == -1)
+		if (ft_elem_add(&list, buffer) == -1)
 		{
 			if (buffer && buffer != NULL)
 				free(buffer);
-			ft_tools_free_elem(&list);
+			ft_free_elem(&list);
 			return (NULL);
 		}
 	}
@@ -130,7 +130,7 @@ t_elem	*ft_read_command(char *str, int *ret)
 		*ret = i;
 		if (buffer && buffer != NULL)
 			free(buffer);
-		ft_tools_free_elem(&list);
+		ft_free_elem(&list);
 		return (NULL);
 	}
 	*ret = READ_OK;

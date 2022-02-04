@@ -6,13 +6,13 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/03 15:00:51 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:21:47 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-static void	ft_tools_free_str_if_empty(char **str)
+static void	ft_free_str_if_empty(char **str)
 {
 	if (ft_strcmp(*str, "") == 0)
 	{
@@ -21,7 +21,7 @@ static void	ft_tools_free_str_if_empty(char **str)
 	}
 }
 
-static int	ft_tools_fill_str_by_one_line(int i, char **line, char **str)
+static int	ft_fill_str_by_one_line(int i, char **line, char **str)
 {
 	if (i != -1)
 	{
@@ -39,7 +39,7 @@ static int	ft_tools_fill_str_by_one_line(int i, char **line, char **str)
 	return (0);
 }
 
-int	ft_tools_put_file_in_str(int fd, char **str)
+int	ft_put_file_in_str(int fd, char **str)
 {
 	char	*line;
 	int		i;
@@ -49,14 +49,14 @@ int	ft_tools_put_file_in_str(int fd, char **str)
 	{
 		line = NULL;
 		i = get_next_line(fd, &line);
-		if (ft_tools_fill_str_by_one_line(i, &line, str) != 0)
+		if (ft_fill_str_by_one_line(i, &line, str) != 0)
 			return (-1);
 	}
-	ft_tools_free_str_if_empty(str);
+	ft_free_str_if_empty(str);
 	return (0);
 }
 
-int	ft_tools_put_double_in_str(char *word, char **str)
+int	ft_put_double_in_str(char *word, char **str)
 {
 	char	*line;
 	int		i;
@@ -71,9 +71,9 @@ int	ft_tools_put_double_in_str(char *word, char **str)
 			free(line);
 			return (0);
 		}
-		if (ft_tools_fill_str_by_one_line(i, &line, str) != 0)
+		if (ft_fill_str_by_one_line(i, &line, str) != 0)
 			return (-1);
 	}
-	ft_tools_free_str_if_empty(str);
+	ft_free_str_if_empty(str);
 	return (0);
 }
