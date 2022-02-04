@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/03 18:02:53 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 05:25:40 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ static int	ft_tools_check_syntaxe_operator(t_elem *list)
 		if (list->type == PIPE && \
 			(list_ptr == NULL || list_ptr->type != ARGUMENT))
 			return (ft_tools_put_error(ERREUR_OPERATOR, list->str));
-		else if ((list->type == IN || list->type == DOUBLE_IN) && \
-			(list_ptr->type != PIPE && list_ptr->type != ARGUMENT))
-			return (ft_tools_put_error(ERREUR_OPERATOR, list->str));
-		else if ((list->type == OUT || list->type == DOUBLE_OUT) && \
-			(list_ptr->type != PIPE && list_ptr->type != ARGUMENT))
+		else if ((list->type == OUT || list->type == DOUBLE_OUT || \
+					list->type == IN || list->type == DOUBLE_IN) && \
+					(list_ptr != NULL && list_ptr->type != PIPE && \
+					list_ptr->type != ARGUMENT))
 			return (ft_tools_put_error(ERREUR_OPERATOR, list->str));
 		else if ((list->type == IN || list->type == DOUBLE_IN || \
 			list->type == OUT || list->type == DOUBLE_OUT || \
@@ -34,17 +33,36 @@ static int	ft_tools_check_syntaxe_operator(t_elem *list)
 			return (ft_tools_put_error(ERREUR_OPERATOR, "/n"));
 		list_ptr = list;
 		list = list->next;
-		// attention crash quand < << > or >> is first
 	}
 	return (0);
 }
 
 static int	ft_tools_check_access_ok(t_elem *list)
 {
-	(void)list;
-	// la fonction va tester si toutes les arguments associes a > >> <
-	// 		sont accesible et existemt (R_OK for <)
-	//		sont accesible (W_OK for > and >>)
+	while (list != NULL)
+	{
+		if (list->type == IN)
+		{
+			list = list->next;
+			if (access(list->str, F_OK) != 0)
+				return (ft_tools_put_error(GENERIC_ERROR, \
+					"Aucun fichier ou dossier de ce type"));
+			else if (access(list->str, R_OK) != 0)
+				return (ft_tools_put_error(GENERIC_ERROR, \
+					"Permission non accordée"));
+		}
+		if (list->type == OUT || list->type == DOUBLE_OUT)
+		{
+			list = list->next;
+			if (access(list->str, F_OK) == 0)
+			{
+				if (access(list->str, W_OK) != 0)
+					return (ft_tools_put_error(GENERIC_ERROR, \
+						"Permission non accordée"));
+			}
+		}
+		list = list->next;
+	}
 	return (0);
 }
 

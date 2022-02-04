@@ -26,7 +26,7 @@ CELIA
 - [x] redirection < et <<
 - [x] normer run_cmd_2.c
 - [x] redirection > et >>
-- [ ] check if file access (ft_tools_check_access_ok)
+- [x] check if file access (ft_tools_check_access_ok)
 - [x] delete global et put in each function when needed
 - [x] corriger les leaks de la variable "data" dans main.c
 - [x] revoir les sorties (stdout = 1, stderr = 2)

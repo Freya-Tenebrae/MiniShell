@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/03 18:46:53 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/04 05:03:25 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_tools_free_env(t_env **env)
 
 void	ft_tools_free_data(t_data **data)
 {
-	int i;
+	int	i;
 
 	if (data != NULL && *data != NULL)
 	{

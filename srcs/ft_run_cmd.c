@@ -12,7 +12,7 @@
 
 #include "../includes/ft_minishell.h"
 
-static void	ft_redirection_cmd(t_data **g_minishell, t_output **out, \
+static void	ft_redirection_cmd(t_data **data, t_output **out, \
 												t_elem **list, char **infile)
 {
 	char	*file_in;
@@ -27,9 +27,9 @@ static void	ft_redirection_cmd(t_data **g_minishell, t_output **out, \
 	}
 	*list = ft_put_args_in_cmd_args(*list, &cmd_args);
 	if (ft_tools_is_build_in(cmd_args[0]) == 0)
-		*out = ft_run_bi((*g_minishell)->path, cmd_args, *infile);
+		*out = ft_run_bi((*data)->path, cmd_args, *infile);
 	else
-		*out = ft_exec_cmd((*g_minishell)->path, cmd_args, *infile);
+		*out = ft_exec_cmd((*data)->path, cmd_args, *infile);
 	ft_freestrs(&cmd_args);
 }
 
@@ -92,14 +92,14 @@ static int	ft_manage_correct_output_run_cmd(t_output **out, \
 	return (0);
 }
 
-t_elem	*ft_run_cmd(t_data **g_minishell, t_elem *list, char **infile)
+t_elem	*ft_run_cmd(t_data **data, t_elem *list, char **infile)
 {
 	t_output	*out;
 	int			fd;
 
 	if (ft_init_run_cmd(list, &fd, infile) != 0)
 		return (NULL);
-	ft_redirection_cmd(g_minishell, &out, &list, infile);
+	ft_redirection_cmd(data, &out, &list, infile);
 	free(*infile);
 	*infile = NULL;
 	if (ft_check_error_output_run_cmd(&out) != 0)
