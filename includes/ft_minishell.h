@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/05 17:09:43 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/05 20:37:50 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int			main(int ac, char **av, char **envp);
 void		ft_init_signal_handling(void);
 int			ft_run_line(char **str, t_data **data);
 t_elem		*ft_read_line(char *str, int *ret);
-int			ft_read_cmd(char *str, int i, char **buffer);
+int			ft_read_cmd(char *str, int i, char **buffer, int *is_operator);
 t_elem		*ft_run_cmd(t_data **data, t_elem *elem, char **infile);
 t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile);
 int			ft_run_execve_with_all_path(char *path, char **cmd_args);
@@ -106,10 +106,10 @@ t_output	*ft_run_bi_unset(char *path, char **cmd_args, char *infile);
 /* ************************************************************************** */
 /*                                   TOOLS                                    */
 /* ************************************************************************** */
-t_elem		*ft_elem_create(char *str);
+t_elem		*ft_elem_create(char *str, int is_operator);
 t_elem		*ft_elem_last(t_elem *list);
 t_elem		*ft_put_args_in_cmd_args(t_elem *list, char ***cmd_args);
-int			ft_elem_add(t_elem **list, char *str);
+int			ft_elem_add(t_elem **list, char *str, int is_operator);
 void		ft_free_elem(t_elem **elem);
 void		ft_free_output(t_output **output);
 t_env		**ft_init_env(char **envp);

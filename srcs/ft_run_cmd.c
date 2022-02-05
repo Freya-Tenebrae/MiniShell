@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/04 16:47:46 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:54:44 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static int	ft_init_run_cmd(t_elem **list, int *fd, char **infile)
 {
 	if (ft_check_access_ok(*list) != 0)
 	{
+		if ((*list)->type == PIPE)
+			*list = (*list)->next;
 		while (*list != NULL && (*list)->type != PIPE)
 			*list = (*list)->next;
 		return (0);

@@ -6,15 +6,36 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 16:59:59 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/05 17:10:24 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/05 20:47:18 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
+static int	ft_put_in_list(char **buffer, t_elem **list, int is_operator)
+{
+	if (*buffer == NULL)
+	{
+		ft_free_elem(list);
+		return (-42);
+	}
+	if (ft_elem_add(list, *buffer, is_operator) == -1)
+	{
+		free(*buffer);
+		*buffer = NULL;
+		ft_free_elem(list);
+		return (-42);
+	}
+	*buffer = NULL;
+	return (0);
+}
+
 static int	ft_loop_read_line(int *i, char *str, char **buffer, t_elem **list)
 {
-	*i = ft_read_cmd(str, *i, buffer);
+	int	is_operator;
+
+	is_operator = 1;
+	*i = ft_read_cmd(str, *i, buffer, &is_operator);
 	if (*i < 0)
 	{
 		if (*buffer && *buffer != NULL)
@@ -24,18 +45,8 @@ static int	ft_loop_read_line(int *i, char *str, char **buffer, t_elem **list)
 	}
 	else
 	{
-		if (*buffer == NULL)
-		{
-			ft_free_elem(list);
+		if (ft_put_in_list(buffer, list, is_operator) == -42)
 			return (-42);
-		}
-		if (ft_elem_add(list, *buffer) == -1)
-		{
-			free(*buffer);
-			ft_free_elem(list);
-			return (-42);
-		}
-		*buffer = NULL;
 	}
 	return (*i);
 }

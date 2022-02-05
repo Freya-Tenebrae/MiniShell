@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/05 17:11:52 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/05 20:42:39 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	ft_read_next_if_operator(char *str, int i, char **buffer)
 	return (i);
 }
 
-int	ft_read_cmd(char *str, int i, char **buffer)
+int	ft_read_cmd(char *str, int i, char **buffer, int *is_operator)
 {
 	char	*new_buffer;
 
@@ -75,9 +75,11 @@ int	ft_read_cmd(char *str, int i, char **buffer)
 		i++;
 	if (ft_char_isoperator(str[i]))
 	{
+		*is_operator = 0;
 		i = ft_read_next_if_operator(str, i, buffer);
 		return (i);
 	}
+	*is_operator = 1;
 	i = ft_read_next_if_argument_or_command(str, i, buffer);
 	new_buffer = ft_keepinside_quote(*buffer);
 	free(*buffer);

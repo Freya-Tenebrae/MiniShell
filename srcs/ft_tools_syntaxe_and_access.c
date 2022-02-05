@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 16:12:00 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 16:53:55 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/05 19:58:34 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_check_syntaxe_operator(t_elem *list)
 	list_ptr = NULL;
 	while (list != NULL)
 	{
+		if (list->type == -1)
+			return (-1);
 		if (list->type == PIPE && \
 			(list_ptr == NULL || list_ptr->type != ARGUMENT))
 			return (ft_put_error(OPERATOR_ERROR, list->str));
@@ -39,7 +41,9 @@ int	ft_check_syntaxe_operator(t_elem *list)
 
 int	ft_check_access_ok(t_elem *list)
 {
-	while (list != NULL)
+	if (list != NULL && list->type == PIPE)
+		list = list->next;
+	while (list != NULL && list->type != PIPE)
 	{
 		if (list->type == IN)
 		{

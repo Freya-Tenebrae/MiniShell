@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 01:20:46 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:53 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/05 20:37:04 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 /* Créer un élément */
 
-t_elem	*ft_elem_create(char *str)
+t_elem	*ft_elem_create(char *str, int is_operator)
 {
 	t_elem	*list_new;
 	int		type;
 
 	type = ft_get_operator_type(str);
-	if (type == -1)
-		return (NULL);
 	if (!str)
 	{
 		str = ft_strdup("");
@@ -33,7 +31,10 @@ t_elem	*ft_elem_create(char *str)
 		return (NULL);
 	list_new->next = NULL;
 	list_new->str = str;
-	list_new->type = type;
+	if (is_operator == 1)
+		list_new->type = ARGUMENT;
+	else
+		list_new->type = type;
 	return (list_new);
 }
 
@@ -54,14 +55,14 @@ t_elem	*ft_elem_last(t_elem *list)
 /* Ajoute un élément à la liste, prends un double pointeur */
 /* pour créer la liste si elle n'éxiste pas */
 
-int	ft_elem_add(t_elem **list, char *str)
+int	ft_elem_add(t_elem **list, char *str, int is_operator)
 {
 	t_elem	*list_new;
 	t_elem	*list_ptr;
 
 	if (!list)
 		return (-1);
-	list_new = ft_elem_create(str);
+	list_new = ft_elem_create(str, is_operator);
 	if (list_new == NULL)
 		return (-1);
 	if (!(*list) || *list == NULL)
@@ -71,5 +72,5 @@ int	ft_elem_add(t_elem **list, char *str)
 		list_ptr = ft_elem_last(*list);
 		list_ptr->next = list_new;
 	}
-	return (1);
+	return (0);
 }
