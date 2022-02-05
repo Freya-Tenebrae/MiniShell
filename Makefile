@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:11:43 by cmaginot          #+#    #+#              #
-#    Updated: 2022/02/04 16:23:39 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/02/05 17:03:05 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME=minishell
 SRCS=$(addprefix ${FOLDER}/, \
 	ft_minishell.c \
 	ft_run_line.c \
+	ft_read_line.c \
 	ft_read_cmd.c \
 	ft_run_cmd.c \
 	ft_exec_cmd.c \

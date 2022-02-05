@@ -8,39 +8,45 @@ This Repositorie contains my solution to the project `Minishell` of 42 (Paris).
 
 [![jaeskim's 42Project Score](https://badge42.herokuapp.com/api/project/cmaginot/minishell)](https://github.com/JaeSeoKim/badge42)
 
-### Cloning
+## Cloning
 
 ```shell
 git clone --recurse-submodules https://github.com/Freya-Tenebrae/MiniShell.git
 ```
 
-### TODO
+## Using
+
+```shell
+./minishell
+```
+
+#### /!\\ ONLY SOME FONCTIONNALITY ARE SUPORTED /!\\
+ - launching an executable or system command
+ - signals : 
+ 	- ctrl-C 
+ 	- ctrl-D 
+ 	- ctrl-\\
+ - simple character supported : 
+ 	- '
+ 	- "
+ 	- <
+ 	- <<
+ 	- \>
+ 	- \>\>
+ 	- |
+ 	- $ (only if followd by ? or a sequence of characters)
+ - A simple working history (arrow up and down without autocompletion)
+
+## TODO
 
 GAUTHIER
 - [ ] make build-in
 
 CELIA
-- [x] refaire runline et checksyntaxe pour ressembler au shell (faire les etapes une par une)
-- [x] include pipe
-- [x] gerer les output de run_cmd_2.c correctement
-- [x] redirection < et <<
-- [x] normer run_cmd_2.c
-- [x] redirection > et >>
-- [x] check if file access (ft_tools_check_access_ok)
-- [x] delete global et put in each function when needed
-- [x] corriger les leaks de la variable "data" dans main.c
-- [x] revoir les sorties (stdout = 1, stderr = 2)
-- [ ] normer readcmd.c
-- [ ] protect all memory allocation when using function like ft_strdup
-- [x] regroup file's, fonction's and variable's name for more coherences
-- [x] organised .h file
-- [ ] refaire les signaux
-- [ ] check complet norme
-
-A REPARTIR
+- [ ] changer gnl par readline et ajuster les signaux pour fonctionner avec
 - [ ] make a working history (with arrow up and down)
+- [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
+
+FINAL TASKS
 - [ ] passer des testeur
 - [ ] check complet a 42, push du projet sur le github de l'intra, et testeur a 42
-
-MAYBE
-- [ ] modifier gnl pour accepter NULL sur line -> free le fd

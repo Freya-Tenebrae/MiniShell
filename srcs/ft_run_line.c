@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 16:32:14 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:09:36 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	ft_pars_line(t_data **data, char **str, int *ret, \
 		return (ft_put_error(GENERIC_ERROR, "Quote error"));
 	ft_replace_env(data, str);
 	*ret = 0;
-	*list = ft_read_command(*str, ret);
+	*list = ft_read_line(*str, ret);
 	if (*list == NULL || *ret != READ_OK)
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 16:14:01 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:09:43 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ typedef struct s_data {
 int			main(int ac, char **av, char **envp);
 void		ft_init_signal_handling(void);
 int			ft_run_line(char **str, t_data **data);
-t_elem		*ft_read_command(char *str, int *ret);
+t_elem		*ft_read_line(char *str, int *ret);
+int			ft_read_cmd(char *str, int i, char **buffer);
 t_elem		*ft_run_cmd(t_data **data, t_elem *elem, char **infile);
 t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile);
 int			ft_run_execve_with_all_path(char *path, char **cmd_args);
@@ -138,7 +139,7 @@ int			ft_get_operator_type(char *str);
 
 int			ft_str_indexof(char *str, char c);
 int			ft_str_lastindexof(char *str, int from, char c);
-int			ft_str_iswhitespace(char c);
+int			ft_iswhitespace(char c);
 char		*ft_str_before(char *str, char c);
 char		*ft_str_after(char *str, char c);
 char		*ft_str_substring(char *str, int begin, int end);
