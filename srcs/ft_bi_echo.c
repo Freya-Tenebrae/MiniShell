@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:20 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/07 16:43:19 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:55:25 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ t_output	*ft_run_bi_echo(char *path, char **cmd_args, char *infile)
 	res->output = 0;
 	res->error = 0;
 	if (!res)
-		return (0);
+	{
+		res->error = ft_strdup("Malloc error");
+		return (res);
+	}
 	i = 1;
 	while (cmd_args[i] && ft_is_valid_option(cmd_args[i]))
 	{
