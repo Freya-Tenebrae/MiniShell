@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:30:52 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:59 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:08:50 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,19 @@ int	ft_check_quote(char *str)
 /* Renvoie une nouvelle chaine de caractère qui prends uniquement */
 /* le contenu de ce qu'il y a entre quote dans str. */
 
+static char	*ft_return_empty_str(void)
+{
+	char	*res;
+
+	res = ft_strdup("");
+	if (!res)
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
+		return (NULL);
+	}
+	return (res);
+}
+
 char	*ft_keepinside_quote(char *str)
 {
 	char	*res;
@@ -58,6 +71,8 @@ char	*ft_keepinside_quote(char *str)
 
 	if (!str)
 		return (NULL);
+	if (ft_strcmp(str, "''") == 0 || ft_strcmp(str, "\"\"") == 0)
+		return (ft_return_empty_str());
 	res = NULL;
 	q = 0;
 	i = -1;

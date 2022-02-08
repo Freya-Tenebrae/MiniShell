@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/04 14:38:01 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:08:46 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ char	*ft_char_writeon(char **str, char c)
 
 	if (!str)
 		return (NULL);
-	if (!(*str))
+	if (!(*str)) // error if *str == NULL ?
 	{
 		*str = ft_char_tostring(c);
 		return (*str);
 	}
 	res = malloc((sizeof(char) * ft_strlen(*str)) + 2);
 	if (!res)
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
 		return (NULL);
+	}
 	i = 0;
 	while ((*str)[i] != '\0')
 	{
