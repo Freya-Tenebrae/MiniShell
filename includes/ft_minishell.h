@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/05 20:37:50 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:30:16 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,17 @@ int			ft_run_execve_with_all_path(char *path, char **cmd_args);
 /*                                  BUILD ID                                  */
 /* ************************************************************************** */
 int			ft_is_build_in(char *cmd);
-t_output	*ft_run_bi(char *path, char **cmd_args, char *infile);
+t_output	*ft_run_bi(t_data **data, char *path, char **cmd_args, \
+																char *infile);
 t_output	*ft_run_bi_cd(char *path, char **cmd_args, char *infile);
 t_output	*ft_run_bi_echo(char *path, char **cmd_args, char *infile);
-t_output	*ft_run_bi_env(char *path, char **cmd_args, char *infile);
-t_output	*ft_run_bi_export(char *path, char **cmd_args, char *infile);
+t_output	*ft_run_bi_env(t_data **data, char *path, char **cmd_args, \
+																char *infile);
+t_output	*ft_run_bi_export(t_data **data, char *path, char **cmd_args, \
+																char *infile);
 t_output	*ft_run_bi_pwd(char *path, char **cmd_args, char *infile);
-t_output	*ft_run_bi_unset(char *path, char **cmd_args, char *infile);
+t_output	*ft_run_bi_unset(t_data **data, char *path, char **cmd_args, \
+																char *infile);
 
 /* ************************************************************************** */
 /*                                   TOOLS                                    */

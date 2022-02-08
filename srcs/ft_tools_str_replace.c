@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/08 16:08:46 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:30:09 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_char_writeon(char **str, char c)
 
 	if (!str)
 		return (NULL);
-	if (!(*str)) // error if *str == NULL ?
+	if (!(*str) || *str == NULL)
 	{
 		*str = ft_char_tostring(c);
 		return (*str);
@@ -56,7 +56,7 @@ char	*ft_str_writeon(char **str, char *to_add)
 
 	if (!str)
 		return (0);
-	if (!(*str))
+	if (!(*str) || *str == NULL)
 	{
 		*str = ft_strdup(to_add);
 		return (*str);

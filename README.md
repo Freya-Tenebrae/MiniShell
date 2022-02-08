@@ -43,9 +43,16 @@ GAUTHIER
 - [ ] make build-in
 
 CELIA
+- [ ] correct environment (check comment in ft_tools_env.c)
+- [ ] correct segfault when < $var
+- [ ] correct new leaks
+- [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
 - [ ] changer gnl par readline et ajuster les signaux pour fonctionner avec
 - [ ] make a working history (with arrow up and down)
-- [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
+- [ ] make buil-in exit
+
+MAYBE
+- [ ] correct priority in < and >
 
 POTENTIAL ERROR
 - [ ] erreur avec < et > (voic onvo avec gauthier le 5/2 a 20h00)
@@ -55,6 +62,7 @@ POTENTIAL ERROR
 	- exit "arg non numerique"  -> msg argument numerique necessaire puis exit
 	- exit "plusieur arguments" -> erreur non numerique if 1rst non numerique (mais quitte si un seul arg numerique) sinon msg trop d'arguments
 	- presence d'un pipe : n'existe pas mais passe au suivant (qui pourra affichher une erreur mais n'exitera pas)
+	- le mettre en bi specifique ...
 
 FINAL TASKS
 - [ ] passer des testeur

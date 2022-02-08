@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:45 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:30:13 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 //			(argument, fonction didn't exist, ...) et out->output devra etre 
 //			set a NULL;
 
-t_output	*ft_run_bi_export(char *path, char **cmd_args, char *infile)
+t_output	*ft_run_bi_export(t_data **data, char *path, char **cmd_args, \
+																char *infile)
 {
+	(void)data;
 	(void)path;
 	(void)cmd_args;
 	(void)infile;

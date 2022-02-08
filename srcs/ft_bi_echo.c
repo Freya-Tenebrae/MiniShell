@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:20 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/07 16:55:25 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:30:14 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,32 +64,32 @@ t_output	*ft_run_bi_echo(char *path, char **cmd_args, char *infile)
 
 	(void)infile;
 	(void)path;
-
+	no_nl = 0;
 	res = malloc(sizeof(t_output));
 	res->output = 0;
 	res->error = 0;
 	if (!res)
 	{
-		res->error = ft_strdup("Malloc error");
-		return (res);
+		ft_put_error(GENERIC_ERROR, "malloc error");
+		return (NULL);
 	}
 	i = 1;
 	while (cmd_args[i] && ft_is_valid_option(cmd_args[i]))
 	{
 		if (ft_has_nl_option(cmd_args[i]))
-			no_nl = 0;
+			no_nl = 1;
 		i++;
 	}
 	while (cmd_args[i])
 	{
-		ft_str_writeon(&res->output, cmd_args[i]);
+		ft_str_writeon(&(res->output), cmd_args[i]);
 		i++;
 		if (cmd_args[i])
-			ft_char_writeon(&res->output, (char) 32);
+			ft_char_writeon(&(res->output), (char) 32);
 	}
 	if (res->output == 0)
 		res->output = ft_strdup("");
-	if (no_nl)
-		ft_char_writeon(&res->output, '\n');
+	if (no_nl == 0)
+		ft_char_writeon(&(res->output), '\n');
 	return (res);
 }

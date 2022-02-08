@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/05 19:54:44 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:30:11 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_redirection_cmd(t_data **data, t_output **out, \
 	}
 	*list = ft_put_args_in_cmd_args(*list, &cmd_args);
 	if (ft_is_build_in(cmd_args[0]) == 0)
-		*out = ft_run_bi((*data)->path, cmd_args, *infile);
+		*out = ft_run_bi(data, (*data)->path, cmd_args, *infile);
 	else
 		*out = ft_exec_cmd((*data)->path, cmd_args, *infile);
 	ft_freestrs(&cmd_args);

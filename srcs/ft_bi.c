@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 18:45:07 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:42 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:30:14 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static t_output	*ft_put_empty_output(void)
 	return (out);
 }
 
-t_output	*ft_run_bi(char *path, char **cmd_args, char *infile)
+t_output	*ft_run_bi(t_data **data, char *path, char **cmd_args, \
+																char *infile)
 {
 	if (cmd_args[0] == NULL)
 		return (ft_put_empty_output());
@@ -56,10 +57,10 @@ t_output	*ft_run_bi(char *path, char **cmd_args, char *infile)
 	else if (ft_strcmp(cmd_args[0], "pwd") == 0)
 		return (ft_run_bi_pwd(path, cmd_args, infile));
 	else if (ft_strcmp(cmd_args[0], "export") == 0)
-		return (ft_run_bi_export(path, cmd_args, infile));
+		return (ft_run_bi_export(data, path, cmd_args, infile));
 	else if (ft_strcmp(cmd_args[0], "unset") == 0)
-		return (ft_run_bi_env(path, cmd_args, infile));
+		return (ft_run_bi_unset(data, path, cmd_args, infile));
 	else if (ft_strcmp(cmd_args[0], "env") == 0)
-		return (ft_run_bi_env(path, cmd_args, infile));
+		return (ft_run_bi_env(data, path, cmd_args, infile));
 	return (NULL);
 }

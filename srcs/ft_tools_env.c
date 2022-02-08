@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:54 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/08 17:30:10 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,16 @@ void	ft_replace_env(t_data **data, char **str)
 	int		strlen;
 	char	*res;
 
-	if (!str || !*str)
+	if (!str || !*str || *str == NULL)
 		return ;
 	i = 0;
 	strlen = ft_strlen(*str);
 	res = NULL;
 	while (i < strlen && (*str)[i])
+	{
+		// ft skip if in '', but not if '' is in ""
 		ft_replace_env_p1(data, *str, &i, &res);
+	}
 	free(*str);
 	*str = res;
 }
