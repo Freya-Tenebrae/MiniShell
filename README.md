@@ -45,7 +45,7 @@ GAUTHIER
 CELIA
 - [ ] correct environment (check comment in ft_tools_env.c)
 - [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
-- [ ] correct small problem with history and signal
+- [ ] correct small problem with history and signal (check rl rediplay and rl on new line)
 
 MAYBE
 - [ ] correct priority in < and >
