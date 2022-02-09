@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/04 15:21:47 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/09 04:01:48 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_free_str_if_empty(char **str)
 {
-	if (ft_strcmp(*str, "") == 0)
+	if (*str && ft_strcmp(*str, "") == 0)
 	{
 		free(*str);
 		*str = NULL;

@@ -6,47 +6,41 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:47 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/09 04:50:55 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-static void	ft_freestr(char **str)
-{
-	if (*str)
-		free(*str);
-}
-
 static void	ft_loop(t_data **data)
 {
-	int		res_gnl;
 	char	*str;
 
 	while (42 == 42)
 	{
-		ft_putstr_fd("minishell~ ", STDOUT_FILENO);
-		res_gnl = get_next_line(0, &str);
-		if (res_gnl <= 0)
+		if (g_status_minishell == -1)
 		{
-			if (res_gnl == 0)
-				ft_freestr(&str);
-			ft_putstr_fd("exit", STDOUT_FILENO);
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
 		}
-		if (ft_run_line(&str, data) != 0)
+		str = readline("minishell~ ");
+		if (str == NULL)
 		{
-			ft_freestr(&str);
-			ft_putstr_fd("exit", STDOUT_FILENO);
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
 		}
-		else
-			ft_freestr(&str);
+		if (ft_strcmp(str, "") != 0)
+		{
+			ft_run_line(&str, data);
+			add_history(str);
+		}
+		free(str);
 	}
 }
 
 static int	ft_init_minishell_data(t_data **data, char **envp)
 {
+	g_status_minishell = 0;
 	*data = malloc(sizeof(t_data));
 	if (!*data)
 		return (-1);

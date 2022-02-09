@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/05 20:42:08 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/09 04:35:35 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ static int	ft_pars_line(t_data **data, char **str, int *ret, \
 	return (0);
 }
 
-int	ft_run_line(char **str, t_data **data)
+void	ft_run_line(char **str, t_data **data)
 {
 	int		ret;
 	int		res_pars_line;
 	t_elem	*list;
 
-	if (ft_strcmp("exit", *str) == 0)
-		return (-1);
 	res_pars_line = ft_pars_line(data, str, &ret, &list);
 	if (res_pars_line == 0)
 	{
@@ -53,5 +51,4 @@ int	ft_run_line(char **str, t_data **data)
 			ft_exec_line(data, list);
 		ft_free_elem(&list);
 	}
-	return (0);
 }

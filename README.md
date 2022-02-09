@@ -44,26 +44,16 @@ GAUTHIER
 
 CELIA
 - [ ] correct environment (check comment in ft_tools_env.c)
-- [ ] correct segfault when < $var
-- [ ] correct new leaks
 - [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
-- [ ] changer gnl par readline et ajuster les signaux pour fonctionner avec
-- [ ] make a working history (with arrow up and down)
-- [ ] make buil-in exit
+- [ ] correct small problem with history and signal
 
 MAYBE
 - [ ] correct priority in < and >
 
 POTENTIAL ERROR
 - [ ] erreur avec < et > (voic onvo avec gauthier le 5/2 a 20h00)
-- [ ] exit doit etre modifier (par ex exit 1 | exit 0 ne doit rien afficher)
-	- exit -> exit normalement
-	- exit "arg numerique" -> exit normalement
-	- exit "arg non numerique"  -> msg argument numerique necessaire puis exit
-	- exit "plusieur arguments" -> erreur non numerique if 1rst non numerique (mais quitte si un seul arg numerique) sinon msg trop d'arguments
-	- presence d'un pipe : n'existe pas mais passe au suivant (qui pourra affichher une erreur mais n'exitera pas)
-	- le mettre en bi specifique ...
 
 FINAL TASKS
+- [ ] norm
 - [ ] passer des testeur
 - [ ] check complet a 42, push du projet sur le github de l'intra, et testeur a 42

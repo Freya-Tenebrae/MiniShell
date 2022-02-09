@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 18:45:07 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/08 17:30:14 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/09 04:44:23 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	ft_is_build_in(char *cmd)
 		return (0);
 	if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "cd") == 0 || \
 		ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0 || \
-		ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0)
+		ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0 || \
+		ft_strcmp(cmd, "exit") == 0)
 		return (0);
 	else
 		return (1);
@@ -62,5 +63,7 @@ t_output	*ft_run_bi(t_data **data, char *path, char **cmd_args, \
 		return (ft_run_bi_unset(data, path, cmd_args, infile));
 	else if (ft_strcmp(cmd_args[0], "env") == 0)
 		return (ft_run_bi_env(data, path, cmd_args, infile));
+	else if (ft_strcmp(cmd_args[0], "exit") == 0)
+		return (ft_run_bi_exit(path, cmd_args, infile));
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/08 17:30:10 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/09 03:51:33 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,14 @@ static void	ft_replace_env_p2(t_data **data, char *str, int *i, \
 			variable = ft_getenv(data, var);
 		j++;
 	}
-	if (var)
+	if (var && var != NULL)
 	{
 		variable = ft_getenv(data, var);
 		if (variable)
 			ft_str_writeon(res, variable->value);
 		*i += (int) ft_strlen(var) + 1;
-		var = 0;
+		free(var);
+		var = NULL;
 	}
 }
 

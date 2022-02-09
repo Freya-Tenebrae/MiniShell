@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:09:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 15:13:42 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/09 04:22:19 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	ft_signal_handler(int signal)
 	{
 		ft_putstr_fd("\b\b  ", STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_replace_line("", 0);
 		ft_putstr_fd("minishell~ ", STDOUT_FILENO);
 	}
 	else if (signal == SIGQUIT)
