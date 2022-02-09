@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:20 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/08 17:30:14 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/09 16:55:39 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_is_valid_option(char *str)
 	int	i;
 
 	i = 0;
-	if (!str || ft_strlen(str) == 0)
+	if (!str || ft_strlen(str) < 1)
 		return (0);
 	if (!str[i] || str[i] != '-')
 		return (0);

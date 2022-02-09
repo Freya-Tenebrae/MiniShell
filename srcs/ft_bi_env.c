@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/08 17:30:13 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/09 17:06:28 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,28 @@
 t_output	*ft_run_bi_env(t_data **data, char *path, char **cmd_args, \
 																char *infile)
 {
-	(void)data;
+	t_output	*res;
+	int			i;
+
 	(void)path;
 	(void)cmd_args;
 	(void)infile;
-	return (NULL);
+
+	i = 0;
+	res = malloc(sizeof(t_output));
+	if (!res)
+		return (NULL);
+	res->error = 0;
+	res->output = ft_strdup("");
+	if (!res->output)
+		return (NULL);
+	while (((*data)->env)[i])
+	{
+		ft_str_writeon(&res->output, ((*data)->env)[i]->name);
+		ft_char_writeon(&res->output, '=');
+		ft_str_writeon(&res->output, ((*data)->env)[i]->value);
+		ft_char_writeon(&res->output, '\n');
+		i++;
+	}
+	return (res);
 }
