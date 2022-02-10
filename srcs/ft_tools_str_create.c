@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/04 14:38:00 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:15:42 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ char	*ft_str_before(char *str, char c)
 	int		i;
 
 	if (!str)
-		return (0);
+		return (NULL);
 	l = 0;
 	while (str[l] && str[l] != c)
 		++l;
 	dst = malloc(l + 1);
 	if (!dst)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (str[i] && i < l)
 	{
@@ -51,7 +51,7 @@ char	*ft_str_after(char *str, char c)
 
 	i = 0;
 	if (!str)
-		return (0);
+		return (NULL);
 	while (str[i] && str[i] != c)
 		i++;
 	if (!str[i])
@@ -61,7 +61,7 @@ char	*ft_str_after(char *str, char c)
 	strlen = ft_strlen(str) - i;
 	res = malloc(strlen + 1);
 	if (!res)
-		return (0);
+		return (NULL);
 	j = 0;
 	while (str[i])
 		res[j++] = str[i++];
@@ -77,7 +77,7 @@ char	*ft_char_tostring(char c)
 
 	str = malloc(sizeof(char) * 2);
 	if (!str)
-		return (0);
+		return (NULL);
 	str[0] = c;
 	str[1] = '\0';
 	return (str);
@@ -94,16 +94,17 @@ char	*ft_str_substring(char *str, int begin, int end)
 	res = 0;
 	i = begin;
 	if (!str)
-		return (0);
+		return (NULL);
 	if (begin >= (int) ft_strlen(str) || end >= (int) ft_strlen(str) || \
 		begin < 0 || end < 0)
-		return (0);
+		return (NULL);
 	if (begin > end)
-		return (0);
+		return (NULL);
 	while (str[i] && i < end)
 	{
 		ft_char_writeon(&res, str[i]);
 		i++;
 	}
 	return (res);
+	// fonction to delete if stayed unused
 }

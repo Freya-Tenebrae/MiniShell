@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:47 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:02:30 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,30 @@ static int	ft_init_var(t_output **res, t_stdoutanderr **std_out_err)
 	(*res)->error = NULL;
 	*std_out_err = malloc(sizeof(t_stdoutanderr));
 	if (!*std_out_err)
+	{
+		ft_free_output(res);
 		return (-1);
+	}
 	if (pipe((*std_out_err)->stdout) == -1)
+	{
+		ft_free_output(res);
+		free (*std_out_err);
 		return (-1);
+	}
 	if (pipe((*std_out_err)->stderr) == -1)
+	{
+		ft_free_output(res);
+		free (*std_out_err);
 		return (-1);
+	}
 	return (0);
+}
+
+static t_output	*ft_free_output_co(t_output **res, t_stdoutanderr **std_out_err)
+{
+	ft_free_output(res);
+	free (*std_out_err);
+	return (NULL);
 }
 
 t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
@@ -92,9 +110,9 @@ t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 	close(std_out_err->stdout[1]);
 	close(std_out_err->stderr[1]);
 	if (ft_put_file_in_str(std_out_err->stdout[0], &res->output) != 0)
-		return (NULL);
+		return (ft_free_output_co(&res, &std_out_err));
 	if (ft_put_file_in_str(std_out_err->stderr[0], &res->error) != 0)
-		return (NULL);
+		return (ft_free_output_co(&res, &std_out_err));
 	if (!res->output && !res->error)
 		res->output = ft_strdup("");
 	waitpid(pid, 0, 0);

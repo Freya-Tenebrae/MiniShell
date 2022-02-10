@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:30:52 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/08 16:08:50 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:09:04 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,12 @@ char	*ft_keepinside_quote(char *str)
 		else if (ft_isquote(str[i]) && q != 0 && str[i] == q)
 			q = 0;
 		else if (q == 0 || str[i] != q)
+		{
 			ft_char_writeon(&res, str[i]);
+			if (res == NULL)
+				ft_put_error(GENERIC_ERROR, "malloc error");
+		}
+
 	}
 	return (res);
 }

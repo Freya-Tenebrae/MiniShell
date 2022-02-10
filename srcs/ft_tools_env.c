@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/09 03:51:33 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:14:26 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ t_env	**ft_init_env(char **envp)
 	{
 		res[i] = malloc(sizeof(t_env));
 		if (!res[i])
-			return (0);
-		res[i]->name = ft_str_before(envp[i], '=');
-		res[i]->value = ft_str_after(envp[i], '=');
+			return (NULL); // free res[]
+		res[i]->name = ft_str_before(envp[i], '='); // what happened if null ? (ft_put_error(GENERIC_ERROR, "malloc error");)
+		res[i]->value = ft_str_after(envp[i], '='); // what happened if null ? (ft_put_error(GENERIC_ERROR, "malloc error");)
 		i++;
 	}
 	res[i] = 0;
@@ -82,6 +82,8 @@ static void	ft_replace_env_p2(t_data **data, char *str, int *i, \
 		variable = ft_getenv(data, var);
 		if (variable)
 			ft_str_writeon(res, variable->value);
+		if (res == NULL)
+			ft_put_error(GENERIC_ERROR, "malloc error");
 		*i += (int) ft_strlen(var) + 1;
 		free(var);
 		var = NULL;
@@ -105,6 +107,8 @@ static void	ft_replace_env_p1(t_data **data, char *str, int *i, \
 		ft_replace_env_p2(data, str, i, res);
 	}
 	ft_char_writeon(res, (str)[*i]);
+	if (res == NULL)
+			ft_put_error(GENERIC_ERROR, "malloc error");
 	*i += 1;
 }
 
