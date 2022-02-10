@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/10 15:56:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/10 17:00:49 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,18 @@ static void	ft_exec_line(t_data **data, t_elem *list)
 		free(infile);
 }
 
-static int	ft_pars_line(t_data **data, char **str, int *ret, \
-																t_elem **list)
+static int ft_pipe_is_present_on_line(t_elem *list)
+{
+	while (list != NULL)
+	{
+		if (list->type == PIPE)
+			return (0);
+		list = list->next;
+	}
+	return (1);
+}
+
+static int	ft_pars_line(t_data **data, char **str, int *ret, t_elem **list)
 {
 	if (!ft_check_quote(*str))
 		return (ft_put_error(GENERIC_ERROR, "Quote error"));
@@ -44,8 +54,11 @@ void	ft_run_line(char **str, t_data **data)
 	int		res_pars_line;
 	t_elem	*list;
 
-	g_status_minishell = 1;
 	res_pars_line = ft_pars_line(data, str, &ret, &list);
+	if (ft_pipe_is_present_on_line(list) == 0)
+		g_status_minishell = 2;
+	else
+		g_status_minishell = 1;
 	if (res_pars_line == 0)
 	{
 		if (ft_check_syntaxe_operator(list) == 0)

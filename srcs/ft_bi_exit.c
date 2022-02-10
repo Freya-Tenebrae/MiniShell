@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 04:43:04 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/09 04:55:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/10 17:02:22 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,15 @@
 
 t_output	*ft_run_bi_exit(char *path, char **cmd_args, char *infile)
 {
-	g_status_minishell = -1;
-	// g_status_minishell : 0 = run | -1 = exit | other : if needed
+	if (g_status_minishell != 2)
+	{
+		g_status_minishell = -1;
+	}
+	// g_status_minishell :
+	//		-1 = exit
+	//		0 = run 
+	//		1 : running line witout pipe 
+	//		2 running line with pipe
 	(void)path;
 	(void)cmd_args;
 	(void)infile;
