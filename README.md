@@ -44,16 +44,13 @@ GAUTHIER
 
 CELIA
 - [ ] correct environment (check comment in ft_tools_env.c)
+- [x] correct small problem with history and signal (check rl rediplay and rl on new line)
 - [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
-- [ ] correct small problem with history and signal (check rl rediplay and rl on new line)
 
 MAYBE
-- [ ] correct priority in < and >
-
-POTENTIAL ERROR
-- [ ] erreur avec < et > (voic onvo avec gauthier le 5/2 a 20h00)
+- [ ] correct priority in < and > (check tchat with gauthier the 5/2 at 8pm)
 
 FINAL TASKS
 - [ ] norm
-- [ ] passer des testeur
-- [ ] check complet a 42, push du projet sur le github de l'intra, et testeur a 42
+- [ ] test
+- [ ] full check at 42

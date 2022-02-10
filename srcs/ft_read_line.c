@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 16:59:59 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/08 16:08:52 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:54:54 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ t_elem	*ft_read_line(char *str, int *ret)
 	{
 		*ret = ft_loop_read_line(&i, str, &buffer, &list);
 		if (i == -42)
+		{
 			return (NULL);
+		}
 	}
 	*ret = READ_OK;
 	return (list);

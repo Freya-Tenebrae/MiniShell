@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/09 04:50:55 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:53:06 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static void	ft_loop(t_data **data)
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
 		}
+		else if (g_status_minishell == 1)
+			g_status_minishell = 0;
 		str = readline("minishell~ ");
 		if (str == NULL)
 		{

@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/09 04:35:35 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:56:26 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_run_line(char **str, t_data **data)
 	int		res_pars_line;
 	t_elem	*list;
 
+	g_status_minishell = 1;
 	res_pars_line = ft_pars_line(data, str, &ret, &list);
 	if (res_pars_line == 0)
 	{
