@@ -47,12 +47,14 @@ CELIA
 - [x] correct small problem with history and signal (check rl rediplay and rl on new line)
 - [ ] put error file too long for redirection > and >>
 - [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it for :
-- read_cmd.c
-- recheck all (by forcing malloc error)
+- ft_tools_env.c
+- ft_quote.c and after
 
 MAYBE
 - [ ] correct priority in < and > (check tchat with gauthier the 5/2 at 8pm)
 - [ ] if ctrl-c is pressend when << is reading
+- [ ] changer tools error to send null or -1 and not only -1;
+- [ ] replace gnl on ft_tools_file_to_str by readline;
 
 FINAL TASKS
 - [ ] norm

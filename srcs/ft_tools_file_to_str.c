@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/10 18:01:51 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/11 17:18:49 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ static int	ft_fill_str_by_one_line(int i, char **line, char **str)
 		ft_str_writeon(str, *line);
 		if (*str == NULL)
 		{
-			ft_put_error(GENERIC_ERROR, "malloc error");
-			return (-1);
+			free(*line);
+			return (ft_put_error(GENERIC_ERROR, "malloc error"));
 		}
 		if (i == 1)
 		{
 			ft_char_writeon(str, '\n');
 			if (*str == NULL)
 			{
-				ft_put_error(GENERIC_ERROR, "malloc error");
-				return (-1);
+				free(*line);
+				return (ft_put_error(GENERIC_ERROR, "malloc error"));
 			}
 		}
 		free(*line);
@@ -55,6 +55,8 @@ int	ft_put_file_in_str(int fd, char **str)
 	{
 		line = NULL;
 		i = get_next_line(fd, &line);
+		if (i == -1)
+			return (ft_put_error(GENERIC_ERROR, "get_next_line error"));
 		if (ft_fill_str_by_one_line(i, &line, str) != 0)
 			return (-1);
 	}
@@ -72,6 +74,8 @@ int	ft_put_double_in_str(char *word, char **str)
 	{
 		line = NULL;
 		i = get_next_line(0, &line);
+		if (i == -1)
+			return (ft_put_error(GENERIC_ERROR, "get_next_line error"));
 		if (i != -1 && ft_strcmp(word, line) == 0)
 		{
 			free(line);

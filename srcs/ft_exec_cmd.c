@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/10 18:02:30 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/11 14:36:20 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,26 +65,26 @@ static int	ft_init_var(t_output **res, t_stdoutanderr **std_out_err)
 {
 	*res = malloc(sizeof(t_output));
 	if (!*res)
-		return (-1);
+		return (ft_put_error(GENERIC_ERROR, "malloc error"));
 	(*res)->output = NULL;
 	(*res)->error = NULL;
 	*std_out_err = malloc(sizeof(t_stdoutanderr));
 	if (!*std_out_err)
 	{
 		ft_free_output(res);
-		return (-1);
+		return (ft_put_error(GENERIC_ERROR, "malloc error"));
 	}
 	if (pipe((*std_out_err)->stdout) == -1)
 	{
 		ft_free_output(res);
 		free (*std_out_err);
-		return (-1);
+		return (ft_put_error(GENERIC_ERROR, "pipe error"));
 	}
 	if (pipe((*std_out_err)->stderr) == -1)
 	{
 		ft_free_output(res);
 		free (*std_out_err);
-		return (-1);
+		return (ft_put_error(GENERIC_ERROR, "pipe error"));
 	}
 	return (0);
 }

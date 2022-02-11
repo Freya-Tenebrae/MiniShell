@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/10 17:00:49 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/11 20:03:40 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_exec_line(t_data **data, t_elem *list)
 
 static int ft_pipe_is_present_on_line(t_elem *list)
 {
-	while (list != NULL)
+	while (list && list != NULL)
 	{
 		if (list->type == PIPE)
 			return (0);
@@ -44,7 +44,7 @@ static int	ft_pars_line(t_data **data, char **str, int *ret, t_elem **list)
 	*ret = 0;
 	*list = ft_read_line(*str, ret);
 	if (*list == NULL || *ret != READ_OK)
-		return (1);
+		return (ft_put_error(GENERIC_ERROR, "Reading line error"));
 	return (0);
 }
 
@@ -55,7 +55,7 @@ void	ft_run_line(char **str, t_data **data)
 	t_elem	*list;
 
 	res_pars_line = ft_pars_line(data, str, &ret, &list);
-	if (ft_pipe_is_present_on_line(list) == 0)
+	if (res_pars_line == 0 && ft_pipe_is_present_on_line(list) == 0)
 		g_status_minishell = 2;
 	else
 		g_status_minishell = 1;

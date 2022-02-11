@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:48:13 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:53 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:30:07 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ t_elem	*ft_put_args_in_cmd_args(t_elem *list, char ***cmd_args)
 	i = ft_lenght_args(list);
 	*cmd_args = malloc(sizeof(char *) * (i + 1));
 	if (!*cmd_args)
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
 		return (NULL);
+	}
 	i = 0;
 	while (list != NULL && list->type != PIPE)
 	{
@@ -48,7 +51,7 @@ t_elem	*ft_put_args_in_cmd_args(t_elem *list, char ***cmd_args)
 		else
 		{
 			(*cmd_args)[i++] = ft_strdup(list->str);
-			if ((*cmd_args)[i - 1] == NULL)
+			if (!(*cmd_args)[i - 1] || (*cmd_args)[i - 1] == NULL)
 			{
 				ft_put_error(GENERIC_ERROR, "malloc error");
 				return (NULL);

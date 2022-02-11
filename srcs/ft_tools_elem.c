@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 01:20:46 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/08 16:08:51 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:11:30 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@ t_elem	*ft_elem_create(char *str, int is_operator)
 	if (!str)
 	{
 		str = ft_strdup("");
-		if (!str)
+		if (!str || str == NULL)
+		{
+			ft_put_error(GENERIC_ERROR, "malloc error");
 			return (NULL);
+		}
 	}
 	type = ft_get_operator_type(str);
 	list_new = malloc(sizeof(t_elem));
 	if (!list_new)
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
 		return (NULL);
+	}
 	list_new->next = NULL;
 	list_new->str = str;
 	if (is_operator == 1)

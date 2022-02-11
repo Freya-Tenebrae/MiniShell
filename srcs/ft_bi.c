@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 18:45:07 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/09 04:44:23 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/11 14:29:27 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ static t_output	*ft_put_empty_output(void)
 	t_output	*out;
 
 	out = malloc(sizeof(t_output));
-	if (!out)
+	if (!out || out == NULL)
 	{
 		ft_put_error(GENERIC_ERROR, "Malloc error");
 		return (NULL);
 	}
 	out->error = NULL;
 	out->output = ft_strdup("");
-	if (!out->output)
+	if (!out->output || out->output == NULL)
 	{
 		ft_put_error(GENERIC_ERROR, "Malloc error");
 		ft_free_output(&out);
