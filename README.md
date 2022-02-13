@@ -45,10 +45,12 @@ GAUTHIER
 CELIA
 - [ ] correct environment (check comment in ft_tools_env.c)
 - [x] correct small problem with history and signal (check rl rediplay and rl on new line)
-- [ ] put error file too long for redirection > and >>
+- [x] put error file too long for redirection > and >>
+- [ ] correct error when a empty space is present at end line : an orror occured ... (line error)
 - [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it for :
-- ft_tools_env.c
-- ft_quote.c and after
+- ft_strs_replace.c --> crash l-67 (to fix)
+- ft_tools_env.c (do all doc)
+- ft_strs_create.c (do all doc)
 
 MAYBE
 - [ ] correct priority in < and > (check tchat with gauthier the 5/2 at 8pm)

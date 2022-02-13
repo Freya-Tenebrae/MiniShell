@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/10 18:23:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/13 07:54:41 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	**ft_str_clonetab(char **strs)
 		if (res[i] == NULL)
 		{
 			ft_put_error(GENERIC_ERROR, "malloc error");
+			ft_freestrs(&res);
 			return (NULL);
 		}
 		i++;

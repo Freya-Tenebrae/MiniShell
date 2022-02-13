@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:36:11 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 16:54:21 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/13 07:29:51 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static void	ft_put_error_next(int i, char *str)
 {
 	if (i == OPERATOR_ERROR)
 	{
-		ft_putstr_fd("minishell : Erreur de syntaxe près du ", STDERR_FILENO);
-		ft_putstr_fd("symbole inattendu « ", STDERR_FILENO);
+		ft_putstr_fd("minishell : Syntax error near symbol « ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putstr_fd(" »\n", STDERR_FILENO);
 	}
@@ -25,7 +24,13 @@ static void	ft_put_error_next(int i, char *str)
 	{
 		ft_putstr_fd("minishell : ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd(": Commande introuvable\n", STDERR_FILENO);
+		ft_putstr_fd(": Command not found\n", STDERR_FILENO);
+	}
+	if (i == FILENAME_TOO_LONG_ERROR)
+	{
+		ft_putstr_fd("minishell : Filename too long :", STDERR_FILENO);
+		ft_putstr_fd(str, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 	}
 }
 
@@ -41,13 +46,13 @@ int	ft_put_error(int i, char *str)
 	{
 		ft_putstr_fd("minishell : ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd(": Aucun fichier ou dossier de ce type\n", STDERR_FILENO);
+		ft_putstr_fd(": No such file or folder\n", STDERR_FILENO);
 	}
 	if (i == ACCESS_ERROR)
 	{
 		ft_putstr_fd("minishell : ", STDERR_FILENO);
 		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putstr_fd(": Permission non accordée\n", STDERR_FILENO);
+		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 	}
 	ft_put_error_next(i, str);
 	return (-1);

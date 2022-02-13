@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/09 04:50:57 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/13 07:25:34 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@
 # define CMD_NOT_FOUND_ERROR 2
 # define FILE_ERROR 3
 # define ACCESS_ERROR 4
+# define FILENAME_TOO_LONG_ERROR 5
 
 # define READ_OK 0
 # define READ_ERR -1
 # define READ_ALLOC_ERR -2
 # define READ_QUOTE_ERR -3
+
+# define N_MAC_CHAR_NAME_FILE 144
 
 /* ************************************************************************** */
 /*                                  TYPEDEF                                   */

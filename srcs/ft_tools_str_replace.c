@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/10 18:17:36 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/13 07:56:50 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ char	*ft_char_writeon(char **str, char c)
 	if (!(*str) || *str == NULL)
 	{
 		*str = ft_char_tostring(c);
+		if (!*str || *str == NULL)
+			return (NULL);
 		return (*str);
 	}
 	res = malloc((sizeof(char) * ft_strlen(*str)) + 2);
-	if (!res)
-	{
-		ft_put_error(GENERIC_ERROR, "malloc error");
+	if (!res || res == NULL)
 		return (NULL);
-	}
 	i = 0;
 	while ((*str)[i] != '\0')
 	{
@@ -59,15 +58,15 @@ char	*ft_str_writeon(char **str, char *to_add)
 	if (!(*str) || *str == NULL)
 	{
 		*str = ft_strdup(to_add);
+		if (!*str || *str == NULL)
+			return (NULL);
 		return (*str);
 	}
 	res = ft_strjoin(*str, to_add);
 	free(*str);
-	if (!res)
-	{
-		ft_put_error(GENERIC_ERROR, "malloc error");
+	// free(res);res = NULL; // fait crash
+	if (!res || res == NULL)
 		return (NULL);
-	}
 	*str = res;
 	return (res);
 }

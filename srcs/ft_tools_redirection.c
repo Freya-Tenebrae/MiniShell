@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/10 18:11:37 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/13 07:38:29 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ int	ft_redirection_out(t_elem *list)
 			file_out = ft_strdup(list->str);
 			if (file_out == NULL)
 				return (ft_put_error(GENERIC_ERROR, "malloc error"));
+			if (ft_strlen(file_out) > 255)
+			{
+				ft_put_error(FILENAME_TOO_LONG_ERROR, file_out);
+				free(file_out);
+				return (-1);
+			}
 			ft_open_fd(&fd, file_out, is_double_out);
 			free(file_out);
 			if (fd == -1)
@@ -68,7 +74,7 @@ void	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
 				free(file_in);
 			list = list->next;
 			*file_in = ft_strdup(list->str);
-			if (*file_in == NULL)
+			if (!*file_in || *file_in == NULL)
 				ft_put_error(GENERIC_ERROR, "malloc error");
 		}
 		list = list->next;
@@ -88,7 +94,10 @@ void	ft_in_on_infile(char *file_in, int is_double_in, char **infile)
 				*infile = NULL;
 		}
 		else
+		{
+			ft_put_error(GENERIC_ERROR, "file can't be oppened");
 			*infile = NULL;
+		}
 	}
 	else if (is_double_in == 1)
 	{

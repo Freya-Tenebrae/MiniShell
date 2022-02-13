@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/11 14:36:20 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/13 07:48:32 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	ft_exec_cmd_child(char *path, char **cmd_args, char *infile, \
 	{
 		ft_putstr_fd("minishell : ", (*std_out_err)->stderr[1]);
 		ft_putstr_fd(cmd_args[0], (*std_out_err)->stderr[1]);
-		ft_putstr_fd(" : commande introuvable\n", (*std_out_err)->stderr[1]);
+		ft_putstr_fd(" : Command not found\n", (*std_out_err)->stderr[1]);
 	}
 	else if (result_execve == -1)
 		ft_putstr_fd("malloc error", (*std_out_err)->stderr[1]);
