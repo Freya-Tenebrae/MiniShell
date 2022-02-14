@@ -53,6 +53,7 @@ CELIA
 
 MAYBE
 - [ ] correct priority in < and > (check discord with gauthier the 5/2 at 8pm)
+- [ ] did > and >> can work on $var ?!
 
 FINAL TASKS
 - [ ] test
