@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/11 20:03:40 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 19:14:41 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	ft_exec_line(t_data **data, t_elem *list)
 		free(infile);
 }
 
-static int ft_pipe_is_present_on_line(t_elem *list)
+static int	ft_pipe_is_present_on_line(t_elem *list)
 {
 	while (list && list != NULL)
 	{

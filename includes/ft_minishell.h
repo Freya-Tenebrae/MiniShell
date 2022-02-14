@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/14 05:24:01 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 17:43:55 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ typedef struct s_data {
 /*                                  GLOBAL                                    */
 /* ************************************************************************** */
 int			g_status_minishell;
+// g_status_minishell == -1 : minishell must exit
+// g_status_minishell == 0  : minishell is running
+// g_status_minishell == 1  : minishell is executing a line without pipe
+// g_status_minishell == 2  : minishell is executing a line with a pipe
+// g_status_minishell == 3  : minishell'll force brocking a loop
 
 /* ************************************************************************** */
 /*                                  FONCTION                                  */

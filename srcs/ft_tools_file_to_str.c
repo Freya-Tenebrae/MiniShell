@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/14 02:59:05 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 17:48:21 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,18 @@ int	ft_put_file_in_str(int fd, char **str)
 int	ft_put_double_in_str(char *word, char **str)
 {
 	char	*line;
-	int		i;
 
-	i = 1;
-	while (i == 1)
+	while (42 == 42)
 	{
-		line = NULL;
-		i = get_next_line(0, &line);
-		if (i == -1)
-			return (ft_put_error(GENERIC_ERROR, "get_next_line error"));
-		if (i != -1 && ft_strcmp(word, line) == 0)
+		line = readline("> ");
+		if (line == NULL)
+			return (ft_put_error(GENERIC_ERROR, "readline error"));
+		if (ft_strcmp(word, line) == 0)
 		{
 			free(line);
 			return (0);
 		}
-		if (ft_fill_str_by_one_line(i, &line, str) != 0)
+		if (ft_fill_str_by_one_line(1, &line, str) != 0)
 			return (-1);
 	}
 	ft_free_str_if_empty(str);

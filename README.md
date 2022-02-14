@@ -47,13 +47,14 @@ CELIA
 - [x] put error file too long for redirection > and >>
 - [x] correct error when a empty space is present at end line : an orror occured ... (line error)
 - [x] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it\
-- [ ] replace gnl on ft_tools_file_to_str by readline; (for ctrl-c handling and to put a '> ' before when << is used) (and to let ctrl-c be possible)
+- [x] replace gnl on ft_tools_file_to_str by readline; (for ctrl-c handling and to put a '> ' before when << is used)
 - [ ] correct environment (check comment in ft_tools_env.c) and check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
 - [ ] norm all file modified for protection malloc (and change tools error to send null or -1 and not only -1 too save lines)
 
 MAYBE
 - [ ] correct priority in < and > (check discord with gauthier the 5/2 at 8pm)
 - [ ] did > and >> can work on $var ?!
+- [ ] make ctrl-c work for reading of <<
 
 FINAL TASKS
 - [ ] test

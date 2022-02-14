@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/14 04:54:40 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 19:19:31 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ static void	ft_replace_env_p1(t_data **data, char *str, int *i, \
 	}
 	ft_char_writeon(res, (str)[*i]);
 	if (res == NULL)
-			ft_put_error(GENERIC_ERROR, "malloc error");
+		ft_put_error(GENERIC_ERROR, "malloc error");
 	*i += 1;
 }
 
