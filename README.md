@@ -46,9 +46,9 @@ CELIA
 - [x] correct small problem with history and signal (check rl rediplay and rl on new line)
 - [x] put error file too long for redirection > and >>
 - [x] correct error when a empty space is present at end line : an orror occured ... (line error)
-- [ ] correct environment (check comment in ft_tools_env.c) and check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
-- [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
+- [x] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it\
 - [ ] replace gnl on ft_tools_file_to_str by readline; (for ctrl-c handling and to put a '> ' before when << is used) (and to let ctrl-c be possible)
+- [ ] correct environment (check comment in ft_tools_env.c) and check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
 - [ ] norm all file modified for protection malloc (and change tools error to send null or -1 and not only -1 too save lines)
 
 MAYBE
