@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/11 15:26:49 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 07:31:24 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ static void	ft_redirection_cmd(t_data **data, t_output **out, \
 	ft_redirection_in(*list, &file_in, &is_double_in);
 	if (file_in != NULL)
 	{
+		if (*infile && *infile != NULL)
+			free(*infile);
+		*infile = NULL;
 		ft_in_on_infile(file_in, is_double_in, infile);
 		free(file_in);
 	}
