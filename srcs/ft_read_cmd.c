@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/14 06:04:42 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 07:18:53 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	ft_read_next_if_argument_or_command(char *str, int i, char **buffer)
 	while (str[i])
 	{
 		ft_check_if_start_or_end_quote(str, i, &quote, &in_quote);
-		if (!ft_iswhitespace(str[i]) || in_quote % 2 != 0)
+		if (ft_iswhitespace(str[i]) != 1 || in_quote % 2 != 0)
 		{
 			if (!ft_char_writeon(buffer, str[i]))
 				return (READ_ALLOC_ERR);
@@ -71,7 +71,7 @@ int	ft_read_cmd(char *str, int i, char **buffer, int *is_operator)
 
 	if (!str)
 		return (READ_ERR);
-	while (str[i] && ft_iswhitespace(str[i]))
+	while (str[i] && ft_iswhitespace(str[i]) == 1)
 		i++;
 	if (ft_char_isoperator(str[i]))
 	{
