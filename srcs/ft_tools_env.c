@@ -6,13 +6,27 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/10 18:14:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 04:54:40 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
 /* Renvoie un tableau de t_env depuis l'envp. */
+
+void	ft_free_envs(t_env ***env, int i)
+{
+	while (i >= 0)
+	{
+		if ((*env)[i] && (*env)[i] != NULL)
+		{
+			ft_free_env(&((*env)[i]));
+			//free((*env)[i]);
+		}
+		i--;
+	}
+	free(*env);
+}
 
 t_env	**ft_init_env(char **envp)
 {
@@ -30,9 +44,28 @@ t_env	**ft_init_env(char **envp)
 	{
 		res[i] = malloc(sizeof(t_env));
 		if (!res[i])
-			return (NULL); // free res[]
-		res[i]->name = ft_str_before(envp[i], '='); // what happened if null ? (ft_put_error(GENERIC_ERROR, "malloc error");)
-		res[i]->value = ft_str_after(envp[i], '='); // what happened if null ? (ft_put_error(GENERIC_ERROR, "malloc error");)
+		{
+			ft_free_envs(&res, i - 1);
+			ft_put_error(GENERIC_ERROR, "malloc error");
+			return (NULL);
+		}
+		res[i]->name = ft_str_before(envp[i], '=');
+		if (!res[i]->name || res[i]->name == NULL)
+		{
+			free(res[i]);
+			ft_free_envs(&res, i - 1);
+			ft_put_error(GENERIC_ERROR, "malloc error");
+			return (NULL);
+		}
+		res[i]->value = ft_str_after(envp[i], '=');
+		if (!res[i]->value || res[i]->value == NULL)
+		{
+			free(res[i]->name);
+			free(res[i]);
+			ft_free_envs(&res, i - 1);
+			ft_put_error(GENERIC_ERROR, "malloc error");
+			return (NULL);
+		}
 		i++;
 	}
 	res[i] = 0;

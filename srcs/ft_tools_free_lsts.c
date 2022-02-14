@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:57 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 03:29:27 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	ft_free_env(t_env **env)
 {
 	if (env != NULL && *env != NULL)
 	{
-		if ((*env)->value != NULL)
+		if ((*env)->value && (*env)->value != NULL)
 			free((*env)->value);
-		if ((*env)->name != NULL)
+		if ((*env)->value && (*env)->name != NULL)
 			free((*env)->name);
 		free(*env);
 	}

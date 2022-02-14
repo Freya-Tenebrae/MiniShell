@@ -43,22 +43,17 @@ GAUTHIER
 - [ ] make build-in
 
 CELIA
-- [ ] correct environment (check comment in ft_tools_env.c)
 - [x] correct small problem with history and signal (check rl rediplay and rl on new line)
 - [x] put error file too long for redirection > and >>
-- [ ] correct error when a empty space is present at end line : an orror occured ... (line error)
-- [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it for :
-- ft_strs_replace.c --> crash l-67 (to fix)
-- ft_tools_env.c (do all doc)
-- ft_strs_create.c (do all doc)
+- [x] correct error when a empty space is present at end line : an orror occured ... (line error)
+- [ ] correct environment (check comment in ft_tools_env.c) and check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
+- [ ] check if all memory allocation when using function like ft_strdup are protected and unleakable, else do it
+- [ ] replace gnl on ft_tools_file_to_str by readline; (for ctrl-c handling and to put a '> ' before when << is used) (and to let ctrl-c be possible)
+- [ ] norm all file modified for protection malloc (and change tools error to send null or -1 and not only -1 too save lines)
 
 MAYBE
-- [ ] correct priority in < and > (check tchat with gauthier the 5/2 at 8pm)
-- [ ] if ctrl-c is pressend when << is reading
-- [ ] changer tools error to send null or -1 and not only -1;
-- [ ] replace gnl on ft_tools_file_to_str by readline;
+- [ ] correct priority in < and > (check discord with gauthier the 5/2 at 8pm)
 
 FINAL TASKS
-- [ ] norm
 - [ ] test
 - [ ] full check at 42

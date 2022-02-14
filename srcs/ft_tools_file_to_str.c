@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/11 17:18:49 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 02:59:05 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_fill_str_by_one_line(int i, char **line, char **str)
 	if (i != -1)
 	{
 		ft_str_writeon(str, *line);
-		if (*str == NULL)
+		if (!*str || *str == NULL)
 		{
 			free(*line);
 			return (ft_put_error(GENERIC_ERROR, "malloc error"));

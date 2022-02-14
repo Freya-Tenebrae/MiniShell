@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:30:52 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/13 06:45:38 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 06:01:49 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ char	*ft_keepinside_quote(char *str)
 	int		strlen;
 
 	if (!str)
+	{
 		return (NULL);
+	}
 	if (ft_strcmp(str, "''") == 0 || ft_strcmp(str, "\"\"") == 0)
 		return (ft_return_empty_str());
 	res = NULL;

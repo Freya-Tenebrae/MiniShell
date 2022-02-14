@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/13 07:56:50 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 03:08:59 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,9 @@ char	*ft_str_writeon(char **str, char *to_add)
 		return (*str);
 	}
 	res = ft_strjoin(*str, to_add);
-	free(*str);
-	// free(res);res = NULL; // fait crash
 	if (!res || res == NULL)
 		return (NULL);
+	free(*str);
 	*str = res;
 	return (res);
 }

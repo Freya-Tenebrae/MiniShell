@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/10 18:15:42 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 05:23:50 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 char	*ft_str_before(char *str, char c)
 {
-	char	*dst;
+	char	*res;
 	int		l;
 	int		i;
 
@@ -26,17 +26,17 @@ char	*ft_str_before(char *str, char c)
 	l = 0;
 	while (str[l] && str[l] != c)
 		++l;
-	dst = malloc(l + 1);
-	if (!dst)
+	res = malloc(l + 1);
+	if (!res)
 		return (NULL);
 	i = 0;
 	while (str[i] && i < l)
 	{
-		dst[i] = str[i];
+		res[i] = str[i];
 		++i;
 	}
-	dst[i] = 0;
-	return (dst);
+	res[i] = 0;
+	return (res);
 }
 
 /* Récupère tout ce qui se trouve après le premier caractère c dans */
@@ -77,34 +77,11 @@ char	*ft_char_tostring(char c)
 
 	str = malloc(sizeof(char) * 2);
 	if (!str)
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
 		return (NULL);
+	}
 	str[0] = c;
 	str[1] = '\0';
 	return (str);
-}
-
-/* Alloue une chaine de caractère qui se trouve entre begin et */
-/* end, dans la chaine str. */
-
-char	*ft_str_substring(char *str, int begin, int end)
-{
-	char	*res;
-	int		i;
-
-	res = 0;
-	i = begin;
-	if (!str)
-		return (NULL);
-	if (begin >= (int) ft_strlen(str) || end >= (int) ft_strlen(str) || \
-		begin < 0 || end < 0)
-		return (NULL);
-	if (begin > end)
-		return (NULL);
-	while (str[i] && i < end)
-	{
-		ft_char_writeon(&res, str[i]);
-		i++;
-	}
-	return (res);
-	// fonction to delete if stayed unused
 }

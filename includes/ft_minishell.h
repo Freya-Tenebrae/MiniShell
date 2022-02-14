@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/13 07:25:34 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 05:24:01 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ int			ft_str_lastindexof(char *str, int from, char c);
 int			ft_iswhitespace(char c);
 char		*ft_str_before(char *str, char c);
 char		*ft_str_after(char *str, char c);
-char		*ft_str_substring(char *str, int begin, int end);
 char		*ft_str_writeon(char **str, char *to_add);
 char		*ft_char_writeon(char **str, char c);
 char		*ft_char_tostring(char c);

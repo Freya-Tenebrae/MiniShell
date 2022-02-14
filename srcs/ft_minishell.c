@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/11 14:42:06 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/14 03:32:23 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,19 @@ static int	ft_init_minishell_data(t_data **data, char **envp)
 		return (ft_put_error(GENERIC_ERROR, "malloc error"));
 	}
 	(*data)->env = ft_init_env(envp);
+	if (!(*data)->env || (*data)->env == NULL)
+	{
+		ft_free_data(data);
+		return (ft_put_error(GENERIC_ERROR, \
+										"environment initialisation error"));
+	}
 	(*data)->path = ft_getenv(data, "PATH")->value;
+	if (!(*data)->path || (*data)->path == NULL)
+	{
+		ft_free_data(data);
+		return (ft_put_error(GENERIC_ERROR, \
+										"environment initialisation error"));
+	}
 	return (0);
 }
 
