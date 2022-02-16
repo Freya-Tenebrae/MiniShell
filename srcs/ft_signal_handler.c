@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:09:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/14 17:48:05 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/16 14:08:55 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_signal_handler(int signal)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		if (g_status_minishell == 0)
+		if (g_status_minishell <= 0)
 			rl_redisplay();
 	}
 	else if (signal == SIGQUIT)
