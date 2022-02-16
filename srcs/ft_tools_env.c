@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/15 16:59:48 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/16 08:27:21 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ t_env	**ft_init_env(char **envp)
 		i++;
 	res = malloc(sizeof(t_env) * (i + 1));
 	if (!res)
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
 		return (0);
+	}
 	i = 0;
 	while (envp[i])
 	{
@@ -80,7 +83,7 @@ t_env	*ft_getenv(t_data **data, char *str)
 	int	i;
 
 	if (!str)
-		return (0);
+		return (NULL);
 	i = 0;
 	while ((*data)->env[i])
 	{
@@ -88,7 +91,7 @@ t_env	*ft_getenv(t_data **data, char *str)
 			return ((*data)->env[i]);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
 void	ft_replace_env(t_data **data, char **str)
@@ -98,11 +101,13 @@ void	ft_replace_env(t_data **data, char **str)
 	char	*var;
 	int		i;
 	int		j;
+	t_env * variable;
 
 	i = 0;
 	var = 0;
-	res = 0;
+	res = NULL;
 	quote = 0;
+	variable = NULL;
 	if (!str || !*str)
 		return ;
 	while (i < (int) ft_strlen(*str) && (*str)[i])
@@ -123,19 +128,42 @@ void	ft_replace_env(t_data **data, char **str)
 				if ((*str)[i] == '$' && (!quote || quote != '\''))
 				{
 					j = i + 1;
-					t_env * variable = 0;
 					while ((*str)[j] && (ft_isalnum((*str)[j]) || (*str)[j] == '_'))
 					{
-						ft_char_writeon( & var, (*str)[j]);
+						ft_char_writeon(&var, (*str)[j]);
+						if (!var || var == NULL)
+						{
+							ft_put_error(GENERIC_ERROR, "malloc error");
+							ft_put_error(GENERIC_ERROR, "environnement error");
+							return ;
+						}
 						if (ft_getenv(data, var) != 0)
+						{
 							variable = ft_getenv(data, var);
+							if (!variable || variable == NULL)
+							{
+								ft_put_error(GENERIC_ERROR, "malloc error");
+								ft_put_error(GENERIC_ERROR, "environnement error");
+								return ; // erreur susceptible de faire crash
+							}
+						}
 						j++;
 					}
 					if (var)
 					{
 						variable = ft_getenv(data, var);
-						if (variable)
-							ft_str_writeon( & res, variable->value);
+						if (!variable || variable == NULL)
+						{
+							ft_put_error(GENERIC_ERROR, "environnement error");
+							return ;
+						}
+						ft_str_writeon(&res, variable->value);
+						if (!res || res == NULL)
+						{
+							ft_put_error(GENERIC_ERROR, "malloc error");
+							ft_put_error(GENERIC_ERROR, "environnement error");
+							return ;
+						}
 						i += (int) ft_strlen(var) + 1;
 						var = 0;
 						continue ;
@@ -143,7 +171,13 @@ void	ft_replace_env(t_data **data, char **str)
 				}
 			}
 		}
-		ft_char_writeon( & res, (*str)[i]);
+		ft_char_writeon(&res, (*str)[i]);
+		if (!res || res == NULL)
+		{
+			ft_put_error(GENERIC_ERROR, "malloc error");
+			ft_put_error(GENERIC_ERROR, "environnement error");
+			return ;
+		}
 		i++;
 	}
 	free(*str);

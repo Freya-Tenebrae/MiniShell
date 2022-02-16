@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/14 03:29:27 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/16 08:22:53 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_free_elem(t_elem **elem)
 
 void	ft_free_output(t_output **output)
 {
-	if (output != NULL && *output != NULL)
+	if (output && output != NULL && *output != NULL)
 	{
 		if ((*output)->output != NULL)
 			free((*output)->output);
@@ -44,7 +44,7 @@ void	ft_free_output(t_output **output)
 
 void	ft_free_env(t_env **env)
 {
-	if (env != NULL && *env != NULL)
+	if (env && env != NULL && *env != NULL)
 	{
 		if ((*env)->value && (*env)->value != NULL)
 			free((*env)->value);
