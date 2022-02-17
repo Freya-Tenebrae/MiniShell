@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/09 17:06:28 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/17 17:25:42 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,13 @@ t_output	*ft_run_bi_env(t_data **data, char *path, char **cmd_args, \
 		return (NULL);
 	while (((*data)->env)[i])
 	{
-		ft_str_writeon(&res->output, ((*data)->env)[i]->name);
-		ft_char_writeon(&res->output, '=');
-		ft_str_writeon(&res->output, ((*data)->env)[i]->value);
-		ft_char_writeon(&res->output, '\n');
+		if (((*data)->env)[i]->value)
+		{
+				ft_str_writeon(&res->output, ((*data)->env)[i]->name);
+			ft_char_writeon(&res->output, '=');
+			ft_str_writeon(&res->output, ((*data)->env)[i]->value);
+			ft_char_writeon(&res->output, '\n');	
+		}
 		i++;
 	}
 	return (res);

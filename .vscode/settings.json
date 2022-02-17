@@ -44,6 +44,8 @@
 		"__functional_base_03": "c",
 		"chrono": "c",
 		"limits": "c",
-		"ratio": "c"
+		"ratio": "c",
+		"__node_handle": "c",
+		"__memory": "c"
 	}
 }

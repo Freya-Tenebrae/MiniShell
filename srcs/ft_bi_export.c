@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/16 18:00:09 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/17 14:41:30 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,29 @@ t_output	*ft_show_env(t_data **data)
 	{
 		ft_str_writeon(&res->output, "export ");
 		ft_str_writeon(&res->output, ((*data)->env)[i]->name);
-		ft_str_writeon(&res->output, "=\"");
-		ft_str_writeon(&res->output, ((*data)->env)[i]->value);
-		ft_str_writeon(&res->output, "\"\n");
+		if (((*data)->env)[i]->value)
+		{
+			ft_str_writeon(&res->output, "=\"");
+			ft_str_writeon(&res->output, ((*data)->env)[i]->value);
+			ft_str_writeon(&res->output, "\"");
+		}
+		ft_str_writeon(&res->output, "\n");
 		i++;
 	}
 	return (res);
+}
+
+void	ft_putenv(t_env **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		ft_putstr(env[i]->name);
+		ft_putstr("\n");
+		i++;
+	}
 }
 
 int		ft_is_valid_identifier(char *str)
@@ -63,46 +80,153 @@ int		ft_is_valid_identifier(char *str)
     return (1);
 }
 
-void	ft_add_variable(t_data **data, char *identifier, char *value)
+void	ft_free_variable(t_env *env)
 {
-	(void) data;
-	ft_putstr(identifier);
-	ft_putstr(":'");
-	if (value)
-		ft_putstr(value);
-	ft_putstr("'\n");
+	if (!env)
+		return ;
+	free(env->name);
+	if (env->value)
+		free(env->value);
+	free(env);
 }
 
-void	ft_fill(t_output *res, char **cmd_args, t_data **data)
+t_env	*ft_create_variable(char *name, char *value)
 {
-	char		*identifier;
-	int			i;
+	t_env	*res;
+
+	res = malloc(sizeof(t_env));
+	if (!res)
+		return (0);
+	res->name = name;
+	res->value = value;
+	return (res);
+}
+
+t_env	*ft_clone_variable(t_env *env)
+{
+	char	*value;
+	char	*name;
+	t_env	*res;
 	
+	name = ft_strdup(env->name);
+	if (!name)
+		return (0);
+	value = 0;
+	if (env->value)
+	{
+		value = ft_strdup(env->value);
+		if (!value)
+			return (0);
+	}
+	res = ft_create_variable(name, value);
+	if (!res)
+		return (0);
+	return (res);
+}
+
+int		ft_env_tab_len(t_env **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return (0);
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+t_env	**ft_clone_and_add_env(t_env **env, t_env *variable)
+{
+	t_env	**res;
+	int		j;
+	
+	j = 0;
+	if (!variable)
+		return (0);
+	res = malloc(sizeof(t_env) * (ft_env_tab_len(env) + 2));
+	if (!res)
+		return (0);
+	while (env[j])
+	{
+		res[j] = ft_clone_variable(env[j]);
+		if (!res[j])
+		{
+			ft_free_env(res);
+			return (0);
+		}
+		j++;
+	}
+	res[j] = variable;
+	res[j + 1] = 0;
+	return (res);
+}
+
+int		ft_try_replace(t_data **data, t_env *variable)
+{
+	t_env	*existing;
+
+	existing = ft_getenv(data, variable->name);
+	if (!existing || !variable->value)
+		return (0);
+	if (existing->value)
+	{
+		existing->value = 0;
+		free(existing->value);
+	}
+	if (variable->value)
+		existing->value = variable->value;
+	free(variable);
+	return (1);
+}
+
+int		ft_add_variable(t_data **data, t_env *variable)
+{
+	t_env	**copy;
+	
+	if (ft_try_replace(data, variable))
+		return (1);
+
+	copy = ft_clone_and_add_env((*data)->env, variable);
+	if (!copy)
+		return (0);
+
+	ft_free_env((*data)->env);
+	(*data)->env = copy;
+	return (1);
+}
+
+int		ft_fill(t_output *res, char **cmd_args, t_data **data)
+{
+	t_env	*variable;
+	int		i;
+
 	i = 1;
 	while (cmd_args[i])
 	{
-		identifier = ft_str_before(cmd_args[i], '=');
-		if (!identifier || ft_strlen(identifier) == 0)
-		{
-			free(identifier);
-			identifier = ft_strdup(cmd_args[i]);
-		}
-		if (!ft_is_valid_identifier(identifier))
+		variable = ft_create_variable(ft_str_before(cmd_args[i], '='), NULL);
+		if (!variable)
+			return (0);
+		if (!ft_is_valid_identifier(variable->name))
+			variable->name = ft_strdup(cmd_args[i]);
+		if (!ft_is_valid_identifier(variable->name))
 		{
 			res->output = NULL;
 			ft_str_writeon(&res->error, "minishell: export: `");
-			ft_str_writeon(&res->error, identifier);
+			ft_str_writeon(&res->error, variable->name);
 			ft_str_writeon(&res->error, "': not a valid identifier\n");
+			ft_free_variable(variable);
 		}
 		else
 		{
 			if (ft_str_indexof(cmd_args[i], '=') != -1)
-				ft_add_variable(data, identifier, ft_str_after(cmd_args[i], '='));
-			else
-				ft_add_variable(data, identifier, 0);
+				variable->value = ft_str_after(cmd_args[i], '=');
+			if (!ft_add_variable(data, variable))
+				return (0);
 		}
 		i++;
 	}
+	return (1);
 }
 
 t_output	*ft_run_bi_export(t_data **data, char *path, char **cmd_args, char *infile)
@@ -115,17 +239,25 @@ t_output	*ft_run_bi_export(t_data **data, char *path, char **cmd_args, char *inf
 		return (ft_show_env(data));
 	res = malloc(sizeof(t_output));
 	if (!res)
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
 		return (0);
+	}
 	res->error = 0;
 	res->output = 0;
-	ft_fill(res, cmd_args, data);
+	if (!ft_fill(res, cmd_args, data))
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
+		return (0);
+	}
 	if (!res->error)
 	{
-		res->output = ft_strdup("");
 		res->error = NULL;
+		res->output = ft_strdup("");
 		if (!res->output)
 		{
 			free(res);
+			ft_put_error(GENERIC_ERROR, "malloc error");
 			return (0);
 		}
 	}
