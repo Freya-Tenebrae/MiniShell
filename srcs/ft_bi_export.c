@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/17 14:41:30 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/17 18:35:11 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,6 @@ t_output	*ft_show_env(t_data **data)
 		i++;
 	}
 	return (res);
-}
-
-void	ft_putenv(t_env **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		ft_putstr(env[i]->name);
-		ft_putstr("\n");
-		i++;
-	}
 }
 
 int		ft_is_valid_identifier(char *str)

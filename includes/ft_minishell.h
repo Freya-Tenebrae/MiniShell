@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/14 17:43:55 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/17 18:29:18 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,13 @@ char		*ft_char_writeon(char **str, char c);
 char		*ft_char_tostring(char c);
 char		**ft_str_clonetab(char **strs);
 void		ft_freestrs(char ***strs);
+
+int			ft_is_valid_identifier(char *str);
+int			ft_str_equal(char *s1, char *s2);
+int			ft_env_tab_len(t_env **tab);
+t_env		*ft_clone_variable(t_env *env);
+t_env		*ft_create_variable(char *name, char *value);
+void		ft_free_variable(t_env *env);
 
 /* ************************************************************************** */
 /*                                    END                                     */
