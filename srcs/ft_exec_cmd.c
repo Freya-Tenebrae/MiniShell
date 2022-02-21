@@ -6,12 +6,13 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/13 07:48:32 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/21 19:26:25 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
+// va remplir std_in par le contenus de infile
 static void	ft_fill_stdin(char *infile, t_stdoutanderr **std_out_err)
 {
 	int	input[2];
@@ -36,6 +37,9 @@ static void	ft_fill_stdin(char *infile, t_stdoutanderr **std_out_err)
 	}
 }
 
+// va lance l'execution d'execve, et gerer le cas ou execve renverrais 
+//		une erreur (ex cmd not found)
+// va egalement apeller ft_fill_stdin pour remplir std_in
 static void	ft_exec_cmd_child(char *path, char **cmd_args, char *infile, \
 								t_stdoutanderr **std_out_err)
 {
@@ -61,6 +65,8 @@ static void	ft_exec_cmd_child(char *path, char **cmd_args, char *infile, \
 	exit(0);
 }
 
+// va initialiser les variable necessaire a exec_cmd
+//		initilise res (t_output) et le pipe std_out_err
 static int	ft_init_var(t_output **res, t_stdoutanderr **std_out_err)
 {
 	*res = malloc(sizeof(t_output));
@@ -89,6 +95,7 @@ static int	ft_init_var(t_output **res, t_stdoutanderr **std_out_err)
 	return (0);
 }
 
+// va free t_output, le pipe std_out_err et return NULL
 static t_output	*ft_free_output_co(t_output **res, t_stdoutanderr **std_out_err)
 {
 	ft_free_output(res);
@@ -96,6 +103,8 @@ static t_output	*ft_free_output_co(t_output **res, t_stdoutanderr **std_out_err)
 	return (NULL);
 }
 
+// va mettre en place fork, se gestion, la gestion des pipe et des return
+//		(t_output ou NULL en cas d'erreur)
 t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile)
 {
 	t_output		*res;

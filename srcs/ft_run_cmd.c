@@ -6,12 +6,15 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 00:54:38 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/14 07:31:24 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/21 19:00:05 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
+// va gerer les redirections in et recuprer l'output de l'execution des
+// build-in (ft_run_bi()) et de ft_exec_cmd().
+//		-infile ne sera uniquement modifier si un input < ou << a lieu
 static void	ft_redirection_cmd(t_data **data, t_output **out, \
 												t_elem **list, char **infile)
 {
@@ -41,6 +44,9 @@ static void	ft_redirection_cmd(t_data **data, t_output **out, \
 	ft_freestrs(&cmd_args);
 }
 
+// va initialiser des valeur ncessaire a run_cmd : verifi si les
+//	acces au fichier en redirections (< << > >>) sont correctes, et
+//	ouvre un fd pour les redirections > et >>
 static int	ft_init_run_cmd(t_elem **list, int *fd, char **infile)
 {
 	if (ft_check_access_ok(*list) != 0)
@@ -66,6 +72,9 @@ static int	ft_init_run_cmd(t_elem **list, int *fd, char **infile)
 	return (0);
 }
 
+
+// va gerer les redirections de l'output dans le cas d'un output correct 
+//		n'etant pas un output d'erreur
 static int	ft_manage_correct_output_run_cmd(t_output **out, \
 										t_elem **list, int fd, char **infile)
 {
@@ -95,6 +104,9 @@ static int	ft_manage_correct_output_run_cmd(t_output **out, \
 	return (0);
 }
 
+// va verifier si l'output est de la bonne forme, puis va apeller 
+//		ft_manage_correct_output_run_cmd si l'output n'est pas un
+//		output d'error
 static int	ft_check_error_and_exec_correct_output(t_output **out, \
 										t_elem **list, int fd, char **infile)
 {
@@ -118,6 +130,12 @@ static int	ft_check_error_and_exec_correct_output(t_output **out, \
 	return (1);
 }
 
+// effectue de la gestion d'erreur (ft_init_run_cmd), execute une commande 
+//		(jusqu'au prochain pipe ou a la fin de list), et return la position apres
+//		ce pipe (ou NULL si fin de la ligne). Permet l'affichage d'une erreur dans 
+//		le cas d'une erreur envoyer via l'output (ex cmd not found)
+// va galement gerer les redirection in lors de l'execution (ft_redirection_cmd)
+//		et out (ft_check_error_and_exec_correct_output)
 t_elem	*ft_run_cmd(t_data **data, t_elem *list, char **infile)
 {
 	t_output	*out;

@@ -6,12 +6,14 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/14 19:14:41 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/21 19:00:22 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
+
+// va lancer l'execution de chaque commande par la fonction ft_run_cmd
 static void	ft_exec_line(t_data **data, t_elem *list)
 {
 	t_elem	*listptr;
