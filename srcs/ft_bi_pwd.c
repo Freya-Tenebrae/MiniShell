@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:32 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/04 14:37:46 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:37:34 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,33 @@
 
 t_output	*ft_run_bi_pwd(char *path, char **cmd_args, char *infile)
 {
-	(void)path;
-	(void)cmd_args;
-	(void)infile;
-	return (NULL);
+	char  *pwd;
+	t_output *out;
+
+	(void) path;
+	(void) cmd_args;
+	(void) infile;
+	pwd = NULL;
+	out = malloc(sizeof(t_output));
+	if (!out || out == NULL)
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
+		return (0);
+	}
+	pwd = getcwd(pwd, 0);
+	if (!pwd || pwd == NULL)
+	{
+		out->output = NULL;
+		out->error = ft_strdup("minishell: pwd: null"); // function to put a message error on *out
+		if (!pwd || pwd == NULL)
+		{
+			free(out);
+			ft_put_error(GENERIC_ERROR, "malloc error");
+			return (0);
+		}
+	}
+	ft_char_writeon(&pwd, '\n');
+	out->error = NULL;
+	out->output = pwd;
+	return (out);
 }
