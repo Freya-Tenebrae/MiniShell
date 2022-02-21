@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:32 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/21 14:37:34 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:47:18 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_output	*ft_run_bi_pwd(char *path, char **cmd_args, char *infile)
 	if (!pwd || pwd == NULL)
 	{
 		out->output = NULL;
-		out->error = ft_strdup("minishell: pwd: null"); // function to put a message error on *out
+		out->error = ft_strdup("minishell: pwd: null");
 		if (!pwd || pwd == NULL)
 		{
 			free(out);
