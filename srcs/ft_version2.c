@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_version2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/24 18:27:10 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/24 19:08:05 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,14 +155,18 @@ void    ft_execute_command(t_data **data, t_elem *list, char **envp)
 	pid = 0;
     if (!ft_there_is_pipe(list))
    	{
-	   	pid = fork();
+   		// if (is_build_in)
+   			// run_bi
+   		// else
+		pid = fork();
 		if (pid == 0)
 		{
-			// get_redirection_in
 			char **args = ft_elem_get_cmd_args(data, list);
 			if (!args)
 				return ;
+			// ft_replace_in_by_redtirection_in();
 			ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, args);
+			// ft_replace_out_by_redtirection_out();
 		}
 		else
 			waitpid(pid, 0, 0); // Add flags
