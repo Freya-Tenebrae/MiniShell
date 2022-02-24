@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/17 18:29:18 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/24 17:56:26 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ typedef struct s_data {
 	char			*path;
 	t_env			**env;
 }					t_data;
+
+typedef struct s_redir {
+	char			*file;
+	int				type;
+}					t_redir;
 
 /* ************************************************************************** */
 /*                                  GLOBAL                                    */
@@ -172,6 +177,8 @@ int			ft_env_tab_len(t_env **tab);
 t_env		*ft_clone_variable(t_env *env);
 t_env		*ft_create_variable(char *name, char *value);
 void		ft_free_variable(t_env *env);
+
+void    ft_execute_command(t_data **data, t_elem *list, char **envp);
 
 /* ************************************************************************** */
 /*                                    END                                     */

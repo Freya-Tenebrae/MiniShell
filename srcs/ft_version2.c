@@ -6,232 +6,166 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/23 21:48:37 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/24 18:27:10 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-// static t_redir	*ft_v2_create_redir(t_elem *elem)
-// {
-// 	t_redir	*res;
-
-// 	res = malloc(sizeof(t_redir));
-// 	if (!res)
-// 		return (0);
-// 	res->file = ft_strdup(elem->next->str);
-// 	res->type = elem->type;
-// 	if (!res->file)
-// 	{
-// 		free(res);
-// 		return (0);
-// 	}
-// 	return (res);
-// }
-
-// static t_redir	*ft_v2_read_next_command_in(t_elem *list)
-// {
-// 	t_elem	*last;
-
-// 	last = 0;
-// 	while (list)
-// 	{
-// 		if (list->type == PIPE)
-// 			break ;
-// 		if (list->type == IN || list->type == DOUBLE_IN)
-// 		{
-// 			last = list;
-// 			list = list->next->next;
-// 			continue ;
-// 		}
-// 		list = list->next;
-// 	}
-// 	if (last)
-// 		return (ft_v2_create_redir(last));
-// 	return (0);
-// }
-
-// static t_redir	*ft_v2_read_next_command_out(t_elem *list)
-// {
-// 	t_elem	*last;
-
-// 	last = 0;
-// 	while (list)
-// 	{
-// 		if (list->type == PIPE)
-// 			break ;
-// 		if (list->type == OUT || list->type == DOUBLE_OUT)
-// 		{
-// 			last = list;
-// 			list = list->next->next;
-// 			continue ;
-// 		}
-// 		list = list->next;
-// 	}
-// 	if (last)
-// 		return (ft_v2_create_redir(last));
-// 	return (0);
-// }
-
-static int	ft_pipe_is_present_on_line(t_elem *list)
-{
-	while (list && list != NULL)
-	{
-		if (list->type == PIPE)
-			return (0);
-		list = list->next;
-	}
-	return (1);
-}
-
-static int	ft_parse_line(t_data **data, char **str, int *ret, t_elem **list)
-{
-	if (!ft_check_quote(*str))
-		return (ft_put_error(GENERIC_ERROR, "Quote error"));
-	ft_replace_env(data, str);
-	*ret = 0;
-	*list = ft_read_line(*str, ret);
-	if (*list == NULL || *ret != READ_OK)
-		return (ft_put_error(GENERIC_ERROR, "Reading line error"));
-	return (0);
-}
-
-static int	ft_v2_is_redirection(t_elem *elem)
+static int	ft_elem_is_redirection(t_elem *elem)
 {
 	return (elem->type == IN || elem->type == DOUBLE_IN || elem->type == OUT || elem->type == DOUBLE_OUT);
 }
 
-static int	ft_v2_read_next_command_tab_length(t_elem *list)
+static int	ft_elem_get_cmd_args_count(t_elem *cursor)
 {
 	int		i;
 
 	i = 0;
-	while (list)
+	while (cursor)
 	{
-		if (list->type == PIPE)
+		if (cursor->type == PIPE)
 			break ;
-		if (ft_v2_is_redirection(list))
+		if (ft_elem_is_redirection(cursor))
 		{
-			list = list->next->next;
+			cursor = cursor->next->next;
 			continue ;
 		}
-		list = list->next;
+		cursor = cursor->next;
 		i++;
 	}
 	return (i);
 }
 
-static char	**ft_v2_read_next_command_args(t_data **data, t_elem *list)
+static char	**ft_elem_get_cmd_args(t_data **data, t_elem *cursor)
 {
 	char	**cmd_tab;
 	int		i;
 
 	(void) data;
 	i = 0;
-	cmd_tab = malloc(sizeof(char*) * (ft_v2_read_next_command_tab_length(list) + 1));
+	cmd_tab = malloc(sizeof(char*) * (ft_elem_get_cmd_args_count(cursor) + 1));
 	if (!cmd_tab)
 		return (0);
-	while (list)
+	while (cursor)
 	{
-		if (list->type == PIPE)
+		if (cursor->type == PIPE)
 			break ;
-		if (ft_v2_is_redirection(list))
+		if (ft_elem_is_redirection(cursor))
 		{
-			list = list->next->next;
+			cursor = cursor->next->next;
 			continue ;
 		}
-		cmd_tab[i] = list->str;
-		list = list->next;
+		cmd_tab[i] = cursor->str;
+		cursor = cursor->next;
 		i++;
 	}
 	cmd_tab[i] = 0;
 	return (cmd_tab);
 }
 
-static t_elem	*ft_v2_get_next_command(t_elem *list)
+static t_elem	*ft_elem_get_right(t_elem *cursor)
 {
-	while (list)
+	while (cursor)
 	{
-		if (list->type == PIPE)
-			return (list->next);
-		list = list->next;
+		if (cursor->type == PIPE)
+			return (cursor->next);
+		cursor = cursor->next;
 	}
 	return (0);
 }
 
-// wc < info.txt > out.txt | cat -e
-
-void    exec(t_data **data, t_elem *list, char **envp);
-
-void    exec_pipe(t_data **data, t_elem *list, char **envp)
+static t_elem	*ft_elem_clone_left(t_elem *cursor)
 {
+	t_elem		*res;
+
+	res = malloc(sizeof(t_elem));
+	if (!res)
+		return (0);
+	res->type = cursor->type;
+	res->str = ft_strdup(cursor->str);
+	if (cursor->next && cursor->next->type != PIPE)
+		res->next = ft_elem_clone_left(cursor->next);
+	else
+		res->next = 0;
+	return (res);
+}
+
+static int	ft_there_is_pipe(t_elem *cursor)
+{
+	while (cursor)
+	{
+		if (cursor->type == PIPE)
+			return (1);
+		cursor = cursor->next;
+	}
+	return (0);
+}
+
+static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
+{
+	int std[2];
     int fd[2];
-
-    pipe(fd);
-
-    int pid = fork();
+	int	pid;
+	
+	if (pipe(fd) == -1)
+		return ;
+	std[0] = dup(STDIN_FILENO);
+	std[1] = dup(STDOUT_FILENO);
+    pid = fork();
+	if (pid == -1)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		return ;
+	}
     if (pid == 0)
     {
+		close(std[0]);
+		close(std[1]);
         dup2(fd[1], STDOUT_FILENO);
         close(fd[0]);
         close(fd[1]);
-        exec(data, list, envp);
-    }
-    else
+        ft_execute_command(data, ft_elem_clone_left(list), envp);
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		exit(0);
+    } else
     {
         dup2(fd[0], STDIN_FILENO);
         close(fd[1]);
         close(fd[0]);
-        exec(data, ft_v2_get_next_command(list), envp);
+        ft_execute_command(data, ft_elem_get_right(list), envp);
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
         wait(NULL);
     }
+	dup2(std[0], STDIN_FILENO);
+	dup2(std[1], STDOUT_FILENO);
+	close(std[0]);
+	close(std[1]);
 }
 
-int		there_is_pipe(t_elem *list)
-{
-	while (list)
-	{
-		if (list->type == PIPE)
-			return (1);
-		list = list->next;
-	}
-	return (0);
-}
+// wc < info.txt > out.txt | cat -e
 
-void    exec(t_data **data, t_elem *list, char **envp)
+void    ft_execute_command(t_data **data, t_elem *list, char **envp)
 {
-    if (there_is_pipe(list))
-    {
-		exec_pipe(data, list, envp);
+	int	pid;
+
+	pid = 0;
+    if (!ft_there_is_pipe(list))
+   	{
+	   	pid = fork();
+		if (pid == 0)
+		{
+			// get_redirection_in
+			char **args = ft_elem_get_cmd_args(data, list);
+			if (!args)
+				return ;
+			ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, args);
+		}
+		else
+			waitpid(pid, 0, 0); // Add flags
 	} else
-	{
-		char **cmd1_args = ft_v2_read_next_command_args(data, list);
-		ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, cmd1_args);
-	}
-}
-
-static void	ft_v2_run_command(t_data **data, t_elem *list)
-{
-	exec(data, list, (*data)->envp);
-}
-
-// ls | wc < info.txt > out.txt | cat -e
-
-void	ft_v2_runline(char **cmd, t_data **data)
-{
-	int		res_parse_line;
-	int		ret;
-	t_elem	*list;
-
-	res_parse_line = ft_parse_line(data, cmd, &ret, &list);
-	if (res_parse_line == 0 && ft_pipe_is_present_on_line(list) == 0)
-		g_status_minishell = 2;
-	else
-		g_status_minishell = 1;
-	if (res_parse_line == 0)
-	{
-		if (ft_check_syntaxe_operator(list) == 0)
-			ft_v2_run_command(data, list);
-		ft_free_elem(&list);
-	}
+		ft_execute_pipe(data, list, envp);
 }
