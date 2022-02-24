@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/24 19:08:05 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/24 19:12:45 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,10 @@ static int	ft_there_is_pipe(t_elem *cursor)
 
 static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
 {
-	int std[2];
-    int fd[2];
-	int	pid;
+	int 	std[2];
+    int 	fd[2];
+	int		pid;
+	t_elem *list_child;
 	
 	if (pipe(fd) == -1)
 		return ;
@@ -126,7 +127,9 @@ static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
         dup2(fd[1], STDOUT_FILENO);
         close(fd[0]);
         close(fd[1]);
-        ft_execute_command(data, ft_elem_clone_left(list), envp);
+        list_child = ft_elem_clone_left(list);
+        ft_execute_command(data, list_child, envp);
+        ft_free_elem(&list_child);
 		close(STDIN_FILENO);
 		close(STDOUT_FILENO);
 		exit(0);
@@ -167,6 +170,7 @@ void    ft_execute_command(t_data **data, t_elem *list, char **envp)
 			// ft_replace_in_by_redtirection_in();
 			ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, args);
 			// ft_replace_out_by_redtirection_out();
+			ft_freestrs(&args);
 		}
 		else
 			waitpid(pid, 0, 0); // Add flags
