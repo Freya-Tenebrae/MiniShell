@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/25 18:20:08 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/25 18:47:41 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ void		ft_init_signal_handling(void);
 void		ft_run_line(char **str, t_data **data);
 t_elem		*ft_read_line(char *str, int *ret);
 int			ft_read_cmd(char *str, int i, char **buffer, int *is_operator);
-t_elem		*ft_run_cmd(t_data **data, t_elem *elem, char **infile);
-t_output	*ft_exec_cmd(char *path, char **cmd_args, char *infile);
+int			ft_execute_command(t_data **data, t_elem *list, char **envp);
 int			ft_run_execve_with_all_path(char *path, char **cmd_args);
 
 /* ************************************************************************** */
@@ -143,13 +142,9 @@ void		ft_free_data(t_data **data);
 
 int			ft_redirection_in_present(t_elem *list);
 int			ft_redirection_out_present(t_elem *list);
-int			ft_redirection_out(t_elem *list);
 int			ft_get_fd_redirection_in(t_elem *list);
 int			ft_get_fd_redirection_out(t_elem *list);
-int			ft_redirection_in(t_elem *list, char **file_in, int *is_double_in);
-int			ft_in_on_infile(char *file_in, int is_double_in, char **infile);
-int			ft_put_file_in_str(int fd, char **str);
-int			ft_put_double_in_str(char *word, char **str);
+//int			ft_put_double_in_str(char *word, char **str);
 
 int			ft_check_syntaxe_operator(t_elem *list);
 int			ft_check_access_ok(t_elem *list);
@@ -181,8 +176,6 @@ int			ft_env_tab_len(t_env **tab);
 t_env		*ft_clone_variable(t_env *env);
 t_env		*ft_create_variable(char *name, char *value);
 void		ft_free_variable(t_env *env);
-
-int			ft_execute_command(t_data **data, t_elem *list, char **envp);
 
 /* ************************************************************************** */
 /*                                    END                                     */

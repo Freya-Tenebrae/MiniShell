@@ -6,33 +6,11 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/25 18:20:11 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/25 18:47:38 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-int ft_redirection_in_present(t_elem *list)
-{
-	while (list != NULL && list->type != PIPE)
-	{
-		if (list->type == IN || list->type == DOUBLE_IN)
-			return (1);
-		list = list->next;
-	}
-	return (0);
-}
-
-int ft_redirection_out_present(t_elem *list)
-{
-	while (list != NULL && list->type != PIPE)
-	{
-		if (list->type == OUT || list->type == DOUBLE_OUT)
-			return (1);
-		list = list->next;
-	}
-	return (0);
-}
 
 static void	ft_open_fd(int *fd, char *file_out, int is_double_out)
 {
@@ -46,7 +24,7 @@ static void	ft_open_fd(int *fd, char *file_out, int is_double_out)
 							S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 }
 
-int	ft_redirection_out(t_elem *list)
+static int	ft_redirection_out(t_elem *list)
 {
 	char	*file_out;
 	int		is_double_out;
@@ -83,7 +61,7 @@ int	ft_redirection_out(t_elem *list)
 	return (fd);
 }
 
-int	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
+static int	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
 {
 	*file_in = NULL;
 	while (list != NULL && list->type != PIPE)
@@ -102,59 +80,6 @@ int	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
 		list = list->next;
 	}
 	return (0);
-}
-
-int	ft_in_on_infile(char *file_in, int is_double_in, char **infile)
-{
-	int	fd;
-
-	if (is_double_in == 0)
-	{
-		fd = open(file_in, O_RDONLY);
-		if (fd != -1)
-		{
-			if (ft_put_file_in_str(fd, infile) != 0)
-				*infile = NULL;
-		}
-		else
-		{
-			*infile = NULL;
-			return (ft_put_error(GENERIC_ERROR, "file can't be oppened"));
-		}
-	}
-	else if (is_double_in == 1)
-	{
-		if (ft_put_double_in_str(file_in, infile) != 0)
-			*infile = NULL;
-	}
-	return (0);
-}
-
-static void	ft_fill_stdin(char *infile)
-{
-	int	input[2];
-	int	pid2;
-
-	if (infile != NULL)
-	{
-		if (pipe(input) == -1)
-			exit(0);
-		pid2 = fork();
-		if (pid2 == 0)
-		{
-			ft_putstr_fd(infile, input[1]);
-			exit(0);
-		}
-		close(input[1]);
-		waitpid(pid2, 0, 0);
-		dup2(input[0], STDIN_FILENO);
-		close(input[0]);
-	}
-}
-
-static void	ft_fill_file_by_stdout(int fd)
-{
-	dup2(STDOUT_FILENO, fd);
 }
 
 int	ft_get_fd_redirection_out(t_elem *list)
@@ -179,4 +104,26 @@ int	ft_get_fd_redirection_in(t_elem *list)
 		return (-1);
 	fd = open(file_in, O_RDONLY);
 	return (fd);
+}
+
+int ft_redirection_in_present(t_elem *list)
+{
+	while (list != NULL && list->type != PIPE)
+	{
+		if (list->type == IN || list->type == DOUBLE_IN)
+			return (1);
+		list = list->next;
+	}
+	return (0);
+}
+
+int ft_redirection_out_present(t_elem *list)
+{
+	while (list != NULL && list->type != PIPE)
+	{
+		if (list->type == OUT || list->type == DOUBLE_OUT)
+			return (1);
+		list = list->next;
+	}
+	return (0);
 }
