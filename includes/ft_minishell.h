@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/25 05:50:19 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/25 18:20:08 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,8 @@ void		ft_free_data(t_data **data);
 int			ft_redirection_in_present(t_elem *list);
 int			ft_redirection_out_present(t_elem *list);
 int			ft_redirection_out(t_elem *list);
-int			ft_replace_in_by_redirection_in(t_elem *list);
-int			ft_replace_in_by_redirection_out(t_elem *list);
+int			ft_get_fd_redirection_in(t_elem *list);
+int			ft_get_fd_redirection_out(t_elem *list);
 int			ft_redirection_in(t_elem *list, char **file_in, int *is_double_in);
 int			ft_in_on_infile(char *file_in, int is_double_in, char **infile);
 int			ft_put_file_in_str(int fd, char **str);

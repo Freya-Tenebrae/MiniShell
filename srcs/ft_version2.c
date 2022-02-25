@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/25 17:40:31 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/25 18:20:33 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,16 +168,6 @@ int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 			char **args = ft_elem_get_cmd_args(data, list);
 			if (!args)
 				return (ft_put_error(GENERIC_ERROR, "malloc error"));
-
-
-			if (ft_redirection_in_present(list) == 1 && \
-				ft_replace_in_by_redirection_in(list) == -1)
-			{
-					// liberer le contenus de out ?
-					ft_put_error(GENERIC_ERROR, "redirection in error");
-			}
-
-
 			result_execve = ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, args);
 			if (result_execve == 0)
 			{
@@ -189,19 +179,19 @@ int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 				ft_put_error(GENERIC_ERROR, "malloc error");
 				exit(0);
 			}
-
-			
 			free(args);
 		}
 		else
 		{
 			waitpid(pid, 0, 0); // Add flags
-			if (ft_redirection_out_present(list) == 1 && \
-				ft_replace_in_by_redirection_out(list) == -1)
-				return (ft_put_error(GENERIC_ERROR, "redirection out error"));
 		}
 	}
 	else
 		ft_execute_pipe(data, list, envp);
 	return (0);
 }
+
+//ft_redirection_out_present(list);
+//ft_get_fd_redirection_out(list);
+//ft_redirection_in_present(list);
+//ft_get_fd_redirection_in(list);
