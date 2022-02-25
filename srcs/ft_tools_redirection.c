@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/25 06:19:36 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/25 17:34:46 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,13 +162,15 @@ static void	ft_fill_file_by_stdout(int fd)
 	pid2 = fork();
 	if (pid2 == 0)
 	{
-		ft_putstr_fd("", input[0]);
+		dup2(input[1], fd);
+		//ft_putstr_fd("", input[0]);
+		ft_putstr_fd("", input[1]);
 		exit(0);
 	}
 	close(input[0]);
 	waitpid(pid2, 0, 0);
 	dup2(input[1], STDOUT_FILENO);
-	close(input[0]);
+	close(input[1]);
 }
 
 int	ft_replace_in_by_redirection_out(t_elem *list)
@@ -196,9 +198,12 @@ int	ft_replace_in_by_redirection_in(t_elem *list)
 	if (ft_redirection_in(list, &file_in, &is_double_in) == -1)
 		return (-1);
 	if (is_double_in == 1)
-		; // put something to lock exec in this fork to fix bug (probably)
+		; // put something to lock exec in this fork to fix bug (probably by blocking stdin)
 	if (ft_in_on_infile(file_in, is_double_in, &infile) == -1)
+	{
+		ft_fill_stdin("");
 		return (-1);
+	}
 	ft_fill_stdin(infile);
 	return (0);
 }
