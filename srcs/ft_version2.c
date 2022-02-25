@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/25 17:28:42 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/25 17:40:31 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 			if (ft_redirection_in_present(list) == 1 && \
 				ft_replace_in_by_redirection_in(list) == -1)
 			{
-        			// liberer le contenus de out ?
+					// liberer le contenus de out ?
 					ft_put_error(GENERIC_ERROR, "redirection in error");
 			}
 
@@ -194,11 +194,14 @@ int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 			free(args);
 		}
 		else
+		{
+			waitpid(pid, 0, 0); // Add flags
 			if (ft_redirection_out_present(list) == 1 && \
 				ft_replace_in_by_redirection_out(list) == -1)
 				return (ft_put_error(GENERIC_ERROR, "redirection out error"));
-			waitpid(pid, 0, 0); // Add flags
-	} else
+		}
+	}
+	else
 		ft_execute_pipe(data, list, envp);
 	return (0);
 }

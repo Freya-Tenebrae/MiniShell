@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/25 17:34:46 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/25 17:42:40 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int	ft_redirection_out(t_elem *list)
 				free(file_out);
 				return (-1);
 			}
+			if (fd != 0)
+				close(fd);
 			ft_open_fd(&fd, file_out, is_double_out);
 			free(file_out);
 			if (fd == -1)
