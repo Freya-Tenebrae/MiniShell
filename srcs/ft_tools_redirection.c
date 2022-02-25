@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/25 06:14:19 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/25 06:19:36 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ int	ft_replace_in_by_redirection_in(t_elem *list)
 	if (ft_redirection_in(list, &file_in, &is_double_in) == -1)
 		return (-1);
 	if (is_double_in == 1)
-		; // put something to lock exec in this fork
+		; // put something to lock exec in this fork to fix bug (probably)
 	if (ft_in_on_infile(file_in, is_double_in, &infile) == -1)
 		return (-1);
 	ft_fill_stdin(infile);

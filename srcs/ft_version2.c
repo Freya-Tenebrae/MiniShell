@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/25 06:08:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/25 06:20:21 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,8 @@ int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 				ft_put_error(GENERIC_ERROR, "malloc error");
 				exit(0);
 			}
+
+			
 			free(args);
 		}
 		else
