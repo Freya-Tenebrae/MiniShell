@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/24 19:12:45 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/25 06:08:26 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
         close(fd[1]);
         list_child = ft_elem_clone_left(list);
         ft_execute_command(data, list_child, envp);
-        ft_free_elem(&list_child);
+        // ft_free_elem(&list_child);
 		close(STDIN_FILENO);
 		close(STDOUT_FILENO);
 		exit(0);
@@ -151,29 +151,52 @@ static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
 
 // wc < info.txt > out.txt | cat -e
 
-void    ft_execute_command(t_data **data, t_elem *list, char **envp)
+int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 {
 	int	pid;
+	int result_execve;
 
 	pid = 0;
     if (!ft_there_is_pipe(list))
    	{
    		// if (is_build_in)
-   			// run_bi
+   			// run_bi (+ output)
    		// else
 		pid = fork();
 		if (pid == 0)
 		{
 			char **args = ft_elem_get_cmd_args(data, list);
 			if (!args)
-				return ;
-			// ft_replace_in_by_redtirection_in();
-			ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, args);
-			// ft_replace_out_by_redtirection_out();
-			ft_freestrs(&args);
+				return (ft_put_error(GENERIC_ERROR, "malloc error"));
+
+
+			if (ft_redirection_in_present(list) == 1 && \
+				ft_replace_in_by_redirection_in(list) == -1)
+			{
+        			// liberer le contenus de out ?
+					ft_put_error(GENERIC_ERROR, "redirection in error");
+			}
+
+
+			result_execve = ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, args);
+			if (result_execve == 0)
+			{
+				ft_put_error(CMD_NOT_FOUND_ERROR, args[0]);
+				exit(0);
+			}
+			else if (result_execve == -1)
+			{
+				ft_put_error(GENERIC_ERROR, "malloc error");
+				exit(0);
+			}
+			free(args);
 		}
 		else
+			if (ft_redirection_out_present(list) == 1 && \
+				ft_replace_in_by_redirection_out(list) == -1)
+				return (ft_put_error(GENERIC_ERROR, "redirection out error"));
 			waitpid(pid, 0, 0); // Add flags
 	} else
 		ft_execute_pipe(data, list, envp);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/24 17:56:26 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/25 05:50:19 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,13 @@ void		ft_replace_env(t_data **data, char **str);
 void		ft_free_env(t_env **env);
 void		ft_free_data(t_data **data);
 
+int			ft_redirection_in_present(t_elem *list);
+int			ft_redirection_out_present(t_elem *list);
 int			ft_redirection_out(t_elem *list);
-void		ft_redirection_in(t_elem *list, char **file_in, int *is_double_in);
-void		ft_in_on_infile(char *file_in, int is_double_in, char **infile);
+int			ft_replace_in_by_redirection_in(t_elem *list);
+int			ft_replace_in_by_redirection_out(t_elem *list);
+int			ft_redirection_in(t_elem *list, char **file_in, int *is_double_in);
+int			ft_in_on_infile(char *file_in, int is_double_in, char **infile);
 int			ft_put_file_in_str(int fd, char **str);
 int			ft_put_double_in_str(char *word, char **str);
 
@@ -178,7 +182,7 @@ t_env		*ft_clone_variable(t_env *env);
 t_env		*ft_create_variable(char *name, char *value);
 void		ft_free_variable(t_env *env);
 
-void    ft_execute_command(t_data **data, t_elem *list, char **envp);
+int			ft_execute_command(t_data **data, t_elem *list, char **envp);
 
 /* ************************************************************************** */
 /*                                    END                                     */
