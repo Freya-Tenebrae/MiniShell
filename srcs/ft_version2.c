@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/26 16:10:04 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/26 16:19:08 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,12 @@ int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 		pid = fork();
 		if (pid == 0)
 		{
+			if (ft_redirection_in_present(list))
+			{
+				int in_fd = ft_get_fd_redirection_in(list);
+				dup2(in_fd, STDIN_FILENO);
+				close(in_fd);
+			}
 			if (ft_redirection_out_present(list))
 			{
 				int out_fd = ft_get_fd_redirection_out(list);
