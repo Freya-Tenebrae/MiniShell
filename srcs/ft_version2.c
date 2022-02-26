@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/26 16:19:08 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/26 16:25:49 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,3 @@ int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 
 	return (0);
 }
-
-//ft_redirection_out_present(list);
-//ft_get_fd_redirection_out(list);
-//ft_redirection_in_present(list);
-//ft_get_fd_redirection_in(list);
