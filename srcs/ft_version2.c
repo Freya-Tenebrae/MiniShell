@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_version2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/25 18:20:33 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/26 16:10:04 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,19 +107,12 @@ static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
 	int 	std[2];
     int 	fd[2];
 	int		pid;
-	t_elem *list_child;
 	
 	if (pipe(fd) == -1)
 		return ;
 	std[0] = dup(STDIN_FILENO);
 	std[1] = dup(STDOUT_FILENO);
     pid = fork();
-	if (pid == -1)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		return ;
-	}
     if (pid == 0)
     {
 		close(std[0]);
@@ -127,9 +120,7 @@ static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
         dup2(fd[1], STDOUT_FILENO);
         close(fd[0]);
         close(fd[1]);
-        list_child = ft_elem_clone_left(list);
-        ft_execute_command(data, list_child, envp);
-        // ft_free_elem(&list_child);
+        ft_execute_command(data, ft_elem_clone_left(list), envp);
 		close(STDIN_FILENO);
 		close(STDOUT_FILENO);
 		exit(0);
@@ -153,33 +144,22 @@ static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
 
 int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 {
-	int	pid;
-	int result_execve;
+	int		result_execve;
+	int		pid;
 
 	pid = 0;
     if (!ft_there_is_pipe(list))
    	{
-   		// if (is_build_in)
-   			// run_bi (+ output)
-   		// else
 		pid = fork();
 		if (pid == 0)
 		{
-			char **args = ft_elem_get_cmd_args(data, list);
-			if (!args)
-				return (ft_put_error(GENERIC_ERROR, "malloc error"));
-			result_execve = ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, args);
-			if (result_execve == 0)
+			if (ft_redirection_out_present(list))
 			{
-				ft_put_error(CMD_NOT_FOUND_ERROR, args[0]);
-				exit(0);
+				int out_fd = ft_get_fd_redirection_out(list);
+				dup2(out_fd, STDOUT_FILENO);
+				close(out_fd);
 			}
-			else if (result_execve == -1)
-			{
-				ft_put_error(GENERIC_ERROR, "malloc error");
-				exit(0);
-			}
-			free(args);
+			result_execve = ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, ft_elem_get_cmd_args(data, list));
 		}
 		else
 		{
@@ -188,6 +168,7 @@ int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 	}
 	else
 		ft_execute_pipe(data, list, envp);
+
 	return (0);
 }
 
