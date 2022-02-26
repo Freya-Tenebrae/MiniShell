@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/25 18:47:41 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/26 20:55:44 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,9 @@ int			ft_env_tab_len(t_env **tab);
 t_env		*ft_clone_variable(t_env *env);
 t_env		*ft_create_variable(char *name, char *value);
 void		ft_free_variable(t_env *env);
+int			ft_redirection_double_in_present(t_elem *list);
+
+char		*ft_get_fd_redirection_double_in(t_elem *list);
 
 /* ************************************************************************** */
 /*                                    END                                     */

@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/26 16:25:49 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:08:35 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,36 @@ int    ft_execute_command(t_data **data, t_elem *list, char **envp)
 		pid = fork();
 		if (pid == 0)
 		{
+			if (ft_redirection_double_in_present(list))
+			{
+				int fd[2];
+
+				pipe(fd);
+				char *buffer;
+				char *in_str;
+
+				in_str = NULL;
+				while (1)
+				{
+					buffer = readline("> ");
+					if (buffer == NULL)
+					{
+						close(fd[0]);
+						close(fd[1]);
+						if (in_str)
+							free(in_str);
+						return (0);
+					}
+					if (ft_str_equal(buffer, ft_get_fd_redirection_double_in(list)))
+						break ;
+					ft_str_writeon(&in_str, buffer);
+					ft_str_writeon(&in_str, "\n");
+				}
+				ft_putstr_fd(in_str, fd[1]);
+				dup2(fd[0], STDIN_FILENO); // Vérifier si il faut bien afficher le double in
+				close(fd[0]);
+				close(fd[1]);
+			} else
 			if (ft_redirection_in_present(list))
 			{
 				int in_fd = ft_get_fd_redirection_in(list);

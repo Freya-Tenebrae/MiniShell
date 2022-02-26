@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_redirection.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/25 18:47:38 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/26 21:05:27 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,46 @@ int	ft_get_fd_redirection_in(t_elem *list)
 	return (fd);
 }
 
-int ft_redirection_in_present(t_elem *list)
+char *ft_get_fd_redirection_double_in(t_elem *list)
+{
+	char *res;
+
+	res = 0;
+	while (list != NULL && list->type != PIPE)
+	{
+		if (list->type == DOUBLE_IN)
+			res = list->next->str;
+		list = list->next;
+	}
+	return (res);
+}
+
+int ft_redirection_double_in_present(t_elem *list)
 {
 	while (list != NULL && list->type != PIPE)
 	{
-		if (list->type == IN || list->type == DOUBLE_IN)
+		if (list->type == DOUBLE_IN)
 			return (1);
 		list = list->next;
 	}
 	return (0);
+}
+
+int ft_redirection_in_present(t_elem *list)
+{
+	int		res;
+
+	res = 0;
+	while (list != NULL && list->type != PIPE)
+	{
+		if (list->type == IN || list->type == DOUBLE_IN)
+		{
+			res = 1;
+			// Voir priorité en fonction de << et <
+		}
+		list = list->next;
+	}
+	return (res);
 }
 
 int ft_redirection_out_present(t_elem *list)
