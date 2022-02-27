@@ -6,13 +6,13 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/27 17:07:04 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:39:23 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-static char*	ft_read_fd(int fd)
+static char*	ft_tools_read_fd(int fd)
 {
 	char	*buf;
 	char	*res;
@@ -28,14 +28,15 @@ static char*	ft_read_fd(int fd)
 	return (res);
 }
 
-int		ft_open_redirections(t_elem *list)
+int		ft_redirection_open_all(t_elem *list)
 {
-	ft_open_in(list);
-	ft_open_double_in(list);
+	ft_redirection_open_out(list);
+	ft_redirection_open_in(list);
+	ft_redirection_open_double_in(list);
 	return (1);
 }
 
-int		ft_open_double_in(t_elem *list)
+int		ft_redirection_open_double_in(t_elem *list)
 {
 	char	*buffer;
 	t_elem	*left;
@@ -62,7 +63,7 @@ int		ft_open_double_in(t_elem *list)
 	return (1);
 }
 
-int		ft_open_in(t_elem *list)
+int		ft_redirection_open_in(t_elem *list)
 {
 	t_elem	*left;
 
@@ -77,8 +78,30 @@ int		ft_open_in(t_elem *list)
 			int in_fd = ft_get_fd_redirection_in(list);
 			if (in_fd < 2)
 				return (0);
-			list->in_content = ft_read_fd(in_fd);
+			list->in_content = ft_tools_read_fd(in_fd);
 			close(in_fd);
+		}
+		list = ft_elem_get_right(list);
+	}
+	return (1);
+}
+
+int		ft_redirection_open_out(t_elem *list)
+{
+	t_elem	*left;
+
+	left = 0;
+	while (list)
+	{
+		left = ft_elem_clone_left(list);
+		if (!left)
+			return (0);
+		if (ft_redirection_out_present(list))
+		{
+			int out_fd = ft_get_fd_redirection_out(list);
+			if (out_fd < 2)
+				return (0);
+			list->out_fd = out_fd;
 		}
 		list = ft_elem_get_right(list);
 	}

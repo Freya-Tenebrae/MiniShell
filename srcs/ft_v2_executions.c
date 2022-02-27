@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/27 17:10:58 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:37:35 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,12 @@ int		ft_execute_command(t_data **data, t_elem *list, char **envp)
 				close(fd[0]);
 				close(fd[1]);
 			}
-			// Ouvrir le fd au début
-			// if (ft_redirection_out_present(list))
-			// {
-			// 	int out_fd = ft_get_fd_redirection_out(list);
-			// 	if (out_fd < 2)
-			// 		return (0);
-			// 	dup2(out_fd, STDOUT_FILENO);
-			// 	close(out_fd);
-			// }
+			if (ft_redirection_out_present(list))
+			{
+				dup2(list->out_fd, STDOUT_FILENO);
+				close(list->out_fd);
+				list->out_fd = -1;
+			}
 			result_execve = ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, ft_elem_get_cmd_args(data, list));
 		}
 		else
@@ -102,6 +99,5 @@ int		ft_execute_command(t_data **data, t_elem *list, char **envp)
 	} else {
 		ft_execute_pipe(data, list, envp);
 	}
-
 	return (0);
 }
