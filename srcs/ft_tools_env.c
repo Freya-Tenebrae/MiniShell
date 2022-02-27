@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/27 19:23:47 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/27 19:37:35 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ static	void ft_replace_env_on(t_data **data, char **str)
                 quote = 0;
             else
             {
-                if ((*str)[i] == '$' && !quote)
+                if ((*str)[i] == '$' && (!quote || quote != '\''))
                 {
                     j = i + 1;
                     while ((*str)[j] && (ft_isalnum((*str)[j]) || (*str)[j] == '_'))
@@ -205,12 +205,12 @@ void	ft_replace_env(t_data **data, t_elem *list)
 	cursor = list;
 	while (cursor)
 	{
-		// printf("%d [%s]\n", cursor->type, cursor->str);
 		if (cursor->type == DOUBLE_IN)
 		{
 			cursor = cursor->next->next;
 			continue ;
 		}
+		// printf("%d [%s]\n", cursor->type, cursor->str);
 		ft_replace_env_on(data, &(cursor->str));
 		cursor = cursor->next;
 	}
