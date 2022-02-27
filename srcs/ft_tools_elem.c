@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_elem.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 01:20:46 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/14 06:13:59 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/27 15:42:28 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_elem	*ft_elem_create(char *str, int is_operator)
 	}
 	list_new->next = NULL;
 	list_new->str = str;
+	list_new->in_content = NULL;
 	if (is_operator == 1)
 		list_new->type = ARGUMENT;
 	else

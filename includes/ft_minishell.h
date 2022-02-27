@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/26 20:55:44 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/27 17:01:40 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_elem {
 	struct s_elem	*next;
 	int				type;
 	char			*str;
+	char			*in_content;
 }					t_elem;
 
 typedef struct s_output {
@@ -177,8 +178,17 @@ t_env		*ft_clone_variable(t_env *env);
 t_env		*ft_create_variable(char *name, char *value);
 void		ft_free_variable(t_env *env);
 int			ft_redirection_double_in_present(t_elem *list);
-
 char		*ft_get_fd_redirection_double_in(t_elem *list);
+
+int			ft_elem_is_redirection(t_elem *elem);
+int			ft_elem_get_cmd_args_count(t_elem *cursor);
+char		**ft_elem_get_cmd_args(t_data **data, t_elem *cursor);
+t_elem		*ft_elem_get_right(t_elem *cursor);
+t_elem		*ft_elem_clone_left(t_elem *cursor);
+
+int			ft_open_double_in(t_elem *list);
+int			ft_open_in(t_elem *list);
+int			ft_open_redirections(t_elem *list);
 
 /* ************************************************************************** */
 /*                                    END                                     */

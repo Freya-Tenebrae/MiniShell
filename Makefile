@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
+#    By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/20 19:17:29 by cmaginot          #+#    #+#              #
-#    Updated: 2022/02/25 18:46:54 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/02/27 15:57:57 by gadeneux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,9 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_tools_redirection.c \
 	ft_tools_arguments_to_strs.c \
 	ft_tools_syntaxe_and_access.c \
-	ft_version2.c \
+	ft_v2_executions.c \
+	ft_v2_redirections.c \
+	ft_v2_tools_redirections.c \
 	ft_tools_strs.c)
 OBJS=$(SRCS:.c=.o)
 
