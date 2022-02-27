@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/14 07:18:53 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/02/27 19:10:31 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	ft_read_next_if_operator(char *str, int i, char **buffer)
 
 int	ft_read_cmd(char *str, int i, char **buffer, int *is_operator)
 {
-	char	*new_buffer;
+	// char	*new_buffer;
 
 	if (!str)
 		return (READ_ERR);
@@ -81,8 +81,8 @@ int	ft_read_cmd(char *str, int i, char **buffer, int *is_operator)
 	}
 	*is_operator = 1;
 	i = ft_read_next_if_argument_or_command(str, i, buffer);
-	new_buffer = ft_keepinside_quote(*buffer);
-	free(*buffer);
-	*buffer = new_buffer;
+	// new_buffer = ft_keepinside_quote(*buffer);
+	// free(*buffer);
+	// *buffer = new_buffer;
 	return (i);
 }

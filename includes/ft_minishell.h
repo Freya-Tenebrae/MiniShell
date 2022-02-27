@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/27 18:39:23 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:59:40 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ void		ft_free_elem(t_elem **elem);
 void		ft_free_output(t_output **output);
 t_env		**ft_init_env(char **envp);
 t_env		*ft_getenv(t_data **data, char *str);
-void		ft_replace_env(t_data **data, char **str);
+// void		ft_replace_env(t_data **data, char **str);
+void		ft_replace_env(t_data **data, t_elem *list);
 void		ft_free_env(t_env **env);
 void		ft_free_data(t_data **data);
 

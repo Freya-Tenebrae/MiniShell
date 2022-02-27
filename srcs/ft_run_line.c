@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/27 18:38:46 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/27 18:59:24 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ static int	ft_parse_line(t_data **data, char **str, int *ret, t_elem **list)
 {
 	if (!ft_check_quote(*str))
 		return (ft_put_error(GENERIC_ERROR, "Quote error"));
-	ft_replace_env(data, str);
 	*ret = 0;
+	// ft_replace_env(data, *str);
 	*list = ft_read_line(*str, ret);
 	if (*list == NULL || *ret != READ_OK)
 		return (ft_put_error(GENERIC_ERROR, "Reading line error"));
+	ft_replace_env(data, *list);
 	return (0);
 }
 
