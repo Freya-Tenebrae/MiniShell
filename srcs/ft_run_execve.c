@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/26 19:55:52 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:29:51 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,12 @@ static int	ft_run_execve_with_one_path(char **cmd_args, char *path)
 
 int	ft_run_execve_with_all_path(char *path, char **cmd_args)
 {
+	int		res_one_path;
 	char	**paths;
 	int		i;
-	int		res_one_path;
 
+	if (!cmd_args || cmd_args == NULL || !cmd_args[0] || cmd_args[0] == NULL)
+		return (0);
 	paths = ft_split(path, ':');
 	i = 0;
 	if (!paths)
