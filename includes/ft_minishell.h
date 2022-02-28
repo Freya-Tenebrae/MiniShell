@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/27 18:59:40 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/28 11:44:50 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,8 @@ void		ft_free_data(t_data **data);
 
 int			ft_redirection_in_present(t_elem *list);
 int			ft_redirection_out_present(t_elem *list);
-int			ft_get_fd_redirection_in(t_elem *list);
-int			ft_get_fd_redirection_out(t_elem *list);
+int			ft_redirection_get_fd_in(t_elem *list);
+int			ft_redirection_get_fd_out(t_elem *list);
 //int			ft_put_double_in_str(char *word, char **str);
 
 int			ft_check_syntaxe_operator(t_elem *list);
@@ -180,7 +180,7 @@ t_env		*ft_clone_variable(t_env *env);
 t_env		*ft_create_variable(char *name, char *value);
 void		ft_free_variable(t_env *env);
 int			ft_redirection_double_in_present(t_elem *list);
-char		*ft_get_fd_redirection_double_in(t_elem *list);
+char		*ft_redirection_get_double_in_fd(t_elem *list);
 
 int			ft_elem_is_redirection(t_elem *elem);
 int			ft_elem_get_cmd_args_count(t_elem *cursor);
@@ -188,10 +188,10 @@ char		**ft_elem_get_cmd_args(t_data **data, t_elem *cursor);
 t_elem		*ft_elem_get_right(t_elem *cursor);
 t_elem		*ft_elem_clone_left(t_elem *cursor);
 
-int			ft_redirection_open_double_in(t_elem *list);
-int			ft_redirection_open_in(t_elem *list);
-int			ft_redirection_open_out(t_elem *list);
+
 int			ft_redirection_open_all(t_elem *list);
+char		*ft_redirection_get_in(t_elem *cmd);
+char		*ft_redirection_get_heredoc(t_elem *cmd);
 
 /* ************************************************************************** */
 /*                                    END                                     */

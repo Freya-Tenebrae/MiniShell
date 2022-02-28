@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/27 12:17:24 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/28 11:29:53 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_open_fd(int *fd, char *file_out, int is_double_out)
 							S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 }
 
-static int	ft_redirection_out(t_elem *list)
+int	ft_redirection_get_fd_out(t_elem *list)
 {
 	char	*file_out;
 	int		is_double_out;
@@ -61,17 +61,13 @@ static int	ft_redirection_out(t_elem *list)
 	return (fd);
 }
 
-static int	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
+static int	ft_redirection_in(t_elem *list, char **file_in)
 {
 	*file_in = NULL;
 	while (list != NULL && list->type != PIPE)
 	{
-		if (list->type == IN || list->type == DOUBLE_IN)
+		if (list->type == IN)
 		{
-			if (list->type == DOUBLE_IN)
-				*is_double_in = 1;
-			else
-				*is_double_in = 0;
 			list = list->next;
 			*file_in = ft_strdup(list->str);
 			if (!*file_in || *file_in == NULL)
@@ -82,15 +78,7 @@ static int	ft_redirection_in(t_elem *list, char **file_in, int *is_double_in)
 	return (0);
 }
 
-int	ft_get_fd_redirection_out(t_elem *list)
-{
-	int		fd;
-
-	fd = ft_redirection_out(list);
-	return (fd);
-}
-
-int	ft_get_fd_redirection_in(t_elem *list)
+int	ft_redirection_get_fd_in(t_elem *list)
 {
 	char	*file_in;
 	char	*infile;
@@ -100,13 +88,14 @@ int	ft_get_fd_redirection_in(t_elem *list)
 	file_in = NULL;
 	infile = NULL;
 	is_double_in = 0;
-	if (ft_redirection_in(list, &file_in, &is_double_in) == -1)
+	if (ft_redirection_in(list, &file_in) == -1)
 		return (-1);
 	fd = open(file_in, O_RDONLY);
 	return (fd);
 }
 
-char *ft_get_fd_redirection_double_in(t_elem *list)
+// OK
+char *ft_redirection_get_double_in_fd(t_elem *list)
 {
 	char *res;
 
@@ -120,34 +109,19 @@ char *ft_get_fd_redirection_double_in(t_elem *list)
 	return (res);
 }
 
-int ft_redirection_double_in_present(t_elem *list)
+// OK
+int ft_redirection_in_present(t_elem *list)
 {
 	while (list != NULL && list->type != PIPE)
 	{
-		if (list->type == DOUBLE_IN)
+		if (list->type == IN || list->type == DOUBLE_IN)
 			return (1);
 		list = list->next;
 	}
 	return (0);
 }
 
-int ft_redirection_in_present(t_elem *list)
-{
-	int		res;
-
-	res = 0;
-	while (list != NULL && list->type != PIPE)
-	{
-		if (list->type == IN || list->type == DOUBLE_IN)
-		{
-			res = 1;
-			// Voir priorité en fonction de << et <
-		}
-		list = list->next;
-	}
-	return (res);
-}
-
+// OK
 int ft_redirection_out_present(t_elem *list)
 {
 	while (list != NULL && list->type != PIPE)

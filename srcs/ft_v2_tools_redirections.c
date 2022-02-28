@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:47:43 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/27 18:31:15 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/28 15:37:27 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ t_elem	*ft_elem_clone_left(t_elem *cursor)
 	res->out_fd = cursor->out_fd;
 	if (cursor->in_content)
 		res->in_content = ft_strdup(cursor->in_content);
+	else
+		res->in_content = NULL;
 	if (cursor->next && cursor->next->type != PIPE)
 		res->next = ft_elem_clone_left(cursor->next);
 	else

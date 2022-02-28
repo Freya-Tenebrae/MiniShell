@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/27 18:37:35 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/28 16:24:52 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,14 @@ int		ft_execute_command(t_data **data, t_elem *list, char **envp)
 			if (ft_redirection_in_present(list))
 			{
 				int fd[2];
-
+				
+				if (!ft_redirection_get_in(list) || ft_redirection_get_in(list) == NULL)
+					return (0);
+					
 				if (pipe(fd) == -1)
 					return (0);
 				
-				ft_putstr_fd(list->in_content, fd[1]);
+				ft_putstr_fd(ft_redirection_get_in(list), fd[1]);
 				dup2(fd[0], STDIN_FILENO);
 				close(fd[0]);
 				close(fd[1]);

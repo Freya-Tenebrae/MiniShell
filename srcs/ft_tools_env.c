@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/27 19:37:35 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/02/27 21:29:06 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_env	*ft_getenv(t_data **data, char *str)
 	return (NULL);
 }
 
-static void	ft_restore_env(t_elem *list)
+static void	ft_remove_quotes(t_elem *list)
 {
 	char	*buffer;
 
@@ -210,9 +210,8 @@ void	ft_replace_env(t_data **data, t_elem *list)
 			cursor = cursor->next->next;
 			continue ;
 		}
-		// printf("%d [%s]\n", cursor->type, cursor->str);
 		ft_replace_env_on(data, &(cursor->str));
 		cursor = cursor->next;
 	}
-	ft_restore_env(list);
+	ft_remove_quotes(list);
 }
