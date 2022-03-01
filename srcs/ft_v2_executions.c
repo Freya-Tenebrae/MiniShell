@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/28 16:24:52 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/01 11:54:39 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ int		ft_execute_command(t_data **data, t_elem *list, char **envp)
 				int fd[2];
 				
 				if (!ft_redirection_get_in(list) || ft_redirection_get_in(list) == NULL)
-					return (0);
+					exit(0);
 					
 				if (pipe(fd) == -1)
-					return (0);
+					exit(0);
 				
 				ft_putstr_fd(ft_redirection_get_in(list), fd[1]);
 				dup2(fd[0], STDIN_FILENO);
