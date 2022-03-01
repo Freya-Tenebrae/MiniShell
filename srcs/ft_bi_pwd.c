@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:32 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/21 14:47:18 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/01 12:10:20 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@
 //			(argument, fonction didn't exist, ...) et out->output devra etre 
 //			set a NULL;
 
-t_output	*ft_run_bi_pwd(char *path, char **cmd_args, char *infile)
+t_output	*ft_run_bi_pwd(void)
 {
 	char  *pwd;
 	t_output *out;
 
-	(void) path;
-	(void) cmd_args;
-	(void) infile;
 	pwd = NULL;
 	out = malloc(sizeof(t_output));
 	if (!out || out == NULL)

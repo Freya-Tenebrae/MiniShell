@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/17 17:25:42 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/01 12:16:10 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,10 @@
 //			(argument, fonction didn't exist, ...) et out->output devra etre 
 //			set a NULL;
 
-t_output	*ft_run_bi_env(t_data **data, char *path, char **cmd_args, \
-																char *infile)
+t_output	*ft_run_bi_env(t_data **data)
 {
 	t_output	*res;
 	int			i;
-
-	(void)path;
-	(void)cmd_args;
-	(void)infile;
 
 	i = 0;
 	res = malloc(sizeof(t_output));

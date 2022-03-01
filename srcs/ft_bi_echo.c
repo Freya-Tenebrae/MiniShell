@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:20 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/09 16:55:39 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/01 12:06:44 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,12 @@ int	ft_is_valid_option(char *str)
 	return (1);
 }
 
-t_output	*ft_run_bi_echo(char *path, char **cmd_args, char *infile)
+t_output	*ft_run_bi_echo(char **cmd_args)
 {
 	int			no_nl;
 	t_output	*res;
 	int			i;
 
-	(void)infile;
-	(void)path;
 	no_nl = 0;
 	res = malloc(sizeof(t_output));
 	res->output = 0;

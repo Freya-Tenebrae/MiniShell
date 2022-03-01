@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/01 11:54:39 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/01 12:05:29 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,18 @@ int		ft_execute_command(t_data **data, t_elem *list, char **envp)
 				close(list->out_fd);
 				list->out_fd = -1;
 			}
-			result_execve = ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, ft_elem_get_cmd_args(data, list));
+			if (ft_is_build_in(ft_elem_get_cmd_args(data, list)[0]) == 1) // gerer autrement (leaks et erreur)
+				ft_run_bi(data, ft_elem_get_cmd_args(data, list));
+			else
+				result_execve = ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, ft_elem_get_cmd_args(data, list));
 		}
 		else
 		{
 			waitpid(pid, 0, 0); // Add flags
 		}
-	} else {
+	}
+	else
+	{
 		ft_execute_pipe(data, list, envp);
 	}
 	return (0);

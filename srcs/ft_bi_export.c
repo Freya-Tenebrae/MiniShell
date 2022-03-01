@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/17 18:35:11 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/01 12:09:47 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,12 +216,10 @@ int		ft_fill(t_output *res, char **cmd_args, t_data **data)
 	return (1);
 }
 
-t_output	*ft_run_bi_export(t_data **data, char *path, char **cmd_args, char *infile)
+t_output	*ft_run_bi_export(t_data **data, char **cmd_args)
 {
 	t_output	*res;
 
-	(void)path;
-	(void)infile;
 	if (!cmd_args || !cmd_args[1])
 		return (ft_show_env(data));
 	res = malloc(sizeof(t_output));

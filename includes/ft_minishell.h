@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/28 11:44:50 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/01 12:16:32 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,18 +114,14 @@ int			ft_run_execve_with_all_path(char *path, char **cmd_args);
 /*                                  BUILD ID                                  */
 /* ************************************************************************** */
 int			ft_is_build_in(char *cmd);
-t_output	*ft_run_bi(t_data **data, char *path, char **cmd_args, \
-																char *infile);
-t_output	*ft_run_bi_cd(char *path, char **cmd_args, char *infile);
-t_output	*ft_run_bi_echo(char *path, char **cmd_args, char *infile);
-t_output	*ft_run_bi_env(t_data **data, char *path, char **cmd_args, \
-																char *infile);
-t_output	*ft_run_bi_export(t_data **data, char *path, char **cmd_args, \
-																char *infile);
-t_output	*ft_run_bi_pwd(char *path, char **cmd_args, char *infile);
-t_output	*ft_run_bi_unset(t_data **data, char *path, char **cmd_args, \
-																char *infile);
-t_output	*ft_run_bi_exit(char *path, char **cmd_args, char *infile);
+t_output	*ft_run_bi(t_data **data, char **cmd_args);
+t_output	*ft_run_bi_cd(char **cmd_args);
+t_output	*ft_run_bi_echo(char **cmd_args);
+t_output	*ft_run_bi_env(t_data **data);
+t_output	*ft_run_bi_export(t_data **data, char **cmd_args);
+t_output	*ft_run_bi_pwd();
+t_output	*ft_run_bi_unset(t_data **data, char **cmd_args);
+t_output	*ft_run_bi_exit(char **cmd_args);
 
 /* ************************************************************************** */
 /*                                   TOOLS                                    */
