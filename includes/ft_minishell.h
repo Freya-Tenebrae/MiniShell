@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/02 16:46:20 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/02 17:02:18 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ char		**ft_elem_get_cmd_args(t_data **data, t_elem *cursor);
 t_elem		*ft_elem_get_right(t_elem *cursor);
 t_elem		*ft_elem_clone_left(t_elem *cursor);
 
+int			ft_redirection_read_heredoc(t_data **data, t_elem *list);
 int			ft_redirection_open_all(t_data **data, t_elem *list);
 char		*ft_redirection_get_in(t_elem *cmd);
 char		*ft_redirection_get_heredoc(t_elem *cmd);
