@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 18:45:07 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/01 12:16:22 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/02 11:44:38 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,44 +25,22 @@ int	ft_is_build_in(char *cmd)
 		return (0);
 }
 
-static t_output	*ft_put_empty_output(void)
-{
-	t_output	*out;
-
-	out = malloc(sizeof(t_output));
-	if (!out || out == NULL)
-	{
-		ft_put_error(GENERIC_ERROR, "Malloc error");
-		return (NULL);
-	}
-	out->error = NULL;
-	out->output = ft_strdup("");
-	if (!out->output || out->output == NULL)
-	{
-		ft_put_error(GENERIC_ERROR, "Malloc error");
-		ft_free_output(&out);
-		return (NULL);
-	}
-	return (out);
-}
-
-t_output	*ft_run_bi(t_data **data, char **cmd_args)
+void	ft_run_bi(t_data **data, char **cmd_args)
 {
 	if (cmd_args[0] == NULL)
-		return (ft_put_empty_output());
+		return ;
 	if (ft_strcmp(cmd_args[0], "echo") == 0)
-		return (ft_run_bi_echo(cmd_args));
+		ft_run_bi_echo(cmd_args);
 	else if (ft_strcmp(cmd_args[0], "cd") == 0)
-		return (ft_run_bi_cd(cmd_args));
+		ft_run_bi_cd(cmd_args);
 	else if (ft_strcmp(cmd_args[0], "pwd") == 0)
-		return (ft_run_bi_pwd());
+		ft_run_bi_pwd();
 	else if (ft_strcmp(cmd_args[0], "export") == 0)
-		return (ft_run_bi_export(data, cmd_args));
+		ft_run_bi_export(data, cmd_args);
 	else if (ft_strcmp(cmd_args[0], "unset") == 0)
-		return (ft_run_bi_unset(data, cmd_args));
+		ft_run_bi_unset(data, cmd_args);
 	else if (ft_strcmp(cmd_args[0], "env") == 0)
-		return (ft_run_bi_env(data));
+		ft_run_bi_env(data);
 	else if (ft_strcmp(cmd_args[0], "exit") == 0)
-		return (ft_run_bi_exit(cmd_args));
-	return (NULL);
+		ft_run_bi_exit(cmd_args);
 }

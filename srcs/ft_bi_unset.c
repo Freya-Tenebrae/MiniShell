@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:52 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/01 12:10:31 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/02 12:01:49 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		ft_unset_env(t_data **data, char *identifier)
 	return (1);
 }
 
-int		ft_read_unset(t_data **data, t_output *res, char **cmd_args)
+int		ft_read_unset(t_data **data, char **cmd_args)
 {
 	int		i;
 
@@ -100,43 +100,19 @@ int		ft_read_unset(t_data **data, t_output *res, char **cmd_args)
 	{
 		if (!ft_is_valid_identifier(cmd_args[i]))
 		{
-			res->output = NULL;
-			ft_str_writeon(&res->error, "minishell: unset: `");
-			ft_str_writeon(&res->error, cmd_args[i]);
-			ft_str_writeon(&res->error, "': not a valid identifier\n");
-		} else {
+			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
+			ft_putstr_fd(cmd_args[i], STDERR_FILENO);
+			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+		} else
 			ft_unset_env(data, cmd_args[i]);
-		}
 		i++;
 	}
 	return (1);
 }
 
-t_output	*ft_run_bi_unset(t_data **data, char **cmd_args)
+void	ft_run_bi_unset(t_data **data, char **cmd_args)
 {
-	t_output	*res;
-
-	res = malloc(sizeof(t_output));
-	if (!res)
-	{
-		ft_put_error(GENERIC_ERROR, "malloc error");
-		return (0);
-	}
-	res->error = 0;
-	res->output = 0;
 	if (!cmd_args || !cmd_args[1])
-		return (res);
-	ft_read_unset(data, res, cmd_args);
-	if (!res->error)
-	{
-		res->error = NULL;
-		res->output = ft_strdup("");
-		if (!res->output)
-		{
-			free(res);
-			ft_put_error(GENERIC_ERROR, "malloc error");
-			return (0);
-		}
-	}
-	return (res);
+		return ;
+	ft_read_unset(data, cmd_args);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/01 12:16:10 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/02 11:53:35 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,20 @@
 //			(argument, fonction didn't exist, ...) et out->output devra etre 
 //			set a NULL;
 
-t_output	*ft_run_bi_env(t_data **data)
+void	ft_run_bi_env(t_data **data)
 {
-	t_output	*res;
-	int			i;
+	int	i;
 
 	i = 0;
-	res = malloc(sizeof(t_output));
-	if (!res)
-		return (NULL);
-	res->error = 0;
-	res->output = ft_strdup("");
-	if (!res->output)
-		return (NULL);
 	while (((*data)->env)[i])
 	{
 		if (((*data)->env)[i]->value)
 		{
-				ft_str_writeon(&res->output, ((*data)->env)[i]->name);
-			ft_char_writeon(&res->output, '=');
-			ft_str_writeon(&res->output, ((*data)->env)[i]->value);
-			ft_char_writeon(&res->output, '\n');	
+			ft_putstr(((*data)->env)[i]->name);
+			ft_putchar('=');
+			ft_putstr(((*data)->env)[i]->value);
+			ft_putchar('\n');	
 		}
 		i++;
 	}
-	return (res);
 }

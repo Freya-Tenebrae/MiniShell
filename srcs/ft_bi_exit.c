@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 04:43:04 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/01 12:08:19 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/02 12:02:10 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 //			(argument, fonction didn't exist, ...) et out->output devra etre 
 //			set a NULL;
 
-t_output	*ft_run_bi_exit(char **cmd_args)
+void	ft_run_bi_exit(char **cmd_args)
 {
 	if (g_status_minishell != 2)
 	{
@@ -32,7 +32,6 @@ t_output	*ft_run_bi_exit(char **cmd_args)
 	//		2 running line with pipe
 	(void)cmd_args;
 	// la version actuelle met un output error ce qui est normal
-	return (NULL);
 }
 
 //	- exit -> exit normalement

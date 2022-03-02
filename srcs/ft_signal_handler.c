@@ -8,7 +8,7 @@ static void	ft_signal_handler(int signal)
 		ft_putstr_fd("\b\b  ", STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		if (g_status_minishell <= 0)
 			rl_redisplay();
 	}
