@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/02 12:03:08 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/02 12:53:54 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,11 @@ int		ft_execute_command(t_data **data, t_elem *list, char **envp)
 				int fd[2];
 				
 				if (!ft_redirection_get_in(list) || ft_redirection_get_in(list) == NULL)
+				{
+					// Gestion d'erreur 
+					ft_put_error(FILE_ERROR, "Unknown file");
 					exit(0);
+				}
 					
 				if (pipe(fd) == -1)
 					exit(0);
@@ -99,7 +103,14 @@ int		ft_execute_command(t_data **data, t_elem *list, char **envp)
 				exit(0);
 			}
 			else
+			{
 				result_execve = ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, ft_elem_get_cmd_args(data, list));
+				if (result_execve == -1)
+					ft_put_error(GENERIC_ERROR, "malloc error");
+				else
+					ft_put_error(CMD_NOT_FOUND_ERROR, ft_elem_get_cmd_args(data, list)[0]);
+				exit(0);
+			}
 		}
 		else
 		{
