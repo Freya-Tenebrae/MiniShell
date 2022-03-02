@@ -6,7 +6,7 @@
 #    By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/20 19:17:29 by cmaginot          #+#    #+#              #
-#    Updated: 2022/02/27 15:57:57 by gadeneux         ###   ########.fr        #
+#    Updated: 2022/03/02 16:25:15 by gadeneux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_v2_executions.c \
 	ft_v2_redirections.c \
 	ft_v2_tools_redirections.c \
+	ft_v2_expension.c \
 	ft_tools_strs.c)
 OBJS=$(SRCS:.c=.o)
 

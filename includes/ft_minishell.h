@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/02 11:47:20 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/02 16:46:20 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ void		ft_free_elem(t_elem **elem);
 void		ft_free_output(t_output **output);
 t_env		**ft_init_env(char **envp);
 t_env		*ft_getenv(t_data **data, char *str);
-// void		ft_replace_env(t_data **data, char **str);
-void		ft_replace_env(t_data **data, t_elem *list);
+void		ft_expension_on_command(t_data **data, t_elem *list);
+void		ft_expension_on_heredoc(t_data **data, char **str);
 void		ft_free_env(t_env **env);
 void		ft_free_data(t_data **data);
 
@@ -153,6 +153,7 @@ int			ft_put_error(int i, char *str);
 int			ft_isquote(char c);
 int			ft_check_quote(char *str);
 char		*ft_keepinside_quote(char *str);
+int			ft_havequote(char *str);
 
 int			ft_str_isoperator(char *str);
 int			ft_char_isoperator(char c);
@@ -184,8 +185,7 @@ char		**ft_elem_get_cmd_args(t_data **data, t_elem *cursor);
 t_elem		*ft_elem_get_right(t_elem *cursor);
 t_elem		*ft_elem_clone_left(t_elem *cursor);
 
-
-int			ft_redirection_open_all(t_elem *list);
+int			ft_redirection_open_all(t_data **data, t_elem *list);
 char		*ft_redirection_get_in(t_elem *cmd);
 char		*ft_redirection_get_heredoc(t_elem *cmd);
 

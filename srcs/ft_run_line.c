@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/27 18:59:24 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/02 16:32:22 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	ft_parse_line(t_data **data, char **str, int *ret, t_elem **list)
 	*list = ft_read_line(*str, ret);
 	if (*list == NULL || *ret != READ_OK)
 		return (ft_put_error(GENERIC_ERROR, "Reading line error"));
-	ft_replace_env(data, *list);
+	ft_expension_on_command(data, *list);
 	return (0);
 }
 
@@ -51,7 +51,7 @@ void	ft_run_line(char **str, t_data **data)
 	{
 		if (ft_check_syntaxe_operator(list) == 0)
 		{
-			ft_redirection_open_all(list);
+			ft_redirection_open_all(data, list);
 			ft_execute_command(data, list, (*data)->envp);
 		}
 		ft_free_elem(&list);

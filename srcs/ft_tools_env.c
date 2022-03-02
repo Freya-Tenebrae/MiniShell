@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/02 16:14:11 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/02 16:24:53 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,84 +92,4 @@ t_env	*ft_getenv(t_data **data, char *str)
 		i++;
 	}
 	return (NULL);
-}
-
-static int	ft_inject(t_data **data, char *str, char **result)
-{
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = 0;
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-	{
-		ft_char_writeon(&tmp, str[i]);
-		i++;
-	}
-	if (ft_getenv(data, tmp))
-	{
-		ft_str_writeon(result, ft_getenv(data, tmp)->value);
-	} else
-	if (tmp)
-	{
-		free(tmp);
-	}
-	if (i == 0)
-		ft_char_writeon(result, '$');
-	return (i);
-}
-
-static void	ft_replace_env_on(t_data **data, char **str)
-{
-	char	*result;
-	char	quote;
-	int		i;
-
-	i = 0;
-	quote = 0;
-	result = 0;
-	if (!str || !*str)
-		return ;
-	while ((*str)[i])
-	{
-		if ((*str)[i] == '$' && ft_isquote((*str)[i + 1]) && !quote)
-        {
-            i++;
-            continue ;
-        }
-		if (!quote && ft_isquote((*str)[i]))
-			quote = (*str)[i];
-		else
-		{
-			if (quote && (*str)[i] == quote)
-				quote = 0;
-			else if ((*str)[i] == '$' && (!quote || quote != '\''))
-			{
-				i += ft_inject(data, &((*str)[i + 1]), &result);
-			} else
-				ft_char_writeon(&result, (*str)[i]);
-		}
-		i++;
-	}
-	if (!result)
-		result = ft_strdup("");
-	free(*str);
-	*str = result;
-}
-
-void	ft_replace_env(t_data **data, t_elem *list)
-{
-	t_elem	*cursor;
-	
-	cursor = list;
-	while (cursor)
-	{
-		if (cursor->type == DOUBLE_IN)
-		{
-			cursor = cursor->next->next;
-			continue ;
-		}
-		ft_replace_env_on(data, &(cursor->str));
-		cursor = cursor->next;
-	}
 }

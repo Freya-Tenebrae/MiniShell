@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/28 16:22:11 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/02 16:58:59 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,50 @@ static char*	ft_tools_read_fd(int fd)
 	return (res);
 }
 
-static int		ft_redirection_read_heredoc(t_elem *list)
+static int		ft_is_eof(char *buffer, char *eof)
+{
+	char	*tmp;
+	int		ret;
+
+	ret = 0;
+	tmp = ft_keepinside_quote(eof);
+	if (!tmp)
+		ret = -1;
+	else if (ft_str_equal(buffer, tmp))
+		ret = 1;
+	else
+		ret = 0;
+	if (tmp)
+		free(tmp);
+	return (ret);
+}
+
+static int		ft_redirection_read_heredoc(t_data **data, t_elem *list)
 {
 	char	*buffer;
+	int		eof_ret;
 
 	buffer = 0;
+	eof_ret = 0;
 	if (list->type == DOUBLE_IN)
 	{
 		while (1)
 		{
 			buffer = readline("> ");
-			if (ft_str_equal(buffer, list->next->str))
+			if (!ft_havequote(list->next->str))
+				ft_expension_on_heredoc(data, &buffer);
+			eof_ret = ft_is_eof(buffer, list->next->str);
+			if (eof_ret == -1)
+			{
+				ft_put_error(GENERIC_ERROR, "malloc error");
+				return (-1);
+			}
+			if (!eof_ret)
+			{
+				ft_str_writeon(&(list->in_content), buffer);
+				ft_str_writeon(&(list->in_content), "\n");
+			} else
 				break ;
-			ft_str_writeon(&(list->in_content), buffer);
-			ft_str_writeon(&(list->in_content), "\n");
 		}
 	}
 	return (1);
@@ -60,14 +90,14 @@ static int		ft_redirection_read_file(t_elem *list)
 	return (1);
 }
 
-static int		ft_redirection_fill_in(t_elem *cmd)
+static int		ft_redirection_fill_in(t_data **data, t_elem *cmd)
 {
 	t_elem	*cursor;
 
 	cursor = cmd;
 	while (cursor && cursor->type != PIPE)
 	{
-		ft_redirection_read_heredoc(cursor);
+		ft_redirection_read_heredoc(data, cursor);
 		cursor = cursor->next;
 	}
 	cursor = cmd;
@@ -79,11 +109,11 @@ static int		ft_redirection_fill_in(t_elem *cmd)
 	return (1);
 }
 
-static int		ft_redirection_open_in(t_elem *list)
+static int		ft_redirection_open_in(t_data **data, t_elem *list)
 {
 	while (list)
 	{
-		ft_redirection_fill_in(list);
+		ft_redirection_fill_in(data, list);
 		list = ft_elem_get_right(list);
 	}
 	return (0);
@@ -111,10 +141,10 @@ int		ft_redirection_open_out(t_elem *list)
 	return (1);
 }
 
-int		ft_redirection_open_all(t_elem *list)
+int		ft_redirection_open_all(t_data **data, t_elem *list)
 {
 	ft_redirection_open_out(list);
-	ft_redirection_open_in(list);
+	ft_redirection_open_in(data, list);
 	return (1);
 }
 

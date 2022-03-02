@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:30:52 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/27 19:04:09 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/02 16:45:48 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,15 @@ char	*ft_keepinside_quote(char *str)
 
 	}
 	return (res);
+}
+
+int		ft_havequote(char *str)
+{
+	while (*str)
+	{
+		if (ft_isquote(*str))
+			return (1);
+		str++;
+	}
+	return (0);
 }
