@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/03 17:20:02 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/03 18:22:14 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int			ft_check_syntaxe_operator(t_elem *list);
 int			ft_check_access_ok(t_elem *list);
 
 int			ft_put_error(int i, char *str);
+void		*ft_put_error_null(int i, char *str);
 
 int			ft_isquote(char c);
 int			ft_check_quote(char *str);
