@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/02 11:53:35 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:20:36 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_run_bi_env(t_data **data)
 			ft_putstr(((*data)->env)[i]->name);
 			ft_putchar('=');
 			ft_putstr(((*data)->env)[i]->value);
-			ft_putchar('\n');	
+			ft_putchar('\n');
 		}
 		i++;
 	}

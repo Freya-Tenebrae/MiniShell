@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:30:52 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/02 16:45:48 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:29:04 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,11 @@ char	*ft_keepinside_quote(char *str)
 			if (!res || res == NULL)
 				ft_put_error(GENERIC_ERROR, "malloc error");
 		}
-
 	}
 	return (res);
 }
 
-int		ft_havequote(char *str)
+int	ft_havequote(char *str)
 {
 	while (*str)
 	{

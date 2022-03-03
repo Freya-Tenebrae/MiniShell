@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_expension.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/02 16:24:54 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:53:12 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,9 @@ static int	ft_expension_inject(t_data **data, char *str, char **result)
 	if (ft_getenv(data, tmp))
 	{
 		ft_str_writeon(result, ft_getenv(data, tmp)->value);
-	} else
-	if (tmp)
-	{
-		free(tmp);
 	}
+	else if (tmp)
+		free(tmp);
 	if (i == 0)
 		ft_char_writeon(result, '$');
 	return (i);
@@ -51,10 +49,10 @@ static void	ft_expension_with_quote(t_data **data, char **str)
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '$' && ft_isquote((*str)[i + 1]) && !quote)
-        {
-            i++;
-            continue ;
-        }
+		{
+			i++;
+			continue ;
+		}
 		if (!quote && ft_isquote((*str)[i]))
 			quote = (*str)[i];
 		else
@@ -64,7 +62,8 @@ static void	ft_expension_with_quote(t_data **data, char **str)
 			else if ((*str)[i] == '$' && (!quote || quote != '\''))
 			{
 				i += ft_expension_inject(data, &((*str)[i + 1]), &result);
-			} else
+			}
+			else
 				ft_char_writeon(&result, (*str)[i]);
 		}
 		i++;
@@ -78,7 +77,7 @@ static void	ft_expension_with_quote(t_data **data, char **str)
 void	ft_expension_on_command(t_data **data, t_elem *list)
 {
 	t_elem	*cursor;
-	
+
 	cursor = list;
 	while (cursor)
 	{
@@ -106,7 +105,8 @@ void	ft_expension_on_heredoc(t_data **data, char **str)
 		if ((*str)[i] == '$')
 		{
 			i += ft_expension_inject(data, &((*str)[i + 1]), &result);
-		} else
+		}
+		else
 			ft_char_writeon(&result, (*str)[i]);
 		i++;
 	}

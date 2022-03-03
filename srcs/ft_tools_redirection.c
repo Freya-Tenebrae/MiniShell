@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_redirection.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/28 11:29:53 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:30:39 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	ft_redirection_in(t_elem *list, char **file_in)
 			list = list->next;
 			*file_in = ft_strdup(list->str);
 			if (!*file_in || *file_in == NULL)
-				return(ft_put_error(GENERIC_ERROR, "malloc error"));
+				return (ft_put_error(GENERIC_ERROR, "malloc error"));
 		}
 		list = list->next;
 	}
@@ -95,9 +95,9 @@ int	ft_redirection_get_fd_in(t_elem *list)
 }
 
 // OK
-char *ft_redirection_get_double_in_fd(t_elem *list)
+char	*ft_redirection_get_double_in_fd(t_elem *list)
 {
-	char *res;
+	char	*res;
 
 	res = 0;
 	while (list != NULL && list->type != PIPE)
@@ -110,7 +110,7 @@ char *ft_redirection_get_double_in_fd(t_elem *list)
 }
 
 // OK
-int ft_redirection_in_present(t_elem *list)
+int	ft_redirection_in_present(t_elem *list)
 {
 	while (list != NULL && list->type != PIPE)
 	{
@@ -122,7 +122,7 @@ int ft_redirection_in_present(t_elem *list)
 }
 
 // OK
-int ft_redirection_out_present(t_elem *list)
+int	ft_redirection_out_present(t_elem *list)
 {
 	while (list != NULL && list->type != PIPE)
 	{

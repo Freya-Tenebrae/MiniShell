@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/02 11:58:01 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:23:47 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,20 @@ void	ft_show_env(t_data **data)
 	}
 }
 
-int		ft_is_valid_identifier(char *str)
+int	ft_is_valid_identifier(char *str)
 {
-    int        i;
+	int	i;
 
-    i = 0;
-    if (!str || ft_strlen(str) == 0)
-        return (0);
-    while (str[i])
-    {
-        if (!ft_isalnum(str[i]) && str[i] != '_')
-            return (0);    
-        i++;
-    }
-    return (1);
+	i = 0;
+	if (!str || ft_strlen(str) == 0)
+		return (0);
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 void	ft_free_variable(t_env *env)
@@ -82,7 +82,7 @@ t_env	*ft_clone_variable(t_env *env)
 	char	*value;
 	char	*name;
 	t_env	*res;
-	
+
 	name = ft_strdup(env->name);
 	if (!name)
 		return (0);
@@ -99,7 +99,7 @@ t_env	*ft_clone_variable(t_env *env)
 	return (res);
 }
 
-int		ft_env_tab_len(t_env **tab)
+int	ft_env_tab_len(t_env **tab)
 {
 	int	i;
 
@@ -115,7 +115,7 @@ t_env	**ft_clone_and_add_env(t_env **env, t_env *variable)
 {
 	t_env	**res;
 	int		j;
-	
+
 	j = 0;
 	if (!variable)
 		return (0);
@@ -137,7 +137,7 @@ t_env	**ft_clone_and_add_env(t_env **env, t_env *variable)
 	return (res);
 }
 
-int		ft_try_replace(t_data **data, t_env *variable)
+int	ft_try_replace(t_data **data, t_env *variable)
 {
 	t_env	*existing;
 
@@ -155,23 +155,21 @@ int		ft_try_replace(t_data **data, t_env *variable)
 	return (1);
 }
 
-int		ft_add_variable(t_data **data, t_env *variable)
+int	ft_add_variable(t_data **data, t_env *variable)
 {
 	t_env	**copy;
-	
+
 	if (ft_try_replace(data, variable))
 		return (1);
-
 	copy = ft_clone_and_add_env((*data)->env, variable);
 	if (!copy)
 		return (0);
-
 	ft_free_env((*data)->env);
 	(*data)->env = copy;
 	return (1);
 }
 
-int		ft_fill(char **cmd_args, t_data **data)
+int	ft_fill(char **cmd_args, t_data **data)
 {
 	t_env	*variable;
 	int		i;

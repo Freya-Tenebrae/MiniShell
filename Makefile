@@ -60,7 +60,7 @@ GNL=includes/Get_next_line
 
 
 CC=clang -g
-CFLAGS=-Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS=-Wall -Wextra -Werror -g3 #-fsanitize=address
 RM=rm -f
 
 all: $(NAME)

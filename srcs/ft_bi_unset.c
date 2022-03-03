@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:52 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/02 12:01:49 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:25:09 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_putenv(t_env **env)
 	}
 }
 
-int		ft_str_equal(char *s1, char *s2)
+int	ft_str_equal(char *s1, char *s2)
 {
 	size_t	i;
 
@@ -53,7 +53,7 @@ t_env	**ft_clone_without_env(t_data **data, char *identifier)
 	t_env	**res;
 	int		i;
 	int		j;
-	
+
 	i = 0;
 	j = 0;
 	res = malloc(sizeof(t_env) * (ft_env_tab_len((*data)->env)));
@@ -77,10 +77,10 @@ t_env	**ft_clone_without_env(t_data **data, char *identifier)
 	return (res);
 }
 
-int		ft_unset_env(t_data **data, char *identifier)
+int	ft_unset_env(t_data **data, char *identifier)
 {
 	t_env	**copy;
-	
+
 	if (!identifier || !ft_getenv(data, identifier))
 		return (1);
 	copy = ft_clone_without_env(data, identifier);
@@ -91,7 +91,7 @@ int		ft_unset_env(t_data **data, char *identifier)
 	return (1);
 }
 
-int		ft_read_unset(t_data **data, char **cmd_args)
+int	ft_read_unset(t_data **data, char **cmd_args)
 {
 	int		i;
 
@@ -103,7 +103,8 @@ int		ft_read_unset(t_data **data, char **cmd_args)
 			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
 			ft_putstr_fd(cmd_args[i], STDERR_FILENO);
 			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-		} else
+		}
+		else
 			ft_unset_env(data, cmd_args[i]);
 		i++;
 	}

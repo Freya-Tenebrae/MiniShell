@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_tools_redirections.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:47:43 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/28 15:37:27 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:28:16 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	ft_elem_is_redirection(t_elem *elem)
 {
-	return (elem->type == IN || elem->type == DOUBLE_IN || elem->type == OUT || elem->type == DOUBLE_OUT);
+	return (elem->type == IN || elem->type == DOUBLE_IN || \
+		elem->type == OUT || elem->type == DOUBLE_OUT);
 }
 
 int	ft_elem_get_cmd_args_count(t_elem *cursor)
@@ -44,7 +45,7 @@ char	**ft_elem_get_cmd_args(t_data **data, t_elem *cursor)
 
 	(void) data;
 	i = 0;
-	cmd_tab = malloc(sizeof(char*) * (ft_elem_get_cmd_args_count(cursor) + 1));
+	cmd_tab = malloc(sizeof(char *) * (ft_elem_get_cmd_args_count(cursor) + 1));
 	if (!cmd_tab)
 		return (0);
 	while (cursor)

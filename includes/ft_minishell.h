@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/02 17:02:18 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:20:02 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void		ft_run_bi_cd(char **cmd_args);
 void		ft_run_bi_echo(char **cmd_args);
 void		ft_run_bi_env(t_data **data);
 void		ft_run_bi_export(t_data **data, char **cmd_args);
-void		ft_run_bi_pwd();
+void		ft_run_bi_pwd(void);
 void		ft_run_bi_unset(t_data **data, char **cmd_args);
 void		ft_run_bi_exit(char **cmd_args);
 

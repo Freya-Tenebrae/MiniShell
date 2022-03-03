@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/02 17:01:51 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:34:15 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-static char*	ft_tools_read_fd(int fd)
+// il faut retirer l'assignement du while
+static char	*ft_tools_read_fd(int fd)
 {
 	char	*buf;
 	char	*res;
 	int		ret;
-	
+
 	ret = 0;
 	res = 0;
 	while ((ret = get_next_line(fd, &buf)))
@@ -28,11 +29,13 @@ static char*	ft_tools_read_fd(int fd)
 	return (res);
 }
 
-static int		ft_redirection_read_file(t_elem *list)
+static int	ft_redirection_read_file(t_elem *list)
 {
+	int	in_fd;
+
 	if (list->type == IN)
 	{
-		int in_fd = ft_redirection_get_fd_in(list);
+		in_fd = ft_redirection_get_fd_in(list);
 		if (in_fd < 2)
 			return (0);
 		list->in_content = ft_tools_read_fd(in_fd);
@@ -41,7 +44,7 @@ static int		ft_redirection_read_file(t_elem *list)
 	return (1);
 }
 
-static int		ft_redirection_fill_in(t_data **data, t_elem *cmd)
+static int	ft_redirection_fill_in(t_data **data, t_elem *cmd)
 {
 	t_elem	*cursor;
 
@@ -60,7 +63,7 @@ static int		ft_redirection_fill_in(t_data **data, t_elem *cmd)
 	return (1);
 }
 
-static int		ft_redirection_open_in(t_data **data, t_elem *list)
+static int	ft_redirection_open_in(t_data **data, t_elem *list)
 {
 	while (list)
 	{
@@ -70,9 +73,10 @@ static int		ft_redirection_open_in(t_data **data, t_elem *list)
 	return (0);
 }
 
-int		ft_redirection_open_out(t_elem *list)
+int	ft_redirection_open_out(t_elem *list)
 {
 	t_elem	*left;
+	int		out_fd;
 
 	left = 0;
 	while (list)
@@ -82,7 +86,7 @@ int		ft_redirection_open_out(t_elem *list)
 			return (0);
 		if (ft_redirection_out_present(list))
 		{
-			int out_fd = ft_redirection_get_fd_out(list);
+			out_fd = ft_redirection_get_fd_out(list);
 			if (out_fd < 2)
 				return (0);
 			list->out_fd = out_fd;
@@ -92,7 +96,7 @@ int		ft_redirection_open_out(t_elem *list)
 	return (1);
 }
 
-int		ft_redirection_open_all(t_data **data, t_elem *list)
+int	ft_redirection_open_all(t_data **data, t_elem *list)
 {
 	ft_redirection_open_out(list);
 	ft_redirection_open_in(data, list);

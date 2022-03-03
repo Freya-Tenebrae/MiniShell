@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:01:22 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/02 17:01:56 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:34:58 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-static int		ft_is_eof(char *buffer, char *eof)
+static int	ft_is_eof(char *buffer, char *eof)
 {
 	char	*tmp;
 	int		ret;
@@ -30,7 +30,7 @@ static int		ft_is_eof(char *buffer, char *eof)
 	return (ret);
 }
 
-int		ft_redirection_read_heredoc(t_data **data, t_elem *list)
+int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 {
 	char	*buffer;
 	int		eof_ret;
@@ -54,7 +54,8 @@ int		ft_redirection_read_heredoc(t_data **data, t_elem *list)
 			{
 				ft_str_writeon(&(list->in_content), buffer);
 				ft_str_writeon(&(list->in_content), "\n");
-			} else
+			}
+			else
 				break ;
 		}
 	}
