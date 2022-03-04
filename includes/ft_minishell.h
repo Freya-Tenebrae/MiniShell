@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/03 18:22:14 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/04 17:10:18 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int			ft_run_execve_with_all_path(char *path, char **cmd_args);
 /* ************************************************************************** */
 int			ft_is_build_in(char *cmd);
 void		ft_run_bi(t_data **data, char **cmd_args);
-void		ft_run_bi_cd(char **cmd_args);
+void		ft_run_bi_cd(t_data **data, char **cmd_args);
 void		ft_run_bi_echo(char **cmd_args);
 void		ft_run_bi_env(t_data **data);
 void		ft_run_bi_export(t_data **data, char **cmd_args);

@@ -6,7 +6,7 @@
 #    By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/20 19:17:29 by cmaginot          #+#    #+#              #
-#    Updated: 2022/03/02 17:02:34 by gadeneux         ###   ########.fr        #
+#    Updated: 2022/03/04 17:30:06 by gadeneux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ GNL=includes/Get_next_line
 
 
 CC=clang -g
-CFLAGS=-Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS=-Wall -Wextra -Werror -g3 -fsanitize=address
 RM=rm -f
 
 all: $(NAME)

@@ -46,6 +46,8 @@
 		"limits": "c",
 		"ratio": "c",
 		"__node_handle": "c",
-		"__memory": "c"
+		"__memory": "c",
+		"__functional_03": "c",
+		"__mutex_base": "c"
 	}
 }

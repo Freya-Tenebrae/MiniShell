@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 18:45:07 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/02 11:44:38 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/04 17:30:29 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_run_bi(t_data **data, char **cmd_args)
 	if (ft_strcmp(cmd_args[0], "echo") == 0)
 		ft_run_bi_echo(cmd_args);
 	else if (ft_strcmp(cmd_args[0], "cd") == 0)
-		ft_run_bi_cd(cmd_args);
+		ft_run_bi_cd(data, cmd_args);
 	else if (ft_strcmp(cmd_args[0], "pwd") == 0)
 		ft_run_bi_pwd();
 	else if (ft_strcmp(cmd_args[0], "export") == 0)
