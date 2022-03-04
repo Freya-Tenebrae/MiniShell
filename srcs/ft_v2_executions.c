@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/04 12:13:40 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/04 16:28:00 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 	pid = 0;
 	if (!ft_there_is_pipe(list))
 	{
+		if (ft_is_build_in(ft_elem_get_cmd_args(data, list)[0]) == 1)
+		{
+			ft_run_bi(data, ft_elem_get_cmd_args(data, list));
+			return (0);
+		}
 		pid = fork();
 		if (pid == 0)
 		{
@@ -97,23 +102,15 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 				list->out_fd = -1;
 			}
 			// gerer autrement le truc en bas (leaks et erreur)
-			if (ft_is_build_in(ft_elem_get_cmd_args(data, list)[0]) == 1)
-			{
-				ft_run_bi(data, ft_elem_get_cmd_args(data, list));
-				exit(0);
-			}
+			result_execve = ft_run_execve_with_all_path(\
+				ft_getenv(data, "PATH")->value, \
+				ft_elem_get_cmd_args(data, list));
+			if (result_execve == -1)
+				ft_put_error(GENERIC_ERROR, "malloc error");
 			else
-			{
-				result_execve = ft_run_execve_with_all_path(\
-					ft_getenv(data, "PATH")->value, \
-					ft_elem_get_cmd_args(data, list));
-				if (result_execve == -1)
-					ft_put_error(GENERIC_ERROR, "malloc error");
-				else
-					ft_put_error(CMD_NOT_FOUND_ERROR, \
-						ft_elem_get_cmd_args(data, list)[0]);
-				exit(0);
-			}
+				ft_put_error(CMD_NOT_FOUND_ERROR, \
+					ft_elem_get_cmd_args(data, list)[0]);
+			exit(0);
 		}
 		else
 		{
