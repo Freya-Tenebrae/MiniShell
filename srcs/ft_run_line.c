@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_run_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/02 16:32:22 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/04 12:12:36 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_parse_line(t_data **data, char **str, int *ret, t_elem **list)
 	*ret = 0;
 	// ft_replace_env(data, *str);
 	*list = ft_read_line(*str, ret);
-	if (*list == NULL || *ret != READ_OK)
+	if (*ret != READ_OK)
 		return (ft_put_error(GENERIC_ERROR, "Reading line error"));
 	ft_expension_on_command(data, *list);
 	return (0);

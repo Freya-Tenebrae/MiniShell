@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_run_execve.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/28 16:29:51 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/04 12:21:52 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ static int	ft_run_execve_with_one_path(char **cmd_args, char *path)
 	return (0);
 }
 
+static int	ft_run_execve_for_exec(char **cmd_args)
+{
+	execve(cmd_args[0], cmd_args, NULL);
+	return (0);
+}
+
 int	ft_run_execve_with_all_path(char *path, char **cmd_args)
 {
 	int		res_one_path;
@@ -73,5 +79,5 @@ int	ft_run_execve_with_all_path(char *path, char **cmd_args)
 			i++;
 	}
 	ft_freestrs(&paths);
-	return (0);
+	return (ft_run_execve_for_exec(cmd_args));
 }

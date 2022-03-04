@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/03 17:58:06 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/04 12:13:40 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 				if (!ft_redirection_get_in(list) || \
 					ft_redirection_get_in(list) == NULL)
 				{
-					// Gestion d'erreur 
+					// Gestion d'erreur, get filename 
 					ft_put_error(FILE_ERROR, "Unknown file");
 					exit(0);
 				}	
