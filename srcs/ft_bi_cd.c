@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/04 18:22:34 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/04 18:25:43 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	step6(t_data **data, char *directory_operand)
 
 void	step7(t_data **data, char *directory_operand)
 {
-	printf("chdir to %s\n", directory_operand);
 	ft_move(data, directory_operand);
 }
 
