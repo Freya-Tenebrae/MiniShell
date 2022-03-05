@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_expension.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/03 17:53:12 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:23:31 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_expension_inject(t_data **data, char *str, char **result)
 		ft_char_writeon(&tmp, str[i]);
 		i++;
 	}
-	if (ft_getenv(data, tmp))
+	if (ft_getenv(data, tmp) && ft_getenv(data, tmp)->value)
 	{
 		ft_str_writeon(result, ft_getenv(data, tmp)->value);
 	}

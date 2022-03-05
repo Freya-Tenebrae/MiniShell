@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/04 18:25:43 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:13:12 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,29 @@
 //			(argument, fonction didn't exist, ...) et out->output devra etre 
 //			set a NULL;
 
-int		check_valid_home(t_data **data)
+int		ft_move(t_data **data, char *destination)
+{
+	char	*pwd;
+	int		ret;
+	
+	if (ft_getenv(data, "PWD"))
+		if (ft_create_or_update_variable(data, "OLDPWD", ft_getenv(data, "PWD")->value) == -1)
+		{
+			ft_put_error(GENERIC_ERROR, "malloc error");
+			return (-1);
+		}
+	ret = chdir(destination);
+	pwd = 0;
+	pwd = getcwd(pwd, 0);
+	if (ft_create_or_update_variable(data, "PWD", pwd) == -1)
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
+		return (-1);
+	}
+	return (1);
+}
+
+static int		check_valid_home(t_data **data)
 {
 	t_env	*home;
 
@@ -27,7 +49,7 @@ int		check_valid_home(t_data **data)
 	return (home && home->value && ft_strlen(home->value) > 0);
 }
 
-int		is_dot_or_dotdot(char *directory_operand)
+static int		is_dot_or_dotdot(char *directory_operand)
 {
 	char	*first;
 
@@ -45,19 +67,7 @@ int		is_dot_or_dotdot(char *directory_operand)
 	return (ft_strcmp(directory_operand, ".") == 0 || ft_strcmp(directory_operand, "..") == 0);
 }
 
-void	ft_move(t_data **data, char *destination)
-{
-	char	*pwd;
-	int		ret;
-	
-	pwd = 0;
-	ret = chdir(destination);
-	pwd = getcwd(pwd, 0);
-	free(ft_getenv(data, "PWD")->value);
-	ft_getenv(data, "PWD")->value = pwd;
-}
-
-void	step6(t_data **data, char *directory_operand)
+static void	step6(t_data **data, char *directory_operand)
 {
 	char	*new_path;
 
@@ -69,7 +79,7 @@ void	step6(t_data **data, char *directory_operand)
 	free(new_path);
 }
 
-void	step7(t_data **data, char *directory_operand)
+static void	step7(t_data **data, char *directory_operand)
 {
 	ft_move(data, directory_operand);
 }

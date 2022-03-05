@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/04 17:10:18 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:07:51 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ char		*ft_char_tostring(char c);
 char		**ft_str_clonetab(char **strs);
 void		ft_freestrs(char ***strs);
 
-int			ft_is_valid_identifier(char *str);
+int			ft_is_valid_variable_identifier(char *str);
 int			ft_str_equal(char *s1, char *s2);
 int			ft_env_tab_len(t_env **tab);
 t_env		*ft_clone_variable(t_env *env);
@@ -190,6 +190,15 @@ int			ft_redirection_read_heredoc(t_data **data, t_elem *list);
 int			ft_redirection_open_all(t_data **data, t_elem *list);
 char		*ft_redirection_get_in(t_elem *cmd);
 char		*ft_redirection_get_heredoc(t_elem *cmd);
+
+int			ft_create_or_update_variable(t_data **data, char *variable_name, char *value);
+void		ft_free_variable(t_env *env);
+void		ft_update_variable_value(t_env *variable, char *value);
+t_env		*ft_create_variable(char *name, char *value);
+t_env		*ft_clone_variable(t_env *env);
+int			ft_env_tab_len(t_env **tab);
+t_env		**ft_clone_and_add_env(t_env **env, t_env *variable);
+int			ft_add_variable(t_data **data, t_env *variable);
 
 /* ************************************************************************** */
 /*                                    END                                     */

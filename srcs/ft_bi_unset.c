@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:52 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/03 17:25:09 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:07:51 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	ft_read_unset(t_data **data, char **cmd_args)
 	i = 1;
 	while (cmd_args[i])
 	{
-		if (!ft_is_valid_identifier(cmd_args[i]))
+		if (!ft_is_valid_variable_identifier(cmd_args[i]))
 		{
 			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
 			ft_putstr_fd(cmd_args[i], STDERR_FILENO);
