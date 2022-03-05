@@ -6,11 +6,47 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:57:18 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/05 16:20:38 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/05 19:49:25 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
+
+static int	ft_is_whitespace_following(char *str)
+{
+	while (*str)
+	{
+		if (!ft_iswhitespace(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+static int	ft_trim_variable_value(char **value)
+{
+	char	*res;
+	int		i;
+
+	i = 0;
+	res = 0;
+	if (!value || !*value)
+		return (0);
+	i = 0;
+	while ((*value)[i] && ft_iswhitespace((*value)[i]))
+		i++;
+	while ((*value)[i])
+	{
+		if (ft_is_whitespace_following(*value + i))
+			break ;
+		if (!(*value)[i + 1] || !ft_iswhitespace((*value)[i]) || !ft_iswhitespace((*value)[i + 1]))
+			ft_char_writeon(&res, (*value)[i]);//renvoie -1 si erreur + free de res
+		i++;
+	}
+	free(*value);
+	*value = res;
+	return (1);
+}
 
 int		ft_create_or_update_variable(t_data **data, char *variable_name, char *value)
 {
@@ -18,6 +54,8 @@ int		ft_create_or_update_variable(t_data **data, char *variable_name, char *valu
 	int		ret;
 
 	ret = 0;
+	if (ft_trim_variable_value(&value) == -1)
+		return (-1);
 	variable = ft_getenv(data, variable_name);
 	if (!variable)
 	{
@@ -146,6 +184,8 @@ int	ft_is_valid_variable_identifier(char *str)
 
 	i = 0;
 	if (!str || ft_strlen(str) == 0)
+		return (0);
+	if (str[0] >= '0' && str[0] <= '9')
 		return (0);
 	while (str[i])
 	{
