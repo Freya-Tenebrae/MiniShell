@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 10:50:24 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 13:45:02 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 /* ************************************************************************** */
 typedef struct s_status {
 	int				status;
-	int				exitcode;
+	unsigned char	exitcode;
 }					t_status;
 
 typedef struct s_elem {

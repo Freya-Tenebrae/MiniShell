@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/16 08:22:53 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 14:48:22 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	ft_free_elem(t_elem **elem)
 			elem_ptr = elem_ptr->next;
 			if ((*elem)->str != NULL)
 				free((*elem)->str);
+			if ((*elem)->in_content != NULL)
+				free((*elem)->in_content);
 			free(*elem);
 			*elem = elem_ptr;
 		}

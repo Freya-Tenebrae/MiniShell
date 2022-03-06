@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:36:11 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 10:50:11 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 14:52:01 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	ft_print_error(int i, char *str)
 	if (!error_str || error_str == NULL)
 		return ft_malloc_error_on_error_management();
 	write(STDERR_FILENO, error_str, ft_strlen(error_str));
+	free(error_str);
 }
 
 int	ft_put_error(int i, char *str)
