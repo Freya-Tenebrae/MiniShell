@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:36:11 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 10:25:38 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:50:11 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,10 @@ void	*ft_put_error_null(int i, char *str)
 {
 	ft_print_error(i, str);
 	return (NULL);
+}
+
+void	ft_put_error_void(int i, char *str)
+{
+	ft_print_error(i, str);
+	return ;
 }

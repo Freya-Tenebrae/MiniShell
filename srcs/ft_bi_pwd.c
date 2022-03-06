@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:32 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/02 12:08:17 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:51:38 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	ft_run_bi_pwd(void)
 	if (!pwd || pwd == NULL)
 	{
 		ft_putstr_fd("minishell: pwd: null", STDERR_FILENO);
-		ft_put_error(GENERIC_ERROR, "malloc error");
-		return ;
+		return ft_put_error_void(GENERIC_ERROR, "malloc error");
 	}
 	ft_putstr(pwd);
 	ft_putchar('\n');

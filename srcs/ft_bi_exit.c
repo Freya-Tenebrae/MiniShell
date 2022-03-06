@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 04:43:04 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 10:45:16 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:51:16 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,11 @@ void	ft_run_bi_exit(char **cmd_args)
 	}
 	else if (cmd_args[1] && ft_arg_is_numeric(cmd_args[1]) != 0)
 	{
-		ft_put_error(NUMERIC_ARG_NEEDED_ERROR, cmd_args[1]);
 		ft_update_minishell_status(2);
-		return ;
+		return ft_put_error_void(NUMERIC_ARG_NEEDED_ERROR, cmd_args[1]);
 	}
 	else if (nb_arg > 1)
-	{
-		ft_put_error(GENERIC_ERROR, "too mutch arguments");
-		return ;
-	}
+		return ft_put_error_void(GENERIC_ERROR, "too mutch arguments");
 	else
 	{
 		ft_update_minishell_status(ft_atoi(cmd_args[1]));
