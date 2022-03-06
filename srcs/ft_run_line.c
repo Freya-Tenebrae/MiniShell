@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 15:50:25 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 17:49:37 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	ft_run_line(char **str, t_data **data)
 		if (ft_check_syntaxe_operator(list) == 0)
 		{
 			ft_redirection_open_all(data, list);
-			ft_execute_command(data, list, (*data)->envp);
+			if (list && ft_strcmp(list->str, "") != 0)
+				ft_execute_command(data, list, (*data)->envp);
 		}
 		ft_free_elem(&list);
 	}

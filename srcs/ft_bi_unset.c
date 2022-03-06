@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:52 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/05 16:07:51 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 17:40:05 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_unset_env(t_data **data, char *identifier)
 	copy = ft_clone_without_env(data, identifier);
 	if (!copy)
 		return (0);
-	ft_free_env((*data)->env);
+	ft_free_envs(&((*data)->env), ft_get_size_env(&((*data)->env)));
 	(*data)->env = copy;
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/05 19:39:30 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 17:03:15 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,40 +39,32 @@ static void	ft_show_env(t_data **data)
 	}
 }
 
-static void	ft_export_error(char *variable_name)
-{
-	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
-	ft_putstr_fd(variable_name, STDERR_FILENO);
-	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-}
-
 static int	ft_fill(char **cmd_args, t_data **data)
 {
 	int		i;
+	char	*tmp;
 
-	(void) data;
 	i = 1;
 	while (cmd_args[i])
 	{
-		(void) ft_export_error;
 		if (ft_str_indexof(cmd_args[i], '=') == -1)
 		{
-			// printf("<%s>\n", cmd_args[i]);
 			if (!ft_is_valid_variable_identifier(cmd_args[i]))
-				ft_export_error(cmd_args[i]);
+				ft_put_error(IDENTIFIER_VAR_ERROR, cmd_args[i]);
 			else
 				ft_create_or_update_variable(data, cmd_args[i], NULL);
-		} else {
-			char *tmp = ft_str_before(cmd_args[i], '=');
+		}
+		else
+		{
+			tmp = ft_str_before(cmd_args[i], '=');
 			if (!tmp)
 				return (-1);
-			// printf("[%s]\n", cmd_args[i]);
 			if (!ft_is_valid_variable_identifier(tmp))
-				ft_export_error(cmd_args[i]);
+				ft_put_error(IDENTIFIER_VAR_ERROR, cmd_args[i]);
 			else
 				ft_create_or_update_variable(data, tmp, ft_str_after(cmd_args[i], '='));
+			free(tmp);
 		}
-		// printf("<%s>\n", cmd_args[i]);
 		i++;
 	}
 	return (1);

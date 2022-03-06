@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 13:45:02 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 17:13:07 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # define ACCESS_ERROR 4
 # define FILENAME_TOO_LONG_ERROR 5
 # define NUMERIC_ARG_NEEDED_ERROR 6
+# define IDENTIFIER_VAR_ERROR 7
 
 # define READ_OK 0
 # define READ_ERR -1
@@ -138,8 +139,9 @@ t_env		*ft_getenv(t_data **data, char *str);
 void		ft_expension_on_command(t_data **data, t_elem *list);
 void		ft_expension_on_heredoc(t_data **data, char **str);
 void		ft_free_env(t_env **env);
+int			ft_get_size_env(t_env ***env);
+void		ft_free_envs(t_env ***env, int i);
 void		ft_free_data(t_data **data);
-
 int			ft_redirection_in_present(t_elem *list);
 int			ft_redirection_out_present(t_elem *list);
 int			ft_redirection_get_fd_in(t_elem *list);

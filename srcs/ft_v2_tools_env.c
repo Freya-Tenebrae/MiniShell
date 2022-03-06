@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_tools_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:57:18 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/05 19:49:25 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 17:18:05 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ t_env	*ft_clone_variable(t_env *env)
 			return (0);
 	}
 	res = ft_create_variable(name, value);
+	free(name);
 	if (!res)
 		return (0);
 	return (res);
@@ -205,7 +206,7 @@ int	ft_add_variable(t_data **data, t_env *variable)
 	copy = ft_clone_and_add_env((*data)->env, variable);
 	if (!copy)
 		return (-1);
-	ft_free_env((*data)->env);
+	ft_free_envs(&((*data)->env), ft_get_size_env(&((*data)->env)));
 	(*data)->env = copy;
 	return (1);
 }

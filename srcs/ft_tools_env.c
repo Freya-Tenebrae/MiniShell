@@ -6,13 +6,25 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/06 10:28:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 17:12:50 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
 /* Renvoie un tableau de t_env depuis l'envp. */
+
+int	ft_get_size_env(t_env ***env)
+{
+	int i;
+
+	i = 0;
+	while ((*env)[i] && (*env)[i] != NULL)
+	{
+		i++;
+	}
+	return (i - 1);
+}
 
 void	ft_free_envs(t_env ***env, int i)
 {
