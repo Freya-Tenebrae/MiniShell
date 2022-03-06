@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 04:43:04 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 10:07:38 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:45:16 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,13 @@ static int	ft_get_number_args(char **cmd_args)
 	return (i - 1);
 }
 
-static void	ft_update_minishell_status(void)
+static void	ft_update_minishell_status(int exitcode)
 {
-	if (g_status_minishell != 2)
-		g_status_minishell = -1;
+	if (g_status_minishell.status != 2)
+	{
+		g_status_minishell.status = -1;
+		g_status_minishell.exitcode = exitcode;
+	}
 }
 
 void	ft_run_bi_exit(char **cmd_args)
@@ -48,13 +51,13 @@ void	ft_run_bi_exit(char **cmd_args)
 	nb_arg = ft_get_number_args(cmd_args);
 	if (nb_arg == 0)
 	{
-		ft_update_minishell_status();
+		ft_update_minishell_status(0);
 		return ;
 	}
 	else if (cmd_args[1] && ft_arg_is_numeric(cmd_args[1]) != 0)
 	{
 		ft_put_error(NUMERIC_ARG_NEEDED_ERROR, cmd_args[1]);
-		ft_update_minishell_status();
+		ft_update_minishell_status(2);
 		return ;
 	}
 	else if (nb_arg > 1)
@@ -64,7 +67,7 @@ void	ft_run_bi_exit(char **cmd_args)
 	}
 	else
 	{
-		ft_update_minishell_status();
+		ft_update_minishell_status(ft_atoi(cmd_args[1]));
 		return ;
 	}
 }

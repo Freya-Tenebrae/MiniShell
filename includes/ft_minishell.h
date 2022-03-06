@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 09:52:05 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:35:48 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@
 /* ************************************************************************** */
 /*                                  TYPEDEF                                   */
 /* ************************************************************************** */
+typedef struct s_status {
+	int				status;
+	int				exitcode;
+}					t_status;
+
 typedef struct s_elem {
 	struct s_elem	*next;
 	int				type;
@@ -93,12 +98,7 @@ typedef struct s_redir {
 /* ************************************************************************** */
 /*                                  GLOBAL                                    */
 /* ************************************************************************** */
-int			g_status_minishell;
-// g_status_minishell == -1 : minishell must exit
-// g_status_minishell == 0  : minishell is running
-// g_status_minishell == 1  : minishell is executing a line without pipe
-// g_status_minishell == 2  : minishell is executing a line with a pipe
-// g_status_minishell == 3  : minishell'll force brocking a loop
+t_status	g_status_minishell;
 
 /* ************************************************************************** */
 /*                                  FONCTION                                  */

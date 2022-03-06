@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal_handler.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 16:32:20 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/04 13:55:54 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:36:44 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_signal_handler(int signal)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
 		// rl_replace_line("", 0);
-		if (g_status_minishell <= 0)
+		if (g_status_minishell.status <= 0)
 			rl_redisplay();
 	}
 	else if (signal == SIGQUIT)
