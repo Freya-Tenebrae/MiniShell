@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_expension.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/05 16:42:26 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 16:19:55 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_expension_inject(t_data **data, char *str, char **result)
 	int		i;
 
 	i = 0;
-	tmp = 0;
+	tmp = NULL;
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 	{
 		ft_char_writeon(&tmp, str[i]);
@@ -28,7 +28,7 @@ static int	ft_expension_inject(t_data **data, char *str, char **result)
 	{
 		ft_str_writeon(result, ft_getenv(data, tmp)->value);
 	}
-	else if (tmp)
+	if (tmp)
 		free(tmp);
 	if (i == 0)
 		ft_char_writeon(result, '$');
