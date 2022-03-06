@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:01:22 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/06 10:30:14 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 15:58:27 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,13 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 			{
 				ft_str_writeon(&(list->in_content), buffer);
 				ft_str_writeon(&(list->in_content), "\n");
+				free(buffer);
 			}
 			else
+			{
+				free(buffer);
 				break ;
+			}
 		}
 	}
 	return (1);

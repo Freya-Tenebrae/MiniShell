@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/06 14:16:13 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 15:53:57 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,17 @@ static char	*ft_tools_read_fd(int fd)
 	int		ret;
 
 	ret = 0;
-	res = 0;
+	res = NULL;
+	buf = NULL;
 	while ((ret = get_next_line(fd, &buf)))
 	{
 		ft_str_writeon(&res, buf);
 		ft_char_writeon(&res, '\n');
+		free(buf);
+		buf = NULL;
 	}
+	free(buf);
+	buf = NULL;
 	return (res);
 }
 

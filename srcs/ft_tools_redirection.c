@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/03 17:30:39 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 16:04:18 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static int	ft_redirection_in(t_elem *list, char **file_in)
 		if (list->type == IN)
 		{
 			list = list->next;
+			if (*file_in)
+				free(*file_in);
 			*file_in = ft_strdup(list->str);
 			if (!*file_in || *file_in == NULL)
 				return (ft_put_error(GENERIC_ERROR, "malloc error"));
@@ -89,8 +91,14 @@ int	ft_redirection_get_fd_in(t_elem *list)
 	infile = NULL;
 	is_double_in = 0;
 	if (ft_redirection_in(list, &file_in) == -1)
+	{
+		if (file_in)
+			free(file_in);
 		return (-1);
+	}
 	fd = open(file_in, O_RDONLY);
+	if (file_in)
+		free(file_in);
 	return (fd);
 }
 
