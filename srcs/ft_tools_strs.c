@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_strs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/05 14:56:14 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:29:41 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,15 @@ char	**ft_str_clonetab(char **strs)
 		len++;
 	res = malloc(sizeof(char *) * (len + 1));
 	if (!res)
-	{
-		ft_put_error(GENERIC_ERROR, "malloc error");
-		return (NULL);
-	}
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	i = 0;
 	while (strs[i])
 	{
 		res[i] = ft_strdup(strs[i]);
 		if (res[i] == NULL)
 		{
-			ft_put_error(GENERIC_ERROR, "malloc error");
 			ft_freestrs(&res);
-			return (NULL);
+			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 		}
 		i++;
 	}

@@ -3,42 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 04:43:04 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/04 16:22:54 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:07:38 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-//	pour les output : 
-//		si il n'y a pas d'erreur, out->output ne devra ni etre non attribuer 
-//			ni nul et out->error devra etre NULL
-//		si il y a une erreur elle devra etre mise dans out->error
-//			(argument, fonction didn't exist, ...) et out->output devra etre 
-//			set a NULL;
+static int	ft_arg_is_numeric(char *arg)
+{
+	int i;
+
+	i = -1;
+	while (arg[++i] != '\0')
+	{
+		if (ft_isdigit(arg[i]) == 0 && !(i == 0 && arg[i] == '-'))
+			return (-1);
+	}
+	return (0);
+}
+
+static int	ft_get_number_args(char **cmd_args)
+{
+	int i;
+
+	i = 0;
+	while (cmd_args[i] != NULL)
+		i++;
+	return (i - 1);
+}
+
+static void	ft_update_minishell_status(void)
+{
+	if (g_status_minishell != 2)
+		g_status_minishell = -1;
+}
 
 void	ft_run_bi_exit(char **cmd_args)
 {
-	if (g_status_minishell != 2)
-	{
-		g_status_minishell = -1;
-	}
-	// g_status_minishell :
-	//		-1 = exit
-	//		0 = run 
-	//		1 : running line witout pipe 
-	//		2 running line with pipe
-	(void)cmd_args;
-	// la version actuelle met un output error ce qui est normal
-}
+	int nb_arg;
 
-//	- exit -> exit normalement
-//	- exit "arg numerique" -> exit normalement
-//	- exit "arg non numerique"  -> msg argument numerique necessaire puis exit
-//	- exit "plusieur arguments" -> erreur non numerique if 1rst non numerique 
-//			(mais quitte si un seul arg numerique) sinon msg trop d'arguments
-//	- presence d'un pipe (avant ou apres) : n'existe pas mais passe a la 
-//			commande suivante 
-//	- le mettre en bi specifique ...
+	nb_arg = ft_get_number_args(cmd_args);
+	if (nb_arg == 0)
+	{
+		ft_update_minishell_status();
+		return ;
+	}
+	else if (cmd_args[1] && ft_arg_is_numeric(cmd_args[1]) != 0)
+	{
+		ft_put_error(NUMERIC_ARG_NEEDED_ERROR, cmd_args[1]);
+		ft_update_minishell_status();
+		return ;
+	}
+	else if (nb_arg > 1)
+	{
+		ft_put_error(GENERIC_ERROR, "too mutch arguments");
+		return ;
+	}
+	else
+	{
+		ft_update_minishell_status();
+		return ;
+	}
+}

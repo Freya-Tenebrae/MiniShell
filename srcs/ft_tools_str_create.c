@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/14 05:23:50 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:29:12 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,7 @@ char	*ft_char_tostring(char c)
 
 	str = malloc(sizeof(char) * 2);
 	if (!str)
-	{
-		ft_put_error(GENERIC_ERROR, "malloc error");
-		return (NULL);
-	}
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	str[0] = c;
 	str[1] = '\0';
 	return (str);

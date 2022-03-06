@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:01:22 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/04 12:03:11 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:30:14 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 				ft_expension_on_heredoc(data, &buffer);
 			eof_ret = ft_is_eof(buffer, list->next->str);
 			if (eof_ret == -1)
-			{
-				ft_put_error(GENERIC_ERROR, "malloc error");
-				return (-1);
-			}
+				return (ft_put_error(GENERIC_ERROR, "malloc error"));
 			if (!eof_ret)
 			{
 				ft_str_writeon(&(list->in_content), buffer);

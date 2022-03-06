@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:30:52 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/03 17:29:04 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:28:59 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ static char	*ft_return_empty_str(void)
 
 	res = ft_strdup("");
 	if (!res)
-	{
-		ft_put_error(GENERIC_ERROR, "malloc error");
-		return (NULL);
-	}
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	return (res);
 }
 

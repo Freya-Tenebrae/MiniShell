@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_elem.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 01:20:46 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/02/27 18:31:49 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:28:04 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,12 @@ t_elem	*ft_elem_create(char *str, int is_operator)
 	{
 		str = ft_strdup("");
 		if (!str || str == NULL)
-		{
-			ft_put_error(GENERIC_ERROR, "malloc error");
-			return (NULL);
-		}
+			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	}
 	type = ft_get_operator_type(str);
 	list_new = malloc(sizeof(t_elem));
 	if (!list_new)
-	{
-		ft_put_error(GENERIC_ERROR, "malloc error");
-		return (NULL);
-	}
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	list_new->next = NULL;
 	list_new->str = str;
 	list_new->in_content = NULL;

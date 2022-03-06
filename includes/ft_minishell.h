@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/05 16:07:51 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 09:52:05 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define FILE_ERROR 3
 # define ACCESS_ERROR 4
 # define FILENAME_TOO_LONG_ERROR 5
+# define NUMERIC_ARG_NEEDED_ERROR 6
 
 # define READ_OK 0
 # define READ_ERR -1

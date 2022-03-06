@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/05 16:13:12 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:26:16 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,14 @@ int		ft_move(t_data **data, char *destination)
 	if (ft_getenv(data, "PWD"))
 		if (ft_create_or_update_variable(data, "OLDPWD", ft_getenv(data, "PWD")->value) == -1)
 		{
-			ft_put_error(GENERIC_ERROR, "malloc error");
-			return (-1);
+			return (ft_put_error(GENERIC_ERROR, "malloc error"););
 		}
 	ret = chdir(destination);
 	pwd = 0;
 	pwd = getcwd(pwd, 0);
 	if (ft_create_or_update_variable(data, "PWD", pwd) == -1)
 	{
-		ft_put_error(GENERIC_ERROR, "malloc error");
-		return (-1);
+		return (ft_put_error(GENERIC_ERROR, "malloc error"););
 	}
 	return (1);
 }

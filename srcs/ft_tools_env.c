@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:39:49 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/02 16:24:53 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/06 10:28:26 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ t_env	**ft_init_env(char **envp)
 		i++;
 	res = malloc(sizeof(t_env) * (i + 1));
 	if (!res)
-	{
-		ft_put_error(GENERIC_ERROR, "malloc error");
-		return (0);
-	}
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	i = 0;
 	while (envp[i])
 	{
@@ -49,16 +46,14 @@ t_env	**ft_init_env(char **envp)
 		if (!res[i])
 		{
 			ft_free_envs(&res, i - 1);
-			ft_put_error(GENERIC_ERROR, "malloc error");
-			return (NULL);
+			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 		}
 		res[i]->name = ft_str_before(envp[i], '=');
 		if (!res[i]->name || res[i]->name == NULL)
 		{
 			free(res[i]);
 			ft_free_envs(&res, i - 1);
-			ft_put_error(GENERIC_ERROR, "malloc error");
-			return (NULL);
+			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 		}
 		res[i]->value = ft_str_after(envp[i], '=');
 		if (!res[i]->value || res[i]->value == NULL)
@@ -66,8 +61,7 @@ t_env	**ft_init_env(char **envp)
 			free(res[i]->name);
 			free(res[i]);
 			ft_free_envs(&res, i - 1);
-			ft_put_error(GENERIC_ERROR, "malloc error");
-			return (NULL);
+			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 		}
 		i++;
 	}
