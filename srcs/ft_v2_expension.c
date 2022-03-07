@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/07 13:59:23 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/07 14:35:59 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	ft_expension_on_command(t_data **data, t_elem *list)
 			cursor = cursor->next->next;
 			continue ;
 		}
-		if (!ft_havequote(cursor->str) && cursor->str[0] == '$' && !ft_getenv(data, cursor->str + 1))
+		if (!ft_havequote(cursor->str) && cursor->str[0] == '$' && ft_is_valid_variable_identifier(cursor->str + 1)
+		&& !ft_getenv(data, cursor->str + 1))
 		{
 			free(cursor->str);
 			cursor->str = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/06 14:51:04 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/07 14:22:08 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 	if (!ft_there_is_pipe(list))
 	{
 		cmd_args = ft_elem_get_cmd_args(data, list);
+		
 		if (ft_is_build_in(cmd_args[0]) == 1)
 		{
 			ft_run_bi(data, cmd_args);

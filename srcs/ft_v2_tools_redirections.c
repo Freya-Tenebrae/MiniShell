@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:47:43 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/07 13:47:24 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/07 14:27:36 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,13 @@ int	ft_elem_get_cmd_args_count(t_elem *cursor)
 			cursor = cursor->next->next;
 			continue ;
 		}
-		cursor = cursor->next;
+		if (cursor->str == NULL)
+		{
+			cursor = cursor->next;
+			continue ;
+		}
 		i++;
+		cursor = cursor->next;
 	}
 	return (i);
 }
@@ -55,6 +60,11 @@ char	**ft_elem_get_cmd_args(t_data **data, t_elem *cursor)
 		if (ft_elem_is_redirection(cursor))
 		{
 			cursor = cursor->next->next;
+			continue ;
+		}
+		if (cursor->str == NULL)
+		{
+			cursor = cursor->next;
 			continue ;
 		}
 		cmd_tab[i] = cursor->str;
