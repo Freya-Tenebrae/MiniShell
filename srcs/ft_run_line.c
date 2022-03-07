@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_run_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 17:49:37 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/07 13:48:27 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_run_line(char **str, t_data **data)
 		if (ft_check_syntaxe_operator(list) == 0)
 		{
 			ft_redirection_open_all(data, list);
-			if (list && ft_strcmp(list->str, "") != 0)
+			if (list && list->str) // ft_strcmp(list->str, "") != 0
 				ft_execute_command(data, list, (*data)->envp);
 		}
 		ft_free_elem(&list);

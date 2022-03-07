@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:01:22 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/06 15:58:27 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/07 14:03:40 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 		while (1)
 		{
 			buffer = readline("> ");
+			eof_ret = ft_is_eof(buffer, list->next->str);
 			if (!ft_havequote(list->next->str))
 				ft_expension_on_heredoc(data, &buffer);
-			eof_ret = ft_is_eof(buffer, list->next->str);
 			if (eof_ret == -1)
 				return (ft_put_error(GENERIC_ERROR, "malloc error"));
 			if (!eof_ret)
