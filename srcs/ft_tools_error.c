@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:36:11 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 16:59:16 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/07 13:06:41 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_print_error_type(int i, char **error_str)
 	if (i == OPERATOR_ERROR)
 		ft_str_writeon(error_str, " »\n");
 	if (i == CMD_NOT_FOUND_ERROR)
-		ft_str_writeon(error_str, " : Command not found\n");
+		ft_str_writeon(error_str, ": command not found\n");
 	if (i == FILENAME_TOO_LONG_ERROR)
 		ft_str_writeon(error_str, " : Filename too long\n");
 	if (i == NUMERIC_ARG_NEEDED_ERROR)
@@ -43,11 +43,11 @@ static void	ft_print_error(int i, char *str)
 
 	error_str = NULL;
 	if (i == OPERATOR_ERROR)
-		ft_str_writeon(&error_str, "minishell : Syntax error near symbol « ");
+		ft_str_writeon(&error_str, "minishell: Syntax error near symbol « ");
 	else if (i == IDENTIFIER_VAR_ERROR)
-		ft_str_writeon(&error_str, "minishell : export : '");
+		ft_str_writeon(&error_str, "minishell: export : '");
 	else
-		ft_str_writeon(&error_str, "minishell : ");
+		ft_str_writeon(&error_str, "minishell: ");
 	if (!error_str || error_str == NULL)
 		return ft_malloc_error_on_error_management();
 	ft_str_writeon(&error_str, str);

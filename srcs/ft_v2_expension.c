@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/07 14:35:59 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/07 16:48:56 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,50 @@ static void	ft_expension_with_quote(t_data **data, char **str)
 	*str = result;
 }
 
+// check si devant chaque $ et bah la variable est valide
+// si aucune variable ne correspond a un truc valide, et bah on pourra supprimer l'argument (mettre à nul)
+// si y'a au moins une variable existance il faudra pas supprimer de la liste
+static int	ft_is_only_variable(t_data **data, char *str)
+{
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			j = ft_str_indexof(str + i + 1, '$');
+			if (j == -1)
+			{
+				k = 0;
+				while ((*data)->env[k])
+				{
+					// printf("Comparing '%s' and '%s'\n", str + i + 1, (*data)->env[k]->name);
+					if (ft_strcmp(str + i + 1, (*data)->env[k]->name) == 0)
+						return (0);
+					k++;
+				}
+				// printf("FIN 1 '%s'\n", str);
+				// printf("PUTEUH !!!!!! {%s}\n", str + i + 1);
+				return (str[0] == '$' && ft_strlen(str) > 1 && ft_is_valid_variable_identifier(str + i + 1));
+			}
+			k = 0;
+			while ((*data)->env[k])
+			{
+				// printf("Comparing '%s' and '%s' for %d caract\n", str + i + 1, (*data)->env[k]->name, j);
+				if (ft_strncmp(str + i + 1, (*data)->env[k]->name, j) == 0)
+					return (0);
+				k++;
+			}
+		}
+		i++;
+	}
+	// printf("PUTEUH\n");
+	return (0); // str[0] == '$' && ft_is_valid_variable_identifier(str + 1)
+}
+
 void	ft_expension_on_command(t_data **data, t_elem *list)
 {
 	t_elem	*cursor;
@@ -86,8 +130,7 @@ void	ft_expension_on_command(t_data **data, t_elem *list)
 			cursor = cursor->next->next;
 			continue ;
 		}
-		if (!ft_havequote(cursor->str) && cursor->str[0] == '$' && ft_is_valid_variable_identifier(cursor->str + 1)
-		&& !ft_getenv(data, cursor->str + 1))
+		if (!ft_havequote(cursor->str) && ft_is_only_variable(data, cursor->str))
 		{
 			free(cursor->str);
 			cursor->str = NULL;
