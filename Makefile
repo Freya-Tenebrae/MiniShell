@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+         #
+#    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/20 19:17:29 by cmaginot          #+#    #+#              #
-#    Updated: 2022/03/05 16:08:54 by gadeneux         ###   ########.fr        #
+#    Updated: 2022/03/08 14:19:46 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_tools_elem.c \
 	ft_tools_free_lsts.c \
 	ft_tools_char.c \
-	ft_tools_file_to_str.c \
 	ft_tools_str_create.c \
 	ft_tools_str_get_index.c \
 	ft_tools_str_replace.c \
