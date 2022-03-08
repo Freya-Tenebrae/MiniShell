@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 10:39:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/08 11:57:11 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,24 @@
 int		ft_move(t_data **data, char *destination)
 {
 	char	*pwd;
+	char	*pwd_value;
 	int		ret;
 	
 	if (ft_getenv(data, "PWD"))
-		if (ft_create_or_update_variable(data, "OLDPWD", ft_getenv(data, "PWD")->value) == -1)
-		{
+	{
+		pwd_value = ft_getenv(data, "PWD")->value;
+		if (pwd_value != NULL)
+			pwd_value = ft_strdup(pwd_value);
+		if (ft_create_or_update_variable(data, "OLDPWD", pwd_value) == -1)
 			return (ft_put_error(GENERIC_ERROR, "malloc error"));
-		}
+	}
 	ret = chdir(destination);
-	pwd = 0;
+	if (ret == -1)
+		return (ft_put_error(CD_ERROR, strerror(errno)));
+	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (ft_create_or_update_variable(data, "PWD", pwd) == -1)
-	{
 		return (ft_put_error(GENERIC_ERROR, "malloc error"));
-	}
 	return (1);
 }
 
@@ -61,6 +65,7 @@ static int		is_dot_or_dotdot(char *directory_operand)
 			free(first);
 			return (1);
 		}
+		free(first);
 	}
 	return (ft_strcmp(directory_operand, ".") == 0 || ft_strcmp(directory_operand, "..") == 0);
 }
@@ -90,20 +95,19 @@ void	ft_run_bi_cd(t_data **data, char **cmd_args)
 	{
 		if (!check_valid_home(data))
 		{
-			ft_putstr_fd("minishell: cd: HOME not set", STDERR_FILENO);
-			return ;
+			return ft_put_error_void(GENERIC_ERROR, "cd : HOME not set");
 		}
 		directory_operand = ft_getenv(data, "HOME")->value;
-	} else {
-		directory_operand = cmd_args[1];
 	}
-	
+	else if (cmd_args[2])
+	{
+		return ft_put_error_void(GENERIC_ERROR, "cd : too mutch arguments");
+	}
+	directory_operand = cmd_args[1];
 	if (directory_operand[0] && directory_operand[0] == '/')
 		step7(data, directory_operand);
 	else if (is_dot_or_dotdot(directory_operand))
 		step6(data, directory_operand);
 	else
-	{
 		ft_move(data, directory_operand);
-	}
 }
