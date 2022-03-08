@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/08 11:58:11 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/08 12:14:10 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 # define NUMERIC_ARG_NEEDED_ERROR 6
 # define IDENTIFIER_VAR_ERROR 7
 # define CD_ERROR 8
+# define PWD_ERROR 9
+# define UNSET_ERROR 10
 
 # define READ_OK 0
 # define READ_ERR -1

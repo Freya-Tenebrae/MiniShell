@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:36:11 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/08 11:55:20 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/08 12:30:52 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	ft_malloc_error_on_error_management(void)
 
 static void	ft_print_error_type(int i, char **error_str)
 {
-	if (i == GENERIC_ERROR)
+	if (i == GENERIC_ERROR || i == CD_ERROR || i == PWD_ERROR)
 		ft_str_writeon(error_str, "\n");
 	if (i == FILE_ERROR)
 		ft_str_writeon(error_str, " : No such file or folder\n");
@@ -33,10 +33,8 @@ static void	ft_print_error_type(int i, char **error_str)
 		ft_str_writeon(error_str, " : Filename too long\n");
 	if (i == NUMERIC_ARG_NEEDED_ERROR)
 		ft_str_writeon(error_str, " : numeric argument needed\n");
-	if (i == IDENTIFIER_VAR_ERROR)
+	if (i == IDENTIFIER_VAR_ERROR || i == UNSET_ERROR)
 		ft_str_writeon(error_str, "' : is not a valid identifier\n");
-	if (i == CD_ERROR)
-		ft_str_writeon(error_str, "\n");
 }
 
 static void	ft_print_error(int i, char *str)
@@ -50,6 +48,10 @@ static void	ft_print_error(int i, char *str)
 		ft_str_writeon(&error_str, "minishell : export : '");
 	else if (i == CD_ERROR)
 		ft_str_writeon(&error_str, "minishell : cd : ");
+	else if (i == PWD_ERROR)
+		ft_str_writeon(&error_str, "minishell : pwd : ");
+	else if (i == UNSET_ERROR)
+		ft_str_writeon(&error_str, "minishell : unset : ");
 	else
 		ft_str_writeon(&error_str, "minishell : ");
 	if (!error_str || error_str == NULL)

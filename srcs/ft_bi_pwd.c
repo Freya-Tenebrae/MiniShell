@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:32 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 10:51:38 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/08 12:09:42 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ void	ft_run_bi_pwd(void)
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (!pwd || pwd == NULL)
-	{
-		ft_putstr_fd("minishell: pwd: null", STDERR_FILENO);
-		return ft_put_error_void(GENERIC_ERROR, "malloc error");
-	}
+		return (ft_put_error_void(PWD_ERROR, strerror(errno)));
 	ft_putstr(pwd);
 	ft_putchar('\n');
 	free(pwd);

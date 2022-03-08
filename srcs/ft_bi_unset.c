@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:52 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 17:40:05 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/08 12:41:20 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,7 @@ int	ft_read_unset(t_data **data, char **cmd_args)
 	while (cmd_args[i])
 	{
 		if (!ft_is_valid_variable_identifier(cmd_args[i]))
-		{
-			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
-			ft_putstr_fd(cmd_args[i], STDERR_FILENO);
-			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-		}
+			return (ft_put_error(UNSET_ERROR, cmd_args[i]));
 		else
 			ft_unset_env(data, cmd_args[i]);
 		i++;
