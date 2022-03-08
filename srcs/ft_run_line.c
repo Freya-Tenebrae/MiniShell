@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_run_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/07 13:48:27 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/08 14:17:21 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	ft_run_line(char **str, t_data **data)
 
 	res_parse_line = ft_parse_line(data, str, &ret, &list);
 	if (res_parse_line == 0 && ft_pipe_is_present_on_line(list) == 0)
-		g_status_minishell.status = 2;
+		g_status_minishell.status_minishell = 2;
 	else
-		g_status_minishell.status = 1;
+		g_status_minishell.status_minishell = 1;
 	if (res_parse_line == 0)
 	{
 		if (ft_check_syntaxe_operator(list) == 0)

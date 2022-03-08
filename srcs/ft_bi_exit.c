@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 04:43:04 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 13:44:09 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/08 14:18:25 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static int	ft_get_number_args(char **cmd_args)
 
 static void	ft_update_minishell_status(long long exitcode)
 {
-	if (g_status_minishell.status != 2)
+	if (g_status_minishell.status_minishell != 2)
 	{
-		g_status_minishell.status = -1;
+		g_status_minishell.status_minishell = -1;
 		g_status_minishell.exitcode = (unsigned char)exitcode;
 	}
 }

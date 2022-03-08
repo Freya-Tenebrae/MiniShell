@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/08 12:14:10 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/08 14:18:29 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@
 /*                                  TYPEDEF                                   */
 /* ************************************************************************** */
 typedef struct s_status {
-	int				status;
+	int				status_minishell;
+	int				status_pipe;
 	unsigned char	exitcode;
 }					t_status;
 
