@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/06 17:13:07 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/08 11:58:11 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
 
 # include "libft/libft.h"
 # include "Get_next_line/get_next_line.h"
@@ -46,6 +47,7 @@
 # define FILENAME_TOO_LONG_ERROR 5
 # define NUMERIC_ARG_NEEDED_ERROR 6
 # define IDENTIFIER_VAR_ERROR 7
+# define CD_ERROR 8
 
 # define READ_OK 0
 # define READ_ERR -1
