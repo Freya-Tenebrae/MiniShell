@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/09 16:15:58 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:22:03 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		if (ft_is_build_in(cmd_args[0]) == 1)
 		{
 			g_status_minishell.status_pipe = ft_run_bi(data, cmd_args);
+			// checker si redirection out et faire un fork pour les rediriger
 			free(cmd_args);
 			return (0);
 		}
@@ -89,6 +90,10 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		pid = fork();
 		if (pid == 0)
 		{
+			if (ft_check_access_ok(list) != 0) // verifier si a marche correctement
+			{
+				exit(0);
+			}
 			if (ft_redirection_in_present(list))
 			{
 				content_redirection_in = ft_redirection_get_in(list);
