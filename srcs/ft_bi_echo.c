@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:20 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/08 14:18:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 10:30:32 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-//	pour les output : 
-//		si il n'y a pas d'erreur, out->output ne devra ni etre non attribuer 
-//			ni nul et out->error devra etre NULL
-//		si il y a une erreur elle devra etre mise dans out->error
-//			(argument, fonction didn't exist, ...) et out->output devra etre 
-//			set a NULL;
 
 int	ft_has_nl_option(char *str)
 {
@@ -56,7 +49,7 @@ int	ft_is_valid_option(char *str)
 	return (1);
 }
 
-void	ft_run_bi_echo(char **cmd_args)
+int	ft_run_bi_echo(char **cmd_args)
 {
 	int			no_nl;
 	int			i;
@@ -78,4 +71,5 @@ void	ft_run_bi_echo(char **cmd_args)
 	}
 	if (no_nl == 0)
 		ft_putchar('\n');
+	return (0);
 }

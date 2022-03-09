@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/07 17:07:41 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:26:02 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ static int	ft_expension_inject(t_data **data, char *str, char **result)
 
 	i = 0;
 	tmp = NULL;
+	if (str[i] && str[i] == '?')
+	{
+		char *buff = ft_itoa(g_status_minishell.status_pipe);
+		if (!buff)
+			return (-1);
+		ft_str_writeon(result, buff);
+		free(buff);
+		return (1);
+	}
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 	{
 		ft_char_writeon(&tmp, str[i]);
@@ -76,7 +85,7 @@ static void	ft_expension_with_quote(t_data **data, char **str)
 
 static int	ft_is_only_variable(t_data **data, char *str)
 {
-	int		i;
+	size_t	i;
 	int		j;
 	int		k;
 
@@ -85,6 +94,8 @@ static int	ft_is_only_variable(t_data **data, char *str)
 	{
 		if (str[i] == '$')
 		{
+			if (i + 1 < ft_strlen(str) && str[i + 1] == '?')
+				return (0);
 			j = ft_str_indexof(str + i + 1, '$');
 			if (j == -1)
 			{
@@ -122,6 +133,7 @@ void	ft_expension_on_command(t_data **data, t_elem *list)
 			cursor = cursor->next->next;
 			continue ;
 		}
+		(void) ft_is_only_variable;
 		if (!ft_havequote(cursor->str) && ft_is_only_variable(data, cursor->str))
 		{
 			free(cursor->str);

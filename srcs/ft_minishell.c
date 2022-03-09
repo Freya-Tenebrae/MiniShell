@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/08 14:18:23 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/08 18:26:32 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	ft_loop(t_data **data)
 static int	ft_init_minishell_data(t_data **data, char **envp)
 {
 	g_status_minishell.status_minishell = 0;
+	g_status_minishell.status_pipe = 0;
 	g_status_minishell.exitcode = 0;
 	*data = malloc(sizeof(t_data));
 	if (!*data)

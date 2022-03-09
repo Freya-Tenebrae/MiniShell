@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/08 14:18:24 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 10:36:41 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,17 @@ static int	ft_fill(char **cmd_args, t_data **data)
 	return (1);
 }
 
-void	ft_run_bi_export(t_data **data, char **cmd_args)
+int	ft_run_bi_export(t_data **data, char **cmd_args)
 {
 	if (!cmd_args || !cmd_args[1])
-		return (ft_show_env(data));
+	{
+		ft_show_env(data);
+		return (0);
+	}
 	if (!ft_fill(cmd_args, data))
+	{
 		ft_put_error(GENERIC_ERROR, "malloc error");
+		return (2);
+	}
+	return (0);
 }

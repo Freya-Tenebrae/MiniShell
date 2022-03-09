@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:57 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/08 14:18:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 10:37:05 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 //			(argument, fonction didn't exist, ...) et out->output devra etre 
 //			set a NULL;
 
-void	ft_run_bi_env(t_data **data)
+int	ft_run_bi_env(t_data **data)
 {
 	int	i;
 
@@ -35,4 +35,5 @@ void	ft_run_bi_env(t_data **data)
 		}
 		i++;
 	}
+	return (0);
 }

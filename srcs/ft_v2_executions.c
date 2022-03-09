@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/07 18:21:01 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/09 10:28:31 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
 int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 {
 	int		result_execve;
-	int		pid;
-	int		fd[2];
 	char	**cmd_args;
+	int		fd[2];
+	int		pid;
 
 	pid = 0;
 	if (!ft_there_is_pipe(list))
@@ -122,7 +122,9 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		}
 		else
 		{
-			waitpid(pid, 0, 0); // Add flags
+			int status = 0;
+			waitpid(pid, &status, 0); // Add flags
+			g_status_minishell.status_pipe = WEXITSTATUS(status);
 		}
 	}
 	else

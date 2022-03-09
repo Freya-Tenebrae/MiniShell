@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 18:45:07 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/08 14:18:27 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 10:38:19 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,23 @@ int	ft_is_build_in(char *cmd)
 		return (0);
 }
 
-void	ft_run_bi(t_data **data, char **cmd_args)
+int		ft_run_bi(t_data **data, char **cmd_args)
 {
 	if (cmd_args[0] == NULL)
-		return ;
+		return (0);
 	if (ft_strcmp(cmd_args[0], "echo") == 0)
-		ft_run_bi_echo(cmd_args);
+		return (ft_run_bi_echo(cmd_args));
 	else if (ft_strcmp(cmd_args[0], "cd") == 0)
-		ft_run_bi_cd(data, cmd_args);
+		return (ft_run_bi_cd(data, cmd_args));
 	else if (ft_strcmp(cmd_args[0], "pwd") == 0)
-		ft_run_bi_pwd();
+		return (ft_run_bi_pwd());
 	else if (ft_strcmp(cmd_args[0], "export") == 0)
-		ft_run_bi_export(data, cmd_args);
+		return (ft_run_bi_export(data, cmd_args));
 	else if (ft_strcmp(cmd_args[0], "unset") == 0)
-		ft_run_bi_unset(data, cmd_args);
+		return (ft_run_bi_unset(data, cmd_args));
 	else if (ft_strcmp(cmd_args[0], "env") == 0)
-		ft_run_bi_env(data);
+		return (ft_run_bi_env(data));
 	else if (ft_strcmp(cmd_args[0], "exit") == 0)
-		ft_run_bi_exit(cmd_args);
+		return (ft_run_bi_exit(cmd_args));
+	return (0);
 }
