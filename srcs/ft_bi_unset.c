@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:52 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 17:50:54 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 18:07:55 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_unset_env(t_data **data, char *identifier)
 	copy = ft_clone_without_env(data, identifier);
 	if (!copy)
 	{
-		ft_put_error(GENERIC_ERROR, "malloc error")
+		ft_put_error(GENERIC_ERROR, "malloc error");
 		return (-2);
 	}
 	ft_free_envs(&((*data)->env), ft_get_size_env(&((*data)->env)));
