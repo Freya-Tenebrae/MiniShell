@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/09 20:22:03 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:43:56 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,15 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		
 		if (ft_is_build_in(cmd_args[0]) == 1)
 		{
+			int out = dup(STDOUT_FILENO);
+			if (ft_redirection_out_present(list))
+			{
+				dup2(list->out_fd, STDOUT_FILENO);
+				close(list->out_fd);
+				list->out_fd = -1;
+			}
 			g_status_minishell.status_pipe = ft_run_bi(data, cmd_args);
-			// checker si redirection out et faire un fork pour les rediriger
+			dup2(out, STDOUT_FILENO);
 			free(cmd_args);
 			return (0);
 		}
