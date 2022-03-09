@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_run_execve.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/08 18:08:45 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/09 14:25:11 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,51 @@ static int	ft_run_execve_for_exec(char **cmd_args)
 	return (0);
 }
 
-int	ft_run_execve_with_all_path(char *path, char **cmd_args)
+static int    ft_if_slash_exist(char *cmd)
 {
-	int		res_one_path;
-	char	**paths;
-	int		i;
+    int    i;
 
-	if (!cmd_args || cmd_args == NULL || !cmd_args[0] || cmd_args[0] == NULL)
-		return (0);
-	paths = ft_split(path, ':');
-	i = 0;
-	if (!paths)
-		return (0);
-	while (paths[i] != NULL)
-	{
-		res_one_path = ft_run_execve_with_one_path(cmd_args, paths[i]);
-		if ((res_one_path) != 0)
-		{
-			ft_freestrs(&paths);
-			return (res_one_path);
-		}
-		else
-			i++;
-	}
-	ft_freestrs(&paths);
-	return (ft_run_execve_for_exec(cmd_args));
+    i = -1;
+    while (cmd[++i] != '\0')
+    {
+        if (cmd[i] == '/')
+        {
+            if (access(cmd, F_OK) != 0)
+                return (-2);
+            else if (access(cmd, X_OK) != 0)
+                return (-3);
+            else
+                return (0);
+        }
+    }
+    return (0);
+}
+
+int    ft_run_execve_with_all_path(char *path, char **cmd_args)
+{
+    int        res_one_path;
+    char    **paths;
+    int        i;
+
+    if (!cmd_args || cmd_args == NULL || !cmd_args[0] || cmd_args[0] == NULL)
+        return (-1);
+    if (ft_if_slash_exist(cmd_args[0]) != 0)
+        return (ft_if_slash_exist(cmd_args[0]));
+    paths = ft_split(path, ':');
+    i = 0;
+    if (!paths)
+        return (0);
+    while (paths[i] != NULL)
+    {
+        res_one_path = ft_run_execve_with_one_path(cmd_args, paths[i]);
+        if ((res_one_path) != 0)
+        {
+            ft_freestrs(&paths);
+            return (res_one_path);
+        }
+        else
+            i++;
+    }
+    ft_freestrs(&paths);
+    return (ft_run_execve_for_exec(cmd_args));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/09 14:20:59 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:15:58 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 {
 	int		result_execve;
 	char	**cmd_args;
+	char	*content_redirection_in;
+	char	*filename_in;
 	int		fd[2];
 	int		pid;
 
@@ -89,16 +91,16 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		{
 			if (ft_redirection_in_present(list))
 			{
-				if (!ft_redirection_get_in(list) || \
-					ft_redirection_get_in(list) == NULL)
+				content_redirection_in = ft_redirection_get_in(list);
+				if (!content_redirection_in || content_redirection_in == NULL)
 				{
-					// Gestion d'erreur, get filename à la place de Unknown file
-					ft_put_error(FILE_ERROR, "Unknown file");
+					filename_in = ft_get_filename_in(list);
+					ft_put_error(FILE_ERROR, filename_in);
 					exit(0);
 				}	
 				if (pipe(fd) == -1)
 					exit(0);
-				ft_putstr_fd(ft_redirection_get_in(list), fd[1]);
+				ft_putstr_fd(content_redirection_in, fd[1]);
 				dup2(fd[0], STDIN_FILENO);
 				close(fd[0]);
 				close(fd[1]);
@@ -109,16 +111,28 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 				close(list->out_fd);
 				list->out_fd = -1;
 			}
-			// gerer autrement le truc en bas (leaks et erreur)
 			cmd_args = ft_elem_get_cmd_args(data, list);
-			result_execve = ft_run_execve_with_all_path(\
-				ft_getenv(data, "PATH")->value, cmd_args);
-			if (result_execve == -1)
-				ft_put_error(GENERIC_ERROR, "malloc error");
-			else
-				ft_put_error(CMD_NOT_FOUND_ERROR, cmd_args[0]);
-			free(cmd_args);
-			exit(0);
+            result_execve = ft_run_execve_with_all_path(\
+                ft_getenv(data, "PATH")->value, cmd_args);
+            if (result_execve == -1)
+            {
+            	g_status_minishell.status_pipe = 2;
+                ft_put_error(GENERIC_ERROR, "malloc error");
+            }
+            else if (result_execve == -2)
+            {
+            	g_status_minishell.status_pipe = 127;
+                ft_put_error(FILE_ERROR, cmd_args[0]);
+            }
+            else if (result_execve == -3)
+            {
+            	g_status_minishell.status_pipe = 127;
+                ft_put_error(ACCESS_ERROR, cmd_args[0]);
+            }
+            else
+                ft_put_error(CMD_NOT_FOUND_ERROR, cmd_args[0]);
+            free(cmd_args);
+            exit(0);
 		}
 		else
 		{

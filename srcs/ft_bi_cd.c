@@ -6,18 +6,11 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/08 14:18:27 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 15:01:06 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-//	pour les output : 
-//		si il n'y a pas d'erreur, out->output ne devra ni etre non attribuer 
-//			ni nul et out->error devra etre NULL
-//		si il y a une erreur elle devra etre mise dans out->error
-//			(argument, fonction didn't exist, ...) et out->output devra etre 
-//			set a NULL;
 
 int		ft_move(t_data **data, char *destination)
 {
@@ -31,15 +24,24 @@ int		ft_move(t_data **data, char *destination)
 		if (pwd_value != NULL)
 			pwd_value = ft_strdup(pwd_value);
 		if (ft_create_or_update_variable(data, "OLDPWD", pwd_value) == -1)
-			return (ft_put_error(GENERIC_ERROR, "malloc error"));
+		{
+			ft_put_error(GENERIC_ERROR, "malloc error");
+			return (2);
+		}
 	}
 	ret = chdir(destination);
 	if (ret == -1)
-		return (ft_put_error(CD_ERROR, strerror(errno)));
+	{
+		ft_put_error(CD_ERROR, strerror(errno));
+		return (1);
+	}
 	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (ft_create_or_update_variable(data, "PWD", pwd) == -1)
-		return (ft_put_error(GENERIC_ERROR, "malloc error"));
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error");
+		return (2);
+	}
 	return (1);
 }
 
@@ -70,44 +72,50 @@ static int		is_dot_or_dotdot(char *directory_operand)
 	return (ft_strcmp(directory_operand, ".") == 0 || ft_strcmp(directory_operand, "..") == 0);
 }
 
-static void	step6(t_data **data, char *directory_operand)
+static int	step6(t_data **data, char *directory_operand)
 {
 	char	*new_path;
+	int		res_move;
 
 	new_path = 0;
-	ft_str_writeon(&new_path, ft_getenv(data, "PWD")->value);
-	ft_str_writeon(&new_path, "/");
-	ft_str_writeon(&new_path, directory_operand);
-	ft_move(data, directory_operand);
+	if (ft_str_writeon(&new_path, ft_getenv(data, "PWD")->value) == NULL)
+		return (2);
+	if (ft_str_writeon(&new_path, "/") == NULL)
+		return (2);
+	if (ft_str_writeon(&new_path, directory_operand) == NULL)
+		return (2);
+	res_move = ft_move(data, directory_operand);
 	free(new_path);
+	return (res_move);
 }
 
-static void	step7(t_data **data, char *directory_operand)
+int	ft_run_bi_cd(t_data **data, char **cmd_args)
 {
-	ft_move(data, directory_operand);
-}
+	char	*directory_operand;
+	int		res_move;
 
-void	ft_run_bi_cd(t_data **data, char **cmd_args)
-{
-	char *directory_operand;
-
+	if (!cmd_args || !*cmd_args)
+		return (2);
 	if (!cmd_args[1])
 	{
 		if (!check_valid_home(data))
 		{
-			return ft_put_error_void(GENERIC_ERROR, "cd : HOME not set");
+			ft_put_error(GENERIC_ERROR, "cd : HOME not set");
+			return (1);
 		}
 		directory_operand = ft_getenv(data, "HOME")->value;
 	}
 	else if (cmd_args[2])
 	{
-		return ft_put_error_void(GENERIC_ERROR, "cd : too mutch arguments");
+		ft_put_error(GENERIC_ERROR, "cd : too mutch arguments");
+		return (1);
 	}
 	directory_operand = cmd_args[1];
 	if (directory_operand[0] && directory_operand[0] == '/')
-		step7(data, directory_operand);
+		res_move = ft_move(data, directory_operand);
 	else if (is_dot_or_dotdot(directory_operand))
-		step6(data, directory_operand);
+		res_move = step6(data, directory_operand);
 	else
-		ft_move(data, directory_operand);
+		res_move = ft_move(data, directory_operand);
+	return (0);
 }

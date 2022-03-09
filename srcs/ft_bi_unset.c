@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:52 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 10:38:53 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/09 14:43:54 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-//	pour les output : 
-//		si il n'y a pas d'erreur, out->output ne devra ni etre non attribuer 
-//			ni nul et out->error devra etre NULL
-//		si il y a une erreur elle devra etre mise dans out->error
-//			(argument, fonction didn't exist, ...) et out->output devra etre 
-//			set a NULL;
 
 void	ft_putenv(t_env **env)
 {

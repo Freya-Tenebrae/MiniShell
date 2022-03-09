@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 10:31:24 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:15:21 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,8 @@ t_env		*ft_clone_variable(t_env *env);
 int			ft_env_tab_len(t_env **tab);
 t_env		**ft_clone_and_add_env(t_env **env, t_env *variable);
 int			ft_add_variable(t_data **data, t_env *variable);
+
+char		*ft_get_filename_in(t_elem *list);
 
 /* ************************************************************************** */
 /*                                    END                                     */
