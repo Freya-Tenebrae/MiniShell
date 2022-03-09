@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:36:11 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/08 12:30:52 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 21:00:19 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ static void	ft_print_error_type(int i, char **error_str)
 	if (i == GENERIC_ERROR || i == CD_ERROR || i == PWD_ERROR)
 		ft_str_writeon(error_str, "\n");
 	if (i == FILE_ERROR)
-		ft_str_writeon(error_str, " : No such file or folder\n");
+		ft_str_writeon(error_str, ": No such file or directory\n");
 	if (i == ACCESS_ERROR)
-		ft_str_writeon(error_str, " : Permission denied\n");
+		ft_str_writeon(error_str, ": Permission denied\n");
 	if (i == OPERATOR_ERROR)
 		ft_str_writeon(error_str, " »\n");
 	if (i == CMD_NOT_FOUND_ERROR)
-		ft_str_writeon(error_str, " : command not found\n");
+		ft_str_writeon(error_str, ": command not found\n");
 	if (i == FILENAME_TOO_LONG_ERROR)
-		ft_str_writeon(error_str, " : Filename too long\n");
+		ft_str_writeon(error_str, ": Filename too long\n");
 	if (i == NUMERIC_ARG_NEEDED_ERROR)
-		ft_str_writeon(error_str, " : numeric argument needed\n");
+		ft_str_writeon(error_str, ": numeric argument needed\n");
 	if (i == IDENTIFIER_VAR_ERROR || i == UNSET_ERROR)
-		ft_str_writeon(error_str, "' : is not a valid identifier\n");
+		ft_str_writeon(error_str, "': is not a valid identifier\n");
 }
 
 static void	ft_print_error(int i, char *str)
@@ -43,17 +43,17 @@ static void	ft_print_error(int i, char *str)
 
 	error_str = NULL;
 	if (i == OPERATOR_ERROR)
-		ft_str_writeon(&error_str, "minishell : Syntax error near symbol « ");
+		ft_str_writeon(&error_str, "minishell: Syntax error near symbol « ");
 	else if (i == IDENTIFIER_VAR_ERROR)
-		ft_str_writeon(&error_str, "minishell : export : '");
+		ft_str_writeon(&error_str, "minishell: export: '");
 	else if (i == CD_ERROR)
-		ft_str_writeon(&error_str, "minishell : cd : ");
+		ft_str_writeon(&error_str, "minishell: cd: ");
 	else if (i == PWD_ERROR)
-		ft_str_writeon(&error_str, "minishell : pwd : ");
+		ft_str_writeon(&error_str, "minishell: pwd: ");
 	else if (i == UNSET_ERROR)
-		ft_str_writeon(&error_str, "minishell : unset : ");
+		ft_str_writeon(&error_str, "minishell: unset: ");
 	else
-		ft_str_writeon(&error_str, "minishell : ");
+		ft_str_writeon(&error_str, "minishell: ");
 	if (!error_str || error_str == NULL)
 		return ft_malloc_error_on_error_management();
 	ft_str_writeon(&error_str, str);

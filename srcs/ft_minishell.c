@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 15:00:05 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 20:59:33 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	ft_loop(t_data **data)
 		str = readline("minishell~ ");
 		if (str == NULL)
 		{
-			ft_putstr_fd("exit\n", STDOUT_FILENO);
+			// ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
 		}
 		if (ft_strcmp(str, "") != 0)
