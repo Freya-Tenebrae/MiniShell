@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/09 10:28:31 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/09 14:20:59 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		
 		if (ft_is_build_in(cmd_args[0]) == 1)
 		{
-			ft_run_bi(data, cmd_args);
+			g_status_minishell.status_pipe = ft_run_bi(data, cmd_args);
 			free(cmd_args);
 			return (0);
 		}
@@ -88,11 +88,11 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		if (pid == 0)
 		{
 			if (ft_redirection_in_present(list))
-			{				
+			{
 				if (!ft_redirection_get_in(list) || \
 					ft_redirection_get_in(list) == NULL)
 				{
-					// Gestion d'erreur, get filename 
+					// Gestion d'erreur, get filename à la place de Unknown file
 					ft_put_error(FILE_ERROR, "Unknown file");
 					exit(0);
 				}	
@@ -123,8 +123,11 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		else
 		{
 			int status = 0;
-			waitpid(pid, &status, 0); // Add flags
-			g_status_minishell.status_pipe = WEXITSTATUS(status);
+			waitpid(pid, &status, WUNTRACED | WCONTINUED); // Add flags
+			if (WIFSIGNALED(status))
+				exit(128 + WTERMSIG(status));
+			if (WIFEXITED(status))
+				g_status_minishell.status_pipe = WEXITSTATUS(status);
 		}
 	}
 	else
