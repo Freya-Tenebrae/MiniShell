@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 14:43:47 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:51:57 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,12 @@ static int	ft_fill(char **cmd_args, t_data **data)
 
 int	ft_run_bi_export(t_data **data, char **cmd_args)
 {
-	if (!cmd_args || !cmd_args[1])
+	if (!cmd_args || !*cmd_args)
+	{
+		ft_show_env(data);
+		return (2);
+	}
+	if (!cmd_args[1])
 	{
 		ft_show_env(data);
 		return (0);

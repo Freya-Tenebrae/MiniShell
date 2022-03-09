@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:52 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 14:43:54 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 17:50:54 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_env	**ft_clone_without_env(t_data **data, char *identifier)
 	j = 0;
 	res = malloc(sizeof(t_env) * (ft_env_tab_len((*data)->env)));
 	if (!res)
-		return (0);
+		return (NULL);
 	while ((*data)->env[i])
 	{
 		if (!ft_str_equal((*data)->env[i]->name, identifier))
@@ -59,8 +59,8 @@ t_env	**ft_clone_without_env(t_data **data, char *identifier)
 			res[j] = ft_clone_variable((*data)->env[i]);
 			if (!res[j])
 			{
-				ft_free_env(res);
-				return (0);
+				ft_free_envs(&((*data)->env), ft_get_size_env(&((*data)->env)));
+				return (NULL);
 			}
 			j++;
 		}
@@ -74,37 +74,43 @@ int	ft_unset_env(t_data **data, char *identifier)
 {
 	t_env	**copy;
 
-	if (!identifier || !ft_getenv(data, identifier))
-		return (1);
+	if (!identifier)
+		return (-1);
+	if (!ft_getenv(data, identifier))
+		return (0);
 	copy = ft_clone_without_env(data, identifier);
 	if (!copy)
-		return (0);
+	{
+		ft_put_error(GENERIC_ERROR, "malloc error")
+		return (-2);
+	}
 	ft_free_envs(&((*data)->env), ft_get_size_env(&((*data)->env)));
 	(*data)->env = copy;
-	return (1);
-}
-
-int	ft_read_unset(t_data **data, char **cmd_args)
-{
-	int		i;
-
-	i = 1;
-	while (cmd_args[i])
-	{
-		if (!ft_is_valid_variable_identifier(cmd_args[i]))
-			return (ft_put_error(UNSET_ERROR, cmd_args[i]));
-		else
-			ft_unset_env(data, cmd_args[i]);
-		i++;
-	}
-	return (1);
+	return (0);
 }
 
 int		ft_run_bi_unset(t_data **data, char **cmd_args)
 {
+	int	i;
+	int	res;
+
+	i = 1;
 	if (!cmd_args || !cmd_args[1])
 		return (2);
-	if (ft_read_unset(data, cmd_args))
-		return (1);
+	while (cmd_args[i])
+	{
+		if (!ft_is_valid_variable_identifier(cmd_args[i]))
+		{
+			ft_put_error(UNSET_ERROR, cmd_args[i]);
+			return (1);
+		}
+		else
+		{
+			res = ft_unset_env(data, cmd_args[i]);
+			if (res < 0)
+				return (res * -1);
+		}
+		i++;
+	}
 	return (0);
 }

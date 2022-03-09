@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:32 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 14:43:50 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 16:56:20 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ int		ft_run_bi_pwd(void)
 	ft_putstr(pwd);
 	ft_putchar('\n');
 	free(pwd);
-	return (1);
+	return (0);
 }

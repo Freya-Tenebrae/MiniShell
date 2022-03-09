@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 04:43:04 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 10:40:37 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/09 17:09:34 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,19 @@ int	ft_run_bi_exit(char **cmd_args)
 {
 	int nb_arg;
 
+	if (!cmd_args || !*cmd_args)
+		return (2);
 	nb_arg = ft_get_number_args(cmd_args);
 	if (nb_arg == 0)
 	{
 		ft_update_minishell_status(0);
-		return (0);
+		return (1);
 	}
 	else if (cmd_args[1] && ft_arg_is_numeric(cmd_args[1]) != 0)
 	{
 		ft_update_minishell_status(2);
 		ft_put_error_void(NUMERIC_ARG_NEEDED_ERROR, cmd_args[1]);
-		return (2);
+		return (1);
 	}
 	else if (nb_arg > 1)
 	{

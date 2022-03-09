@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 15:01:06 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/09 17:49:50 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_move(t_data **data, char *destination)
 		ft_put_error(GENERIC_ERROR, "malloc error");
 		return (2);
 	}
-	return (1);
+	return (0);
 }
 
 static int		check_valid_home(t_data **data)
@@ -61,7 +61,7 @@ static int		is_dot_or_dotdot(char *directory_operand)
 	{
 		first = ft_str_before(directory_operand, '/');
 		if (!first)
-			return (-1);
+			return (-2);
 		if (ft_strcmp(first, ".") == 0 || ft_strcmp(first, "..") == 0)
 		{
 			free(first);
@@ -93,6 +93,7 @@ int	ft_run_bi_cd(t_data **data, char **cmd_args)
 {
 	char	*directory_operand;
 	int		res_move;
+	int		res_is_dot;
 
 	if (!cmd_args || !*cmd_args)
 		return (2);
@@ -113,9 +114,15 @@ int	ft_run_bi_cd(t_data **data, char **cmd_args)
 	directory_operand = cmd_args[1];
 	if (directory_operand[0] && directory_operand[0] == '/')
 		res_move = ft_move(data, directory_operand);
-	else if (is_dot_or_dotdot(directory_operand))
-		res_move = step6(data, directory_operand);
 	else
-		res_move = ft_move(data, directory_operand);
-	return (0);
+	{
+		res_is_dot = is_dot_or_dotdot(directory_operand);
+		if (res_is_dot == -2)
+			return (2);
+		else if (res_is_dot)
+			res_move = step6(data, directory_operand);
+		else
+			res_move = ft_move(data, directory_operand);
+	}
+	return (res_move);
 }

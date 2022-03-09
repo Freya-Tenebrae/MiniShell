@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:20 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 10:30:32 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/09 17:19:17 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	ft_run_bi_echo(char **cmd_args)
 	int			no_nl;
 	int			i;
 
+	if (!cmd_args || !*cmd_args)
+		return (2);
 	no_nl = 0;
 	i = 1;
 	while (cmd_args[i] && ft_is_valid_option(cmd_args[i]))
