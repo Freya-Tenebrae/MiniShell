@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/10 16:26:50 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:51:19 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ t_env		**ft_clone_and_add_env(t_env **env, t_env *variable);
 int			ft_add_variable(t_data **data, t_env *variable);
 
 char		*ft_get_filename_in(t_elem *list);
+int			ft_if_slash_exist(char *cmd);
 
 /* ************************************************************************** */
 /*                                    END                                     */

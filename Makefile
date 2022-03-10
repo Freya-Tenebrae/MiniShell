@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/20 19:17:29 by cmaginot          #+#    #+#              #
-#    Updated: 2022/03/10 10:54:06 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/03/10 16:52:46 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_tools_env.c \
 	ft_tools_quote.c \
 	ft_tools_operator.c \
+	ft_tools_is_executable.c \
 	ft_bi.c \
 	ft_bi_cd.c \
 	ft_bi_echo.c \
