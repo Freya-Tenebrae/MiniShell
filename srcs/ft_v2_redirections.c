@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/09 16:14:58 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 11:52:34 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static char	*ft_tools_read_fd(int fd)
 	int		ret;
 
 	ret = 0;
-	res = NULL;
+	res = ft_strdup("");
+	if (!res || res == NULL)
+		return(ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	buf = NULL;
 	while ((ret = get_next_line(fd, &buf)))
 	{
