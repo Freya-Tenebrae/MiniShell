@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 11:20:04 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 13:31:12 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 {
 	int		result_execve;
 	char	**cmd_args;
+	int		standard[2];
 	int		pid;
-	int		out;
 
 	pid = 0;
 	if (!ft_there_is_pipe(list))
@@ -112,11 +112,14 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		cmd_args = ft_elem_get_cmd_args(data, list);
 		if (ft_is_build_in(cmd_args[0]) == 1)
 		{
-			out = dup(STDOUT_FILENO);
+			standard[0] = dup(STDIN_FILENO);
+			standard[1] = dup(STDOUT_FILENO);
 			if (redirections(list))
 				g_status_minishell.status_pipe = ft_run_bi(data, cmd_args);
-			dup2(out, STDOUT_FILENO);
-			close(out);
+			dup2(standard[0], STDIN_FILENO);
+			dup2(standard[1], STDOUT_FILENO);
+			close(standard[0]);
+			close(standard[1]);
 			free(cmd_args);
 			return (0);
 		}
