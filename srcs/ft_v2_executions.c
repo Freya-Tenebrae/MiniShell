@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 18:05:52 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:39:46 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ int	redirections(t_elem *list)
 	char	*filename_in;
 	int		fd[2];
 
-	ft_check_access_ok_speak_only(list);
-	if (ft_check_access_ok_mute(list) != 0)
+	if (ft_check_access_ok(list) != 0)
 		return (-1);
 		
 	if (ft_redirection_in_present(list))

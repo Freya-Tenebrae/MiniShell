@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 16:12:00 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/10 18:10:23 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:39:21 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_check_syntaxe_operator(t_elem *list)
 	return (0);
 }
 
-void	ft_check_access_ok_speak_only(t_elem *list)
+int	ft_check_access_ok(t_elem *list)
 {
 	if (list != NULL && list->type == PIPE)
 		list = list->next;
@@ -49,9 +49,9 @@ void	ft_check_access_ok_speak_only(t_elem *list)
 		{
 			list = list->next;
 			if (access(list->str, F_OK) != 0)
-				ft_put_error(FILE_ERROR, list->str);
+				return (ft_put_error(FILE_ERROR, list->str));
 			else if (access(list->str, R_OK) != 0)
-				ft_put_error(ACCESS_ERROR, list->str);
+				return (ft_put_error(ACCESS_ERROR, list->str));
 		}
 		if (list->type == OUT || list->type == DOUBLE_OUT)
 		{
@@ -59,34 +59,7 @@ void	ft_check_access_ok_speak_only(t_elem *list)
 			if (access(list->str, F_OK) == 0)
 			{
 				if (access(list->str, W_OK) != 0)
-					ft_put_error(ACCESS_ERROR, list->str);
-			}
-		}
-		list = list->next;
-	}
-}
-
-int	ft_check_access_ok_mute(t_elem *list)
-{
-	if (list != NULL && list->type == PIPE)
-		list = list->next;
-	while (list != NULL && list->type != PIPE)
-	{
-		if (list->type == IN)
-		{
-			list = list->next;
-			if (access(list->str, F_OK) != 0)
-				return (-1);
-			else if (access(list->str, R_OK) != 0)
-				return (-1);
-		}
-		if (list->type == OUT || list->type == DOUBLE_OUT)
-		{
-			list = list->next;
-			if (access(list->str, F_OK) == 0)
-			{
-				if (access(list->str, W_OK) != 0)
-					return (-1);
+					return (ft_put_error(ACCESS_ERROR, list->str));
 			}
 		}
 		list = list->next;
