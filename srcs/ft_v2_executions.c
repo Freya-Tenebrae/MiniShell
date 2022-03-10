@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 15:40:29 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 17:20:45 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	redirections(t_elem *list)
 	int		fd[2];
 	
 	if (ft_check_access_ok(list) != 0)
-		return (0);
+		return (-1);
 		
 	if (ft_redirection_in_present(list))
 	{
@@ -81,10 +81,10 @@ int	redirections(t_elem *list)
 		{
 			filename_in = ft_get_filename_in(list);
 			ft_put_error(FILE_ERROR, filename_in);
-			exit(0);
+			return (-1);
 		}	
 		if (pipe(fd) == -1)
-			exit(0);
+			return (-1);
 		ft_putstr_fd(content_redirection_in, fd[1]);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
@@ -96,7 +96,7 @@ int	redirections(t_elem *list)
 		close(list->out_fd);
 		list->out_fd = -1;
 	}
-	return (1);
+	return (0);
 }
 
 int	ft_execute_command(t_data **data, t_elem *list, char **envp)
@@ -114,7 +114,7 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		{
 			standard[0] = dup(STDIN_FILENO);
 			standard[1] = dup(STDOUT_FILENO);
-			if (redirections(list))
+			if (redirections(list) == 0)
 				g_status_minishell.status_pipe = ft_run_bi(data, cmd_args);
 			dup2(standard[0], STDIN_FILENO);
 			dup2(standard[1], STDOUT_FILENO);
@@ -123,11 +123,12 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 			free(cmd_args);
 			return (0);
 		}
+		else
 		free(cmd_args);
 		pid = fork();
 		if (pid == 0)
 		{
-            if (redirections(list))
+            if (redirections(list) == 0)
 			{
 				cmd_args = ft_elem_get_cmd_args(data, list);
 				result_execve = ft_run_execve_with_all_path(\

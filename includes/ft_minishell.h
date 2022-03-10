@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/10 16:51:19 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 17:19:09 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ int			ft_redirection_get_fd_out(t_elem *list);
 
 int			ft_check_syntaxe_operator(t_elem *list);
 int			ft_check_access_ok(t_elem *list);
+int			ft_check_access_ok_mute(t_elem *list);
 
 int			ft_put_error(int i, char *str);
 void		*ft_put_error_null(int i, char *str);
