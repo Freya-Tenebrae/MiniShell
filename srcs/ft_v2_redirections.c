@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 17:21:17 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:17:35 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,14 @@ int	ft_redirection_open_out(t_elem *list)
 		left = ft_elem_clone_left(list);
 		if (!left)
 			return (0);
-		if (ft_check_access_ok_mute(list) != 0)
-		{
-			ft_free_elem(&left);
-			return (-1);
-		}
 		if (ft_redirection_out_present(list))
 		{
 			out_fd = ft_redirection_get_fd_out(list);
 			if (out_fd < 2)
+			{
+				ft_free_elem(&left);
 				return (0);
+			}
 			list->out_fd = out_fd;
 		}
 		list = ft_elem_get_right(list);

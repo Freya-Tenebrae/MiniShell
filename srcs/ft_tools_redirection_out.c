@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 16:45:08 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/10 17:13:09 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 18:15:07 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ int	ft_redirection_get_fd_out(t_elem *list)
 	is_double_out = 0;
 	while (list != NULL && list->type != PIPE)
 	{
+		if (ft_check_one_access_ok_mute(list) != 0)
+		{
+			if (fd > 1)
+				close (fd);
+			return (-1);
+		}
 		if (list->type == OUT || list->type == DOUBLE_OUT)
 		{
 			ft_redirection_out(list, &is_double_out, &fd);
