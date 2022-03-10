@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/14 03:08:59 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 10:50:20 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 /* Écris un caractère sur la chaine str (Free l'ancien str et remplace). */
 /* Si la chaine str n'existe pas elle sera allouée. */
+
+static char	*ft_char_writeon_when_str_empty(char **str, char c)
+{
+	*str = ft_char_tostring(c);
+	if (!*str || *str == NULL)
+		return (NULL);
+	return (*str);
+}
 
 char	*ft_char_writeon(char **str, char c)
 {
@@ -23,12 +31,7 @@ char	*ft_char_writeon(char **str, char c)
 	if (!str)
 		return (NULL);
 	if (!(*str) || *str == NULL)
-	{
-		*str = ft_char_tostring(c);
-		if (!*str || *str == NULL)
-			return (NULL);
-		return (*str);
-	}
+		return (ft_char_writeon_when_str_empty(str, c));
 	res = malloc((sizeof(char) * ft_strlen(*str)) + 2);
 	if (!res || res == NULL)
 		return (NULL);

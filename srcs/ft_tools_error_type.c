@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tools_char.c                                    :+:      :+:    :+:   */
+/*   ft_tools_error_type.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 10:40:47 by cmaginot         ###   ########.fr       */
+/*   Created: 2022/01/24 18:36:11 by cmaginot          #+#    #+#             */
+/*   Updated: 2022/03/10 10:37:20 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-/* Renvoie true si le caractère c est un whitespace. */
-
-int	ft_isquote(char c)
+int	ft_put_error(int i, char *str)
 {
-	return (c == '\'' || c == '"');
+	ft_print_error(i, str);
+	return (-1);
 }
 
-int	ft_iswhitespace(char c)
+void	*ft_put_error_null(int i, char *str)
 {
-	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f' || \
-																	c == '\r')
-		return (1);
-	return (0);
+	ft_print_error(i, str);
+	return (NULL);
+}
+
+void	ft_put_error_void(int i, char *str)
+{
+	ft_print_error(i, str);
+	return ;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 20:59:33 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/10 10:29:47 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ static void	ft_loop(t_data **data)
 	while (42 == 42)
 	{
 		if (g_status_minishell.status_minishell == -1)
-		{
-			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
-		}
 		else if (g_status_minishell.status_minishell > 0)
 		{
 			g_status_minishell.exitcode = 0;
@@ -30,10 +27,7 @@ static void	ft_loop(t_data **data)
 		}
 		str = readline("minishell~ ");
 		if (str == NULL)
-		{
-			// ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
-		}
 		if (ft_strcmp(str, "") != 0)
 		{
 			add_history(str);
@@ -41,6 +35,7 @@ static void	ft_loop(t_data **data)
 		}
 		free(str);
 	}
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 }
 
 static int	ft_init_minishell_data(t_data **data, char **envp)

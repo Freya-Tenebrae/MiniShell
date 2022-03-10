@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:28:11 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/04 14:38:00 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 10:33:52 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,20 @@ int	ft_str_indexof(char *str, char c)
 /* Renvoie l'index de la dernière occurence du caractère c */
 /* dans la chaine str, ou -1 si aucun résultat. */
 
-int	ft_str_lastindexof(char *str, int from, char c)
-{
-	int	i;
-	int	res;
+// int	ft_str_lastindexof(char *str, int from, char c)
+// {
+// 	int	i;
+// 	int	res;
 
-	i = from;
-	res = -1;
-	if (from < 0 || from > (int) ft_strlen(str))
-		return (-1);
-	while (str[i])
-	{
-		if (str[i] == c)
-			res = i;
-		i++;
-	}
-	return (res);
-}
+// 	i = from;
+// 	res = -1;
+// 	if (from < 0 || from > (int) ft_strlen(str))
+// 		return (-1);
+// 	while (str[i])
+// 	{
+// 		if (str[i] == c)
+// 			res = i;
+// 		i++;
+// 	}
+// 	return (res);
+// }
