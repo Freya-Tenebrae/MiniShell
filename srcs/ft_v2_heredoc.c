@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:01:22 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/07 14:03:40 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/10 15:38:45 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 		while (1)
 		{
 			buffer = readline("> ");
+			if (buffer == NULL)
+			{
+				if (list->in_content && list->in_content != NULL)
+					free(list->in_content);
+				list->in_content = ft_strdup("");
+				ft_put_error(GENERIC_ERROR, "warning : «here-doc» reach end of file");
+				break;
+			}
 			eof_ret = ft_is_eof(buffer, list->next->str);
 			if (!ft_havequote(list->next->str))
 				ft_expension_on_heredoc(data, &buffer);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 13:31:12 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/10 15:40:29 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,11 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 				{
 					g_status_minishell.status_pipe = 127;
 					ft_put_error(ACCESS_ERROR, cmd_args[0]);
+				}
+				else if (result_execve == -4)
+				{
+					g_status_minishell.status_pipe = 127;
+					ft_put_error(IS_DIRECTORY_ERROR, cmd_args[0]);
 				}
 				else
 					ft_put_error(CMD_NOT_FOUND_ERROR, cmd_args[0]);
