@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 15:45:48 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:39:12 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static int	ft_run_execve_for_exec(char **cmd_args)
 
 static int	ft_if_slash_exist(char *cmd)
 {
-	int	i;
+	int			i;
+	struct stat	*statbuf;
 
 	i = -1;
 	while (cmd[++i] != '\0')
@@ -68,10 +69,23 @@ static int	ft_if_slash_exist(char *cmd)
 				return (-2);
 			else if (access(cmd, X_OK) != 0)
 				return (-3);
-			else if (1 == 1)
-				return (-4);
 			else
-				return (0);
+			{
+				statbuf = malloc(sizeof(struct stat));
+				if (!statbuf || statbuf == NULL)
+					return (-1);
+				stat(cmd, statbuf);
+          		if ((statbuf->st_mode & S_IFMT) == S_IFDIR)
+          		{
+          			free(statbuf);
+					return (-4);
+          		}
+				else
+				{
+					free(statbuf);
+					return (0);
+				}
+			} 
 		}
 	}
 	return (0);

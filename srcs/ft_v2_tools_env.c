@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:57:18 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/08 10:43:58 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/10 16:28:26 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,13 @@ static int	ft_trim_variable_value(char **value)
 		if (ft_is_whitespace_following(*value + i))
 			break ;
 		if (!(*value)[i + 1] || !ft_iswhitespace((*value)[i]) || !ft_iswhitespace((*value)[i + 1]))
-			ft_char_writeon(&res, (*value)[i]);//renvoie -1 si erreur + free de res
+		{
+			ft_char_writeon(&res, (*value)[i]);
+			if (!res || res == NULL)
+			{
+				free(value);
+			}
+		}
 		i++;
 	}
 	free(*value);
