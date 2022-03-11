@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_tools_redirections.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:47:43 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/07 14:27:36 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/11 04:20:44 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_elem	*ft_elem_clone_left(t_elem *cursor)
 
 	res = malloc(sizeof(t_elem));
 	if (!res)
-		return (0);
+		return (NULL);
 	res->type = cursor->type;
 	if (cursor->str)
 		res->str = ft_strdup(cursor->str);
