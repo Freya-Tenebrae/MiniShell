@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 16:51:57 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 14:47:24 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static int	ft_fill(char **cmd_args, t_data **data)
 			if (!ft_is_valid_variable_identifier(tmp))
 				ft_put_error(IDENTIFIER_VAR_ERROR, cmd_args[i]);
 			else
-				ft_create_or_update_variable(data, tmp, ft_str_after(cmd_args[i], '='));
+				ft_create_or_update_variable(data, tmp, \
+											ft_str_after(cmd_args[i], '='));
 			free(tmp);
 		}
 		i++;

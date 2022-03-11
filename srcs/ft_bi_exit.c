@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 04:43:04 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 18:07:35 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 14:46:45 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_arg_is_numeric(char *arg)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (arg[++i] != '\0')
@@ -27,7 +27,7 @@ static int	ft_arg_is_numeric(char *arg)
 
 static int	ft_get_number_args(char **cmd_args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd_args[i] != NULL)
@@ -46,7 +46,7 @@ static void	ft_update_minishell_status(long long exitcode)
 
 int	ft_run_bi_exit(char **cmd_args)
 {
-	int nb_arg;
+	int	nb_arg;
 
 	if (!cmd_args || !*cmd_args)
 		return (2);

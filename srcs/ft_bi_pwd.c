@@ -6,13 +6,13 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:32 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 16:56:20 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 14:46:59 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-int		ft_run_bi_pwd(void)
+int	ft_run_bi_pwd(void)
 {
 	char	*pwd;
 

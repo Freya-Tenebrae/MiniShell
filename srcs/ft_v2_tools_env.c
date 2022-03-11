@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:57:18 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 16:28:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:37:41 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,14 @@ static int	ft_trim_variable_value(char **value)
 	{
 		if (ft_is_whitespace_following(*value + i))
 			break ;
-		if (!(*value)[i + 1] || !ft_iswhitespace((*value)[i]) || !ft_iswhitespace((*value)[i + 1]))
+		if (!(*value)[i + 1] || !ft_iswhitespace((*value)[i]) || \
+											!ft_iswhitespace((*value)[i + 1]))
 		{
 			ft_char_writeon(&res, (*value)[i]);
 			if (!res || res == NULL)
 			{
 				free(value);
+				return (ft_put_error(GENERIC_ERROR, "malloc error"));
 			}
 		}
 		i++;
@@ -54,7 +56,8 @@ static int	ft_trim_variable_value(char **value)
 	return (1);
 }
 
-int		ft_create_or_update_variable(t_data **data, char *variable_name, char *value)
+int	ft_create_or_update_variable(t_data **data, char *variable_name, \
+																	char *value)
 {
 	t_env	*variable;
 	int		ret;
@@ -73,7 +76,8 @@ int		ft_create_or_update_variable(t_data **data, char *variable_name, char *valu
 			free(variable);
 		if (ret == -1)
 			return (-1);
-	} else
+	}
+	else
 		ft_update_variable_value(variable, value);
 	return (1);
 }
@@ -101,7 +105,7 @@ t_env	*ft_create_variable(char *name, char *value)
 
 	res = malloc(sizeof(t_env));
 	if (!res)
-		return (0);
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	res->name = ft_strdup(name);
 	res->value = value;
 	return (res);
@@ -115,13 +119,13 @@ t_env	*ft_clone_variable(t_env *env)
 
 	name = ft_strdup(env->name);
 	if (!name)
-		return (0);
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	value = 0;
 	if (env->value)
 	{
 		value = ft_strdup(env->value);
 		if (!value)
-			return (0);
+			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	}
 	res = ft_create_variable(name, value);
 	free(name);
@@ -130,7 +134,7 @@ t_env	*ft_clone_variable(t_env *env)
 	return (res);
 }
 
-int		ft_env_tab_len(t_env **tab)
+int	ft_env_tab_len(t_env **tab)
 {
 	int	i;
 
@@ -152,7 +156,7 @@ t_env	**ft_clone_and_add_env(t_env **env, t_env *variable)
 		return (0);
 	res = malloc(sizeof(t_env) * (ft_env_tab_len(env) + 2));
 	if (!res)
-		return (0);
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	while (env[j])
 	{
 		res[j] = ft_clone_variable(env[j]);

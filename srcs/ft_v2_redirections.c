@@ -6,13 +6,12 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/11 13:35:29 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:41:24 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-// il faut retirer l'assignement du while
 static char	*ft_tools_read_fd(int fd)
 {
 	char	*buf;
@@ -22,14 +21,18 @@ static char	*ft_tools_read_fd(int fd)
 	ret = 0;
 	res = ft_strdup("");
 	if (!res || res == NULL)
-		return(ft_put_error_null(GENERIC_ERROR, "malloc error"));
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	buf = NULL;
 	while ((ret = get_next_line(fd, &buf)))
 	{
 		ft_str_writeon(&res, buf);
-		ft_char_writeon(&res, '\n');
 		free(buf);
 		buf = NULL;
+		if (!res || res == NULL)
+			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
+		ft_char_writeon(&res, '\n');
+		if (!res || res == NULL)
+			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	}
 	free(buf);
 	buf = NULL;

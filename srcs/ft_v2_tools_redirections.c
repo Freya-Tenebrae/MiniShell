@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:47:43 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/11 04:20:44 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:37:16 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**ft_elem_get_cmd_args(t_data **data, t_elem *cursor)
 	i = 0;
 	cmd_tab = malloc(sizeof(char *) * (ft_elem_get_cmd_args_count(cursor) + 1));
 	if (!cmd_tab)
-		return (0);
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	while (cursor)
 	{
 		if (cursor->type == PIPE)
@@ -95,12 +95,20 @@ t_elem	*ft_elem_clone_left(t_elem *cursor)
 		return (NULL);
 	res->type = cursor->type;
 	if (cursor->str)
+	{
 		res->str = ft_strdup(cursor->str);
+		if (!res->str || res->str == NULL)
+			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
+	}
 	else
 		res->str = NULL;
 	res->out_fd = cursor->out_fd;
 	if (cursor->in_content)
+	{
 		res->in_content = ft_strdup(cursor->in_content);
+		if (!res->in_content || res->in_content == NULL)
+			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
+	}
 	else
 		res->in_content = NULL;
 	if (cursor->next && cursor->next->type != PIPE)

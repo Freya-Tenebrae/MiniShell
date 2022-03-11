@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:01:22 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 15:38:45 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:37:17 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 	char	*buffer;
 	int		eof_ret;
 
-	buffer = 0;
+	buffer = NULL;
 	eof_ret = 0;
 	if (list->type == DOUBLE_IN)
 	{
@@ -47,8 +47,9 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 				if (list->in_content && list->in_content != NULL)
 					free(list->in_content);
 				list->in_content = ft_strdup("");
-				ft_put_error(GENERIC_ERROR, "warning : «here-doc» reach end of file");
-				break;
+				ft_put_error(GENERIC_ERROR, \
+									"warning : «here-doc» reach end of file");
+				break ;
 			}
 			eof_ret = ft_is_eof(buffer, list->next->str);
 			if (!ft_havequote(list->next->str))
@@ -58,8 +59,15 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 			if (!eof_ret)
 			{
 				ft_str_writeon(&(list->in_content), buffer);
-				ft_str_writeon(&(list->in_content), "\n");
+				if (list->in_content == NULL)
+				{
+					free(buffer);
+					return (ft_put_error(GENERIC_ERROR, "malloc error"));
+				}
 				free(buffer);
+				ft_str_writeon(&(list->in_content), "\n");
+				if (list->in_content == NULL)
+					return (ft_put_error(GENERIC_ERROR, "malloc error"));
 			}
 			else
 			{

@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:52 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 18:07:55 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 14:47:04 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	ft_unset_env(t_data **data, char *identifier)
 	return (0);
 }
 
-int		ft_run_bi_unset(t_data **data, char **cmd_args)
+int	ft_run_bi_unset(t_data **data, char **cmd_args)
 {
 	int	i;
 	int	res;

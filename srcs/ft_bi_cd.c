@@ -6,18 +6,18 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 17:49:50 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 14:48:22 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-int		ft_move(t_data **data, char *destination)
+int	ft_move(t_data **data, char *destination)
 {
 	char	*pwd;
 	char	*pwd_value;
 	int		ret;
-	
+
 	if (ft_getenv(data, "PWD"))
 	{
 		pwd_value = ft_getenv(data, "PWD")->value;
@@ -45,7 +45,7 @@ int		ft_move(t_data **data, char *destination)
 	return (0);
 }
 
-static int		check_valid_home(t_data **data)
+static int	check_valid_home(t_data **data)
 {
 	t_env	*home;
 
@@ -53,7 +53,7 @@ static int		check_valid_home(t_data **data)
 	return (home && home->value && ft_strlen(home->value) > 0);
 }
 
-static int		is_dot_or_dotdot(char *directory_operand)
+static int	is_dot_or_dotdot(char *directory_operand)
 {
 	char	*first;
 
@@ -69,7 +69,8 @@ static int		is_dot_or_dotdot(char *directory_operand)
 		}
 		free(first);
 	}
-	return (ft_strcmp(directory_operand, ".") == 0 || ft_strcmp(directory_operand, "..") == 0);
+	return (ft_strcmp(directory_operand, ".") == 0 || \
+									ft_strcmp(directory_operand, "..") == 0);
 }
 
 static int	step6(t_data **data, char *directory_operand)

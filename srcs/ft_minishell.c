@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/10 10:29:47 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 14:20:56 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,15 @@ static void	ft_loop(t_data **data)
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 }
 
-static int	ft_init_minishell_data(t_data **data, char **envp)
+static void	ft_init_minishell_global(void)
 {
 	g_status_minishell.status_minishell = 0;
 	g_status_minishell.status_pipe = 0;
 	g_status_minishell.exitcode = 0;
+}
+
+static int	ft_init_minishell_data(t_data **data, char **envp)
+{
 	*data = malloc(sizeof(t_data));
 	if (!*data)
 		return (ft_put_error(GENERIC_ERROR, "malloc error"));
@@ -75,6 +79,7 @@ int	main(int ac, char **av, char **envp)
 
 	(void) ac;
 	(void) av;
+	ft_init_minishell_global();
 	if (ft_init_minishell_data(&data, envp) != 0)
 		return (-1);
 	ft_init_signal_handling();

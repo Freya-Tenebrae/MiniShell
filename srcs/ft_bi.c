@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 18:45:07 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/09 10:45:34 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/11 14:46:16 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_is_build_in(char *cmd)
 		return (0);
 }
 
-int		ft_run_bi(t_data **data, char **cmd_args)
+int	ft_run_bi(t_data **data, char **cmd_args)
 {
 	if (cmd_args[0] == NULL)
 		return (-1);

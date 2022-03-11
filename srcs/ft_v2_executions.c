@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 18:39:46 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/11 16:03:09 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	redirections(t_elem *list)
 
 	if (ft_check_access_ok(list) != 0)
 		return (-1);
-		
 	if (ft_redirection_in_present(list))
 	{
 		content_redirection_in = ft_redirection_get_in(list);
@@ -105,6 +104,7 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 	char	**cmd_args;
 	int		standard[2];
 	int		pid;
+	int		status;
 
 	pid = 0;
 	if (!ft_there_is_pipe(list))
@@ -124,15 +124,15 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 			return (0);
 		}
 		else
-		free(cmd_args);
+			free(cmd_args);
 		pid = fork();
 		if (pid == 0)
 		{
-            if (redirections(list) == 0)
+			if (redirections(list) == 0)
 			{
 				cmd_args = ft_elem_get_cmd_args(data, list);
 				result_execve = ft_run_execve_with_all_path(\
-                ft_getenv(data, "PATH")->value, cmd_args);
+				ft_getenv(data, "PATH")->value, cmd_args);
 				if (result_execve == -1)
 				{
 					g_status_minishell.status_pipe = 2;
@@ -155,14 +155,14 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 				}
 				else
 					ft_put_error(CMD_NOT_FOUND_ERROR, cmd_args[0]);
-        	    free(cmd_args);
+				free(cmd_args);
 			}
-            exit(0);
+			exit(0);
 		}
 		else
 		{
-			int status = 0;
-			waitpid(pid, &status, WUNTRACED | WCONTINUED); // Add flags
+			status = 0;
+			waitpid(pid, &status, WUNTRACED | WCONTINUED);
 			if (WIFSIGNALED(status))
 				exit(128 + WTERMSIG(status));
 			if (WIFEXITED(status))
