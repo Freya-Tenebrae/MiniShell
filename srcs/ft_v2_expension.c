@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/12 13:11:16 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/12 15:08:18 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,13 @@ static int	ft_is_only_variable(t_data **data, char *str)
 				while ((*data)->env[k])
 				{
 					if (ft_strcmp(str + i + 1, (*data)->env[k]->name) == 0)
-						return (0);
+					{
+						// printf("A\n");
+						return (!(*data)->env[k]->value);
+					}
 					k++;
 				}
+				// printf("B\n");
 				return (str[0] == '$' && ft_strlen(str) > 1 && \
 								ft_is_valid_variable_identifier(str + i + 1));
 			}
@@ -137,14 +141,22 @@ static int	ft_is_only_variable(t_data **data, char *str)
 			while ((*data)->env[k])
 			{
 				if (!ft_is_nvalid_variable_identifier(str + i + 1, j))
+				{
+					// printf("C\n");
 					return (0);
-				if (ft_strncmp(str + i + 1, (*data)->env[k]->name, j) == 0)
-					return (0);
+				}
+				if (ft_strncmp(str + i + 1, (*data)->env[k]->name, j) == 0
+				&& (j - i) >= ft_strlen((*data)->env[k]->name))
+				{
+					// printf("D\n");
+					return (!(*data)->env[k]->value);
+				}
 				k++;
 			}
 		}
 		i++;
 	}
+	// printf("E\n");
 	return (0);
 }
 
@@ -169,6 +181,12 @@ void	ft_expension_on_command(t_data **data, t_elem *list)
 		ft_expension_with_quote(data, &(cursor->str));
 		cursor = cursor->next;
 	}
+	// cursor = list;
+	// while (cursor)
+	// {
+	// 	printf("'%s'\n", cursor->str);
+	// 	cursor = cursor->next;
+	// }
 }
 
 void	ft_expension_on_heredoc(t_data **data, char **str)
