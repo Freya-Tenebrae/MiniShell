@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/11 16:03:09 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/12 14:19:26 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 			{
 				cmd_args = ft_elem_get_cmd_args(data, list);
 				result_execve = ft_run_execve_with_all_path(\
-				ft_getenv(data, "PATH")->value, cmd_args);
+				ft_getenv(data, "PATH")->value, cmd_args, data);
 				if (result_execve == -1)
 				{
 					g_status_minishell.status_pipe = 2;

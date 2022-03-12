@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/12 13:00:17 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/12 15:00:28 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@
 # include <sys/stat.h>
 # include <errno.h>
 
-
 # include "libft/libft.h"
 # include "Get_next_line/get_next_line.h"
-#include "string.h"
+# include "string.h"
 
 /* ************************************************************************** */
 /*                                   DEFINE                                   */
@@ -120,7 +119,8 @@ void		ft_run_line(char **str, t_data **data);
 t_elem		*ft_read_line(char *str, int *ret);
 int			ft_read_cmd(char *str, int i, char **buffer, int *is_operator);
 int			ft_execute_command(t_data **data, t_elem *list, char **envp);
-int			ft_run_execve_with_all_path(char *path, char **cmd_args);
+int			ft_run_execve_with_all_path(char *path, char **cmd_args, \
+																t_data **data);
 
 /* ************************************************************************** */
 /*                                  BUILD ID                                  */

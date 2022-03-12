@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 16:53:00 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/12 15:01:43 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int	ft_check_if_label_is_not_null(char *label, char ***clone)
 	return (0);
 }
 
-static int	ft_run_execve_with_one_path(char **cmd_args, char *path)
+static int	ft_run_execve_with_one_path(char **cmd_args, char *path, \
+																char ***envp)
 {
 	char	**clone;
 	char	*label;
@@ -44,21 +45,37 @@ static int	ft_run_execve_with_one_path(char **cmd_args, char *path)
 		return (-1);
 	free(clone[0]);
 	clone[0] = label;
-	execve(clone[0], clone, NULL);
+	execve(clone[0], clone, *envp);
 	ft_freestrs(&clone);
 	return (0);
 }
 
-static int	ft_run_execve_for_exec(char **cmd_args)
+static int	ft_run_execve_for_exec(char **cmd_args, char ***paths, char ***envp)
 {
-	execve(cmd_args[0], cmd_args, NULL);
+	ft_freestrs(paths);
+	execve(cmd_args[0], cmd_args, *envp);
 	return (0);
 }
 
-int	ft_run_execve_with_all_path(char *path, char **cmd_args)
+static int	ft_run_execve_loop_path(char **cmd_args, char ***paths, int i, \
+																char ***envp)
+{
+	int	res_one_path;
+
+	res_one_path = ft_run_execve_with_one_path(cmd_args, (*paths)[i], envp);
+	if ((res_one_path) != 0)
+	{
+		ft_freestrs(paths);
+		return (res_one_path);
+	}
+	return (0);
+}
+
+int	ft_run_execve_with_all_path(char *path, char **cmd_args, t_data **data)
 {
 	int		res_one_path;
 	char	**paths;
+	char	**envp;
 	int		i;
 
 	if (!cmd_args || cmd_args == NULL || !cmd_args[0] || cmd_args[0] == NULL)
@@ -67,19 +84,15 @@ int	ft_run_execve_with_all_path(char *path, char **cmd_args)
 		return (ft_if_slash_exist(cmd_args[0]));
 	paths = ft_split(path, ':');
 	i = 0;
+	envp = (*data)->envp;
 	if (!paths)
 		return (0);
 	while (paths[i] != NULL)
 	{
-		res_one_path = ft_run_execve_with_one_path(cmd_args, paths[i]);
-		if ((res_one_path) != 0)
-		{
-			ft_freestrs(&paths);
+		res_one_path = ft_run_execve_loop_path(cmd_args, &paths, i, &envp);
+		if (res_one_path != 0)
 			return (res_one_path);
-		}
-		else
-			i++;
+		i++;
 	}
-	ft_freestrs(&paths);
-	return (ft_run_execve_for_exec(cmd_args));
+	return (ft_run_execve_for_exec(cmd_args, &paths, &envp));
 }
