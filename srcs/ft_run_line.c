@@ -6,11 +6,57 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/11 14:27:58 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/12 16:08:00 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
+
+static t_elem	*ft_clear_list_from_null_strat(t_elem **list)
+{
+	t_elem	*ptr_list;
+
+	while (*list && *list != NULL)
+	{
+		if ((*list)->str != NULL)
+			break ;
+		ptr_list = *list;
+		*list = (*list)->next;
+		if (ptr_list->in_content != NULL)
+			free(ptr_list->in_content);
+		free(ptr_list);
+	}
+	return (*list);
+}
+
+static t_elem	*ft_clear_list_from_null(t_elem **list)
+{
+	t_elem	*ptr_list_1;
+	t_elem	*ptr_list_2;
+	t_elem	*ptr_list_3;
+
+	*list = ft_clear_list_from_null_strat(list);
+	ptr_list_2 = *list;
+	while (ptr_list_2 != NULL && ptr_list_2->next != NULL)
+	{
+		ptr_list_1 = ptr_list_2->next;
+		ptr_list_3 = ptr_list_1;
+		if (ptr_list_1->str == NULL)
+		{
+			ptr_list_1 = ptr_list_1->next;
+			ptr_list_2->next = ptr_list_1;
+			if (ptr_list_3->in_content != NULL)
+				free(ptr_list_3->in_content);
+			free(ptr_list_3);
+		}
+		else
+		{
+			ptr_list_2 = ptr_list_1;
+			ptr_list_1 = ptr_list_1->next;
+		}
+	}
+	return (*list);
+}
 
 static int	ft_pipe_is_present_on_line(t_elem *list)
 {
@@ -32,6 +78,7 @@ static int	ft_parse_line(t_data **data, char **str, int *ret, t_elem **list)
 	if (*ret != READ_OK)
 		return (ft_put_error(GENERIC_ERROR, "Reading line error"));
 	ft_expension_on_command(data, *list);
+	*list = ft_clear_list_from_null(list);
 	return (0);
 }
 
