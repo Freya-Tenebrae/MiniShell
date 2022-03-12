@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/12 15:00:28 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/12 17:24:14 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,8 @@ int			ft_redirection_open_all(t_data **data, t_elem *list);
 char		*ft_redirection_get_in(t_elem *cmd);
 char		*ft_redirection_get_heredoc(t_elem *cmd);
 
-int			ft_create_or_update_variable(t_data **data, char *variable_name, char *value);
+int			ft_create_or_update_variable(t_data **data, char *variable_name, \
+																char *value);
 void		ft_free_variable(t_env *env);
 void		ft_update_variable_value(t_env *variable, char *value);
 t_env		*ft_create_variable(char *name, char *value);

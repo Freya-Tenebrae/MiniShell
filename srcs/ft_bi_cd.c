@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/11 14:48:22 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/12 17:20:36 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ int	ft_move(t_data **data, char *destination)
 	char	*pwd_value;
 	int		ret;
 
+	if (access(destination, F_OK) != 0)
+	{
+		ft_put_error(CD_ERROR, "destination error : no such file or folder");
+		return (1);
+	}
 	if (ft_getenv(data, "PWD"))
 	{
 		pwd_value = ft_getenv(data, "PWD")->value;
@@ -53,26 +58,6 @@ static int	check_valid_home(t_data **data)
 	return (home && home->value && ft_strlen(home->value) > 0);
 }
 
-static int	is_dot_or_dotdot(char *directory_operand)
-{
-	char	*first;
-
-	if (ft_str_indexof(directory_operand, '/') != -1)
-	{
-		first = ft_str_before(directory_operand, '/');
-		if (!first)
-			return (-2);
-		if (ft_strcmp(first, ".") == 0 || ft_strcmp(first, "..") == 0)
-		{
-			free(first);
-			return (1);
-		}
-		free(first);
-	}
-	return (ft_strcmp(directory_operand, ".") == 0 || \
-									ft_strcmp(directory_operand, "..") == 0);
-}
-
 static int	step6(t_data **data, char *directory_operand)
 {
 	char	*new_path;
@@ -85,7 +70,7 @@ static int	step6(t_data **data, char *directory_operand)
 		return (2);
 	if (ft_str_writeon(&new_path, directory_operand) == NULL)
 		return (2);
-	res_move = ft_move(data, directory_operand);
+	res_move = ft_move(data, new_path);
 	free(new_path);
 	return (res_move);
 }
@@ -94,7 +79,6 @@ int	ft_run_bi_cd(t_data **data, char **cmd_args)
 {
 	char	*directory_operand;
 	int		res_move;
-	int		res_is_dot;
 
 	if (!cmd_args || !*cmd_args)
 		return (2);
@@ -107,23 +91,15 @@ int	ft_run_bi_cd(t_data **data, char **cmd_args)
 		}
 		directory_operand = ft_getenv(data, "HOME")->value;
 	}
-	else if (cmd_args[2])
+	else
 	{
-		ft_put_error(GENERIC_ERROR, "cd : too mutch arguments");
-		return (1);
+		directory_operand = cmd_args[1];
+		if (cmd_args[2])
+			ft_put_error(GENERIC_ERROR, "cd : too mutch arguments");
 	}
-	directory_operand = cmd_args[1];
 	if (directory_operand[0] && directory_operand[0] == '/')
 		res_move = ft_move(data, directory_operand);
 	else
-	{
-		res_is_dot = is_dot_or_dotdot(directory_operand);
-		if (res_is_dot == -2)
-			return (2);
-		else if (res_is_dot)
-			res_move = step6(data, directory_operand);
-		else
-			res_move = ft_move(data, directory_operand);
-	}
+		res_move = step6(data, directory_operand);
 	return (res_move);
 }
