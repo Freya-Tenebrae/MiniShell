@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/11 14:47:24 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/12 13:11:09 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,10 @@ static int	ft_fill(char **cmd_args, t_data **data)
 int	ft_run_bi_export(t_data **data, char **cmd_args)
 {
 	if (!cmd_args || !*cmd_args)
-	{
-		ft_show_env(data);
 		return (2);
-	}
 	if (!cmd_args[1])
 	{
-		ft_show_env(data);
+		(void) ft_show_env;
 		return (0);
 	}
 	if (!ft_fill(cmd_args, data))

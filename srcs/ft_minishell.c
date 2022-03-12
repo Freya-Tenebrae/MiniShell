@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/11 14:20:56 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/12 12:23:16 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	ft_loop(t_data **data)
 		}
 		free(str);
 	}
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	// ft_putstr_fd("exit\n", STDOUT_FILENO);
 }
 
 static void	ft_init_minishell_global(void)

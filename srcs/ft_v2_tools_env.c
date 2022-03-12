@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_tools_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:57:18 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/11 15:37:41 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/12 13:00:21 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ static int	ft_try_replace(t_data **data, t_env *variable)
 	return (1);
 }
 
-int	ft_is_valid_variable_identifier(char *str)
+int	ft_is_nvalid_variable_identifier(char *str, int n)
 {
 	int	i;
 
@@ -198,13 +198,18 @@ int	ft_is_valid_variable_identifier(char *str)
 		return (0);
 	if (str[0] >= '0' && str[0] <= '9')
 		return (0);
-	while (str[i])
+	while (str[i] && i < n)
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (0);
 		i++;
 	}
 	return (1);
+}
+
+int	ft_is_valid_variable_identifier(char *str)
+{
+	return (ft_is_nvalid_variable_identifier(str, (int) ft_strlen(str)));
 }
 
 int	ft_add_variable(t_data **data, t_env *variable)

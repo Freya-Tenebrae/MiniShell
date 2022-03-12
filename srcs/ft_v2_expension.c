@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_expension.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/11 16:00:31 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/12 13:11:16 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ static int	ft_is_only_variable(t_data **data, char *str)
 			k = 0;
 			while ((*data)->env[k])
 			{
+				if (!ft_is_nvalid_variable_identifier(str + i + 1, j))
+					return (0);
 				if (ft_strncmp(str + i + 1, (*data)->env[k]->name, j) == 0)
 					return (0);
 				k++;
@@ -159,8 +161,7 @@ void	ft_expension_on_command(t_data **data, t_elem *list)
 			continue ;
 		}
 		(void) ft_is_only_variable;
-		if (!ft_havequote(cursor->str) && \
-										ft_is_only_variable(data, cursor->str))
+		if (!ft_havequote(cursor->str) && ft_is_only_variable(data, cursor->str))
 		{
 			free(cursor->str);
 			cursor->str = NULL;
