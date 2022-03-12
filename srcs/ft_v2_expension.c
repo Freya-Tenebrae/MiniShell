@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/12 13:11:16 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/12 14:44:43 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ static int	ft_is_only_variable(t_data **data, char *str)
 				while ((*data)->env[k])
 				{
 					if (ft_strcmp(str + i + 1, (*data)->env[k]->name) == 0)
-						return (0);
+						return (!(*data)->env[k]->value);
 					k++;
 				}
 				return (str[0] == '$' && ft_strlen(str) > 1 && \
@@ -138,8 +138,9 @@ static int	ft_is_only_variable(t_data **data, char *str)
 			{
 				if (!ft_is_nvalid_variable_identifier(str + i + 1, j))
 					return (0);
-				if (ft_strncmp(str + i + 1, (*data)->env[k]->name, j) == 0)
-					return (0);
+				if (ft_strncmp(str + i + 1, (*data)->env[k]->name, j) == 0
+				&& (j - i) >= ft_strlen((*data)->env[k]->name))
+					return (!(*data)->env[k]->value);
 				k++;
 			}
 		}
