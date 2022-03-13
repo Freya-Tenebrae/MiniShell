@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:36:11 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/11 16:35:18 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/13 12:09:08 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_print_error(int i, char *str)
 	else if (i == PWD_ERROR)
 		ft_str_writeon(&error_str, "minishell: pwd: ");
 	else if (i == UNSET_ERROR)
-		ft_str_writeon(&error_str, "minishell: unset: ");
+		ft_str_writeon(&error_str, "minishell: unset: `");
 	else
 		ft_str_writeon(&error_str, "minishell: ");
 	if (!error_str || error_str == NULL)

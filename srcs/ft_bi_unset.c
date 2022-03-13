@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:52 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/11 14:47:04 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/13 12:12:35 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,7 @@ int	ft_run_bi_unset(t_data **data, char **cmd_args)
 	while (cmd_args[i])
 	{
 		if (!ft_is_valid_variable_identifier(cmd_args[i]))
-		{
 			ft_put_error(UNSET_ERROR, cmd_args[i]);
-			return (1);
-		}
 		else
 		{
 			res = ft_unset_env(data, cmd_args[i]);
@@ -112,5 +109,5 @@ int	ft_run_bi_unset(t_data **data, char **cmd_args)
 		}
 		i++;
 	}
-	return (0);
+	return (1);
 }
