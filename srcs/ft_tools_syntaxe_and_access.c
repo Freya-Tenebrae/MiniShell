@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_syntaxe_and_access.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 16:12:00 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/10 18:39:21 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/13 15:34:14 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int	ft_check_access_ok(t_elem *list)
 		{
 			list = list->next;
 			if (access(list->str, F_OK) != 0)
+			{
+				g_status_minishell.status_pipe = 1;
 				return (ft_put_error(FILE_ERROR, list->str));
+			}
 			else if (access(list->str, R_OK) != 0)
 				return (ft_put_error(ACCESS_ERROR, list->str));
 		}

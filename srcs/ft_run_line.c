@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_run_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/12 16:08:00 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/13 14:36:49 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ static int	ft_pipe_is_present_on_line(t_elem *list)
 static int	ft_parse_line(t_data **data, char **str, int *ret, t_elem **list)
 {
 	if (!ft_check_quote(*str))
+	{
+		g_status_minishell.status_pipe = 127;
 		return (ft_put_error(GENERIC_ERROR, "Quote error"));
+	}
 	*ret = 0;
 	*list = ft_read_line(*str, ret);
 	if (*ret != READ_OK)

@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/12 14:06:51 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/13 15:10:09 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,23 @@ static void	ft_show_env(t_data **data)
 
 static int	ft_fill(char **cmd_args, t_data **data)
 {
-	int		i;
 	char	*tmp;
+	int		res;
+	int		i;
 
 	i = 1;
+	res = 0;
 	while (cmd_args[i])
 	{
 		if (ft_str_indexof(cmd_args[i], '=') == -1)
 		{
 			if (!ft_is_valid_variable_identifier(cmd_args[i]))
+			{
 				ft_put_error(IDENTIFIER_VAR_ERROR, cmd_args[i]);
-			else
-				ft_create_or_update_variable(data, cmd_args[i], NULL);
+				res = -1;
+			}
+			else if (ft_create_or_update_variable(data, cmd_args[i], NULL) == -1)
+				return (-2);
 		}
 		else
 		{
@@ -53,19 +58,24 @@ static int	ft_fill(char **cmd_args, t_data **data)
 			if (!tmp)
 				return (-1);
 			if (!ft_is_valid_variable_identifier(tmp))
+			{
 				ft_put_error(IDENTIFIER_VAR_ERROR, cmd_args[i]);
-			else
-				ft_create_or_update_variable(data, tmp, \
-											ft_str_after(cmd_args[i], '='));
+				res = -1;
+			}
+			else if (ft_create_or_update_variable(data, tmp, ft_str_after(cmd_args[i], '=')) == -1)
+				return (-2);
 			free(tmp);
 		}
 		i++;
 	}
-	return (1);
+	return (res);
 }
 
 int	ft_run_bi_export(t_data **data, char **cmd_args)
 {
+	int		res;
+
+	res = 0;
 	if (!cmd_args || !*cmd_args)
 		return (2);
 	if (!cmd_args[1])
@@ -73,7 +83,10 @@ int	ft_run_bi_export(t_data **data, char **cmd_args)
 		ft_show_env(data);
 		return (0);
 	}
-	if (!ft_fill(cmd_args, data))
+	res = ft_fill(cmd_args, data);
+	if (res == -1)
+		return (1);
+	else if (res == -2)
 	{
 		ft_put_error(GENERIC_ERROR, "malloc error");
 		return (2);

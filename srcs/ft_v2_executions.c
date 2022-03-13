@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/12 14:19:26 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/13 15:45:00 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,47 +125,72 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		}
 		else
 			free(cmd_args);
+		
+		int pipe_exit_code_fd[2];
+
+		if (pipe(pipe_exit_code_fd) == -1)
+			return (0);
+
 		pid = fork();
+		
 		if (pid == 0)
 		{
+			int pipe_exit_code = 0;
 			if (redirections(list) == 0)
 			{
 				cmd_args = ft_elem_get_cmd_args(data, list);
-				result_execve = ft_run_execve_with_all_path(\
-				ft_getenv(data, "PATH")->value, cmd_args, data);
+				result_execve = ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, cmd_args, data);
+				
 				if (result_execve == -1)
 				{
-					g_status_minishell.status_pipe = 2;
+					pipe_exit_code = 2;
 					ft_put_error(GENERIC_ERROR, "malloc error");
 				}
 				else if (result_execve == -2)
 				{
-					g_status_minishell.status_pipe = 127;
+					pipe_exit_code = 127;
 					ft_put_error(FILE_ERROR, cmd_args[0]);
 				}
 				else if (result_execve == -3)
 				{
-					g_status_minishell.status_pipe = 127;
+					pipe_exit_code = 127;
 					ft_put_error(ACCESS_ERROR, cmd_args[0]);
 				}
 				else if (result_execve == -4)
 				{
-					g_status_minishell.status_pipe = 127;
+					pipe_exit_code = 127;
 					ft_put_error(IS_DIRECTORY_ERROR, cmd_args[0]);
 				}
 				else
+				{
+					pipe_exit_code = 127;
 					ft_put_error(CMD_NOT_FOUND_ERROR, cmd_args[0]);
+				}
 				free(cmd_args);
+				close(pipe_exit_code_fd[0]);
+				write(pipe_exit_code_fd[1], &pipe_exit_code, sizeof(int));
+				close(pipe_exit_code_fd[1]);
+			} else {
+				pipe_exit_code = 1;
+				close(pipe_exit_code_fd[0]);
+				write(pipe_exit_code_fd[1], &pipe_exit_code, sizeof(int));
+				close(pipe_exit_code_fd[1]);
 			}
 			exit(0);
 		}
 		else
 		{
+			int pipe_exit_code = 0;
+			close(pipe_exit_code_fd[1]);
+			read(pipe_exit_code_fd[0], &pipe_exit_code, sizeof(int));
+			close(pipe_exit_code_fd[0]);
 			status = 0;
 			waitpid(pid, &status, WUNTRACED | WCONTINUED);
 			if (WIFSIGNALED(status))
 				exit(128 + WTERMSIG(status));
-			if (WIFEXITED(status))
+			else if (pipe_exit_code != 0)
+				g_status_minishell.status_pipe = pipe_exit_code;
+			else if (WIFEXITED(status))
 				g_status_minishell.status_pipe = WEXITSTATUS(status);
 		}
 	}
