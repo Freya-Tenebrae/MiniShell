@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 20:15:56 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 20:20:22 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,16 @@ static int	ft_execute_pipe(t_data **data, t_elem *list)
 	return (0);
 }
 
+static void	redirections2(t_elem *list)
+{
+	if (ft_redirection_out_present(list))
+	{
+		dup2(list->out_fd, STDOUT_FILENO);
+		close(list->out_fd);
+		list->out_fd = -1;
+	}
+}
+
 int	redirections(t_elem *list)
 {
 	char	*content_redirection_in;
@@ -104,12 +114,7 @@ int	redirections(t_elem *list)
 		close(fd[0]);
 		close(fd[1]);
 	}
-	if (ft_redirection_out_present(list))
-	{
-		dup2(list->out_fd, STDOUT_FILENO);
-		close(list->out_fd);
-		list->out_fd = -1;
-	}
+	redirections2(list);
 	return (0);
 }
 
