@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_tools_redirections.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:47:43 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/12 15:17:06 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:27:14 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,26 @@ t_elem	*ft_elem_get_right(t_elem *cursor)
 	return (0);
 }
 
+int	ft_elem_clone_left2(t_elem *cursor, t_elem *res)
+{
+	if (cursor->in_content)
+	{
+		res->in_content = ft_strdup(cursor->in_content);
+		if (!res->in_content || res->in_content == NULL)
+		{
+			ft_put_error_null(GENERIC_ERROR, "malloc error");
+			return (-1);
+		}
+	}
+	else
+		res->in_content = NULL;
+	if (cursor->next && cursor->next->type != PIPE)
+		res->next = ft_elem_clone_left(cursor->next);
+	else
+		res->next = 0;
+	return (0);
+}
+
 t_elem	*ft_elem_clone_left(t_elem *cursor)
 {
 	t_elem		*res;
@@ -103,17 +123,7 @@ t_elem	*ft_elem_clone_left(t_elem *cursor)
 	else
 		res->str = NULL;
 	res->out_fd = cursor->out_fd;
-	if (cursor->in_content)
-	{
-		res->in_content = ft_strdup(cursor->in_content);
-		if (!res->in_content || res->in_content == NULL)
-			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
-	}
-	else
-		res->in_content = NULL;
-	if (cursor->next && cursor->next->type != PIPE)
-		res->next = ft_elem_clone_left(cursor->next);
-	else
-		res->next = 0;
+	if (ft_elem_clone_left2(cursor, res) == -1)
+		return (NULL);
 	return (res);
 }
