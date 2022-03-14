@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 19:58:01 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 20:15:56 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,37 @@ static int	ft_there_is_pipe(t_elem *cursor)
 	return (0);
 }
 
-static int	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
+static int	ft_execute_pipe_child(t_data **data, t_elem *list, int *std,
+	int *fd)
 {
 	t_elem	*list_left;
+
+	close(std[0]);
+	close(std[1]);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
+	close(fd[1]);
+	list_left = ft_elem_clone_left(list);
+	ft_execute_command(data, list_left);
+	ft_free_elem(&list_left);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	exit(0);
+}
+
+static void	ft_execute_pipe_parent(t_data **data, t_elem *list, int *fd)
+{
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[1]);
+	close(fd[0]);
+	ft_execute_command(data, ft_elem_get_right(list));
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	wait(NULL);
+}
+
+static int	ft_execute_pipe(t_data **data, t_elem *list)
+{
 	int		std[2];
 	int		fd[2];
 	int		pid;
@@ -42,29 +70,9 @@ static int	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
 		return (-1);
 	}
 	if (pid == 0)
-	{
-		close(std[0]);
-		close(std[1]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-		list_left = ft_elem_clone_left(list);
-		ft_execute_command(data, list_left, envp);
-		ft_free_elem(&list_left);
-		close(STDIN_FILENO);
-		close(STDOUT_FILENO);
-		exit(0);
-	}
+		ft_execute_pipe_child(data, list, std, fd);
 	else
-	{
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[1]);
-		close(fd[0]);
-		ft_execute_command(data, ft_elem_get_right(list), envp);
-		close(STDIN_FILENO);
-		close(STDOUT_FILENO);
-		wait(NULL);
-	}
+		ft_execute_pipe_parent(data, list, fd);
 	dup2(std[0], STDIN_FILENO);
 	dup2(std[1], STDOUT_FILENO);
 	close(std[0]);
@@ -105,7 +113,7 @@ int	redirections(t_elem *list)
 	return (0);
 }
 
-int	ft_execute_command(t_data **data, t_elem *list, char **envp)
+int	ft_execute_command(t_data **data, t_elem *list)
 {
 	int		pipe_exit_code_fd[2];
 	int		redirection_ret;
@@ -203,6 +211,6 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		}
 	}
 	else
-		ft_execute_pipe(data, list, envp);
+		ft_execute_pipe(data, list);
 	return (0);
 }

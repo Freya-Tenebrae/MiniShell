@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/12 17:24:14 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/14 20:15:34 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void		ft_init_signal_handling(void);
 void		ft_run_line(char **str, t_data **data);
 t_elem		*ft_read_line(char *str, int *ret);
 int			ft_read_cmd(char *str, int i, char **buffer, int *is_operator);
-int			ft_execute_command(t_data **data, t_elem *list, char **envp);
+int			ft_execute_command(t_data **data, t_elem *list);
 int			ft_run_execve_with_all_path(char *path, char **cmd_args, \
 																t_data **data);
 
