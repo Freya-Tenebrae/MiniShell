@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 17:11:38 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:19:54 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,18 @@ static int	ft_expension_inject(t_data **data, char *str, char **result)
 	return (ft_exp_inject2(data, str, result));
 }
 
+static int	ft_expension_with_quote4(t_data **data, char **str, int *i,
+		char **result)
+{
+	int	j;
+
+	j = ft_expension_inject(data, &((*str)[*i + 1]), result);
+	if (j == -1)
+		return (1);
+	*i += j;
+	return (0);
+}
+
 static int	ft_expension_with_quote3(char **result, char **str, int i)
 {
 	ft_char_writeon(result, (*str)[i]);
@@ -74,17 +86,6 @@ static int	ft_expension_with_quote3(char **result, char **str, int i)
 		ft_put_error_void(GENERIC_ERROR, "malloc error");
 		return (-1);
 	}
-	return (0);
-}
-
-static int	test(t_data **data, char **str, int *i, char **result)
-{
-	int	j;
-
-	j = ft_expension_inject(data, &((*str)[*i + 1]), result);
-	if (j == -1)
-		return (1);
-	*i += j;
 	return (0);
 }
 
@@ -105,7 +106,7 @@ static void	ft_expension_with_quote2(t_data **data, char **str, char **result)
 					quote = 0;
 				else if ((*str)[i] == '$' && (!quote || quote != '\''))
 				{
-					if (test(data, str, &i, result))
+					if (ft_expension_with_quote4(data, str, &i, result))
 						break ;
 				}
 				else if (ft_expension_with_quote3(result, str, i) == -1)
