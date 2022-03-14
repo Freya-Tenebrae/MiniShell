@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:47:43 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 17:27:14 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:38:56 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,11 @@ int	ft_elem_get_cmd_args_count(t_elem *cursor)
 	return (i);
 }
 
-char	**ft_elem_get_cmd_args(t_data **data, t_elem *cursor)
+void	ft_elem_get_cmd_args2(t_elem *cursor, char **cmd_tab)
 {
-	char	**cmd_tab;
-	int		i;
+	int	i;
 
-	(void) data;
 	i = 0;
-	cmd_tab = malloc(sizeof(char *) * (ft_elem_get_cmd_args_count(cursor) + 1));
-	if (!cmd_tab)
-		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	while (cursor)
 	{
 		if (cursor->type == PIPE)
@@ -72,6 +67,19 @@ char	**ft_elem_get_cmd_args(t_data **data, t_elem *cursor)
 		i++;
 	}
 	cmd_tab[i] = 0;
+}
+
+char	**ft_elem_get_cmd_args(t_data **data, t_elem *cursor)
+{
+	char	**cmd_tab;
+	int		i;
+
+	(void) data;
+	i = 0;
+	cmd_tab = malloc(sizeof(char *) * (ft_elem_get_cmd_args_count(cursor) + 1));
+	if (!cmd_tab)
+		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
+	ft_elem_get_cmd_args2(cursor, cmd_tab);
 	return (cmd_tab);
 }
 
