@@ -6,31 +6,32 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/12 15:08:18 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 15:48:08 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-static int	ft_expension_inject(t_data **data, char *str, char **result)
+static int	ft_exp_inject3(char *tmp, int i, char **result)
+{
+	if (tmp)
+		free(tmp);
+	if (i == 0)
+	{
+		ft_char_writeon(result, '$');
+		if (!*result)
+			return (ft_put_error(GENERIC_ERROR, "malloc error"));
+	}
+	return (i);
+}
+
+static int	ft_exp_inject2(t_data **data, char *str, char **result)
 {
 	char	*tmp;
 	int		i;
-	char	*buff;
 
 	i = 0;
 	tmp = NULL;
-	if (str[i] && str[i] == '?')
-	{
-		buff = ft_itoa(g_status_minishell.status_pipe);
-		if (!buff)
-			return (ft_put_error(GENERIC_ERROR, "malloc error"));
-		ft_str_writeon(result, buff);
-		free(buff);
-		if (!*result)
-			return (ft_put_error(GENERIC_ERROR, "malloc error"));
-		return (1);
-	}
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 	{
 		ft_char_writeon(&tmp, str[i]);
@@ -44,15 +45,25 @@ static int	ft_expension_inject(t_data **data, char *str, char **result)
 		if (!*result)
 			return (ft_put_error(GENERIC_ERROR, "malloc error"));
 	}
-	if (tmp)
-		free(tmp);
-	if (i == 0)
+	return (ft_exp_inject3(tmp, i, result));
+}
+
+static int	ft_expension_inject(t_data **data, char *str, char **result)
+{
+	char	*buff;
+
+	if (str[0] && str[0] == '?')
 	{
-		ft_char_writeon(result, '$');
+		buff = ft_itoa(g_status_minishell.status_pipe);
+		if (!buff)
+			return (ft_put_error(GENERIC_ERROR, "malloc error"));
+		ft_str_writeon(result, buff);
+		free(buff);
 		if (!*result)
 			return (ft_put_error(GENERIC_ERROR, "malloc error"));
+		return (1);
 	}
-	return (i);
+	return (ft_exp_inject2(data, str, result));
 }
 
 static void	ft_expension_with_quote(t_data **data, char **str)
