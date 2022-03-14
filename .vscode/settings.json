@@ -48,6 +48,7 @@
 		"__node_handle": "c",
 		"__memory": "c",
 		"__functional_03": "c",
-		"__mutex_base": "c"
+		"__mutex_base": "c",
+		"__config": "c"
 	}
 }

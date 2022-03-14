@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 16:12:11 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 16:28:54 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,48 @@ static void	ft_expension_with_quote(t_data **data, char **str)
 	*str = result;
 }
 
-static int	ft_is_only_variable(t_data **data, char *str)
+static int	ft_is_only_variable3(t_data **data, char *str, size_t i, int j)
 {
-	size_t	i;
+	int		k;
+
+	k = 0;
+	while ((*data)->env[k])
+	{
+		if (!ft_is_nvalid_variable_identifier(str + i + 1, j))
+			return (0);
+		if (ft_strncmp(str + i + 1, (*data)->env[k]->name, j) == 0
+			&& (j - i) >= ft_strlen((*data)->env[k]->name))
+			return (!(*data)->env[k]->value);
+		k++;
+	}
+	return (-1);
+}
+
+static int	ft_is_only_variable2(t_data **data, char *str, size_t i)
+{
 	int		j;
 	int		k;
+
+	j = ft_str_indexof(str + i + 1, '$');
+	if (j == -1)
+	{
+		k = 0;
+		while ((*data)->env[k])
+		{
+			if (ft_strcmp(str + i + 1, (*data)->env[k]->name) == 0)
+				return (!(*data)->env[k]->value);
+			k++;
+		}
+		return (str[0] == '$' && ft_strlen(str) > 1 && \
+						ft_is_valid_variable_identifier(str + i + 1));
+	}
+	return (ft_is_only_variable3(data, str, i, j));
+}
+
+static int	ft_is_only_variable(t_data **data, char *str)
+{
+	int		ret;
+	size_t	i;
 
 	i = 0;
 	while (str[i])
@@ -131,43 +168,12 @@ static int	ft_is_only_variable(t_data **data, char *str)
 		{
 			if (i + 1 < ft_strlen(str) && str[i + 1] == '?')
 				return (0);
-			j = ft_str_indexof(str + i + 1, '$');
-			if (j == -1)
-			{
-				k = 0;
-				while ((*data)->env[k])
-				{
-					if (ft_strcmp(str + i + 1, (*data)->env[k]->name) == 0)
-					{
-						// printf("A\n");
-						return (!(*data)->env[k]->value);
-					}
-					k++;
-				}
-				// printf("B\n");
-				return (str[0] == '$' && ft_strlen(str) > 1 && \
-								ft_is_valid_variable_identifier(str + i + 1));
-			}
-			k = 0;
-			while ((*data)->env[k])
-			{
-				if (!ft_is_nvalid_variable_identifier(str + i + 1, j))
-				{
-					// printf("C\n");
-					return (0);
-				}
-				if (ft_strncmp(str + i + 1, (*data)->env[k]->name, j) == 0
-				&& (j - i) >= ft_strlen((*data)->env[k]->name))
-				{
-					// printf("D\n");
-					return (!(*data)->env[k]->value);
-				}
-				k++;
-			}
+			ret = ft_is_only_variable2(data, str, i);
+			if (ret != -1)
+				return (ret);
 		}
 		i++;
 	}
-	// printf("E\n");
 	return (0);
 }
 
@@ -183,8 +189,8 @@ void	ft_expension_on_command(t_data **data, t_elem *list)
 			cursor = cursor->next->next;
 			continue ;
 		}
-		(void) ft_is_only_variable;
-		if (!ft_havequote(cursor->str) && ft_is_only_variable(data, cursor->str))
+		if (!ft_havequote(cursor->str)
+			&& ft_is_only_variable(data, cursor->str))
 		{
 			free(cursor->str);
 			cursor->str = NULL;
@@ -192,12 +198,6 @@ void	ft_expension_on_command(t_data **data, t_elem *list)
 		ft_expension_with_quote(data, &(cursor->str));
 		cursor = cursor->next;
 	}
-	// cursor = list;
-	// while (cursor)
-	// {
-	// 	printf("'%s'\n", cursor->str);
-	// 	cursor = cursor->next;
-	// }
 }
 
 static void ft_expension_on_heredoc2(t_data **data, char **str, char **result)
