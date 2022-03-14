@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/13 15:45:00 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:34:55 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,12 +153,12 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 				}
 				else if (result_execve == -3)
 				{
-					pipe_exit_code = 127;
+					pipe_exit_code = 126;
 					ft_put_error(ACCESS_ERROR, cmd_args[0]);
 				}
 				else if (result_execve == -4)
 				{
-					pipe_exit_code = 127;
+					pipe_exit_code = 126;
 					ft_put_error(IS_DIRECTORY_ERROR, cmd_args[0]);
 				}
 				else
