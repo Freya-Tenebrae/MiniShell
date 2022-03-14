@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 17:19:54 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 21:19:14 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void	ft_expension_on_command(t_data **data, t_elem *list)
 	}
 }
 
-static void ft_expension_on_heredoc2(t_data **data, char **str, char **result)
+static void	ft_expension_on_heredoc2(t_data **data, char **str, char **result)
 {
 	int		i;
 

@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 21:10:25 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 21:19:38 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ static void	ft_execute_command_child(t_data **data, t_elem *list,
 		pipe_exit_code);
 }
 
-static void ft_execute_command_parent(int *pipe_exit_code_fd, int pid)
+static void	ft_execute_command_parent(int *pipe_exit_code_fd, int pid)
 {
 	int		pipe_exit_code;
 	int		status;
