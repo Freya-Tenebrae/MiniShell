@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 20:44:54 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 21:10:25 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,8 @@ static void	ft_execute_command_child_manage_errors(int result_execve,
 	}
 }
 
-static void	ft_execute_command_child(t_data **data, t_elem *list, int *pipe_exit_code)
+static void	ft_execute_command_child(t_data **data, t_elem *list,
+	int *pipe_exit_code)
 {
 	int		result_execve;
 	char	**cmd_args;
@@ -189,59 +190,76 @@ static void	ft_execute_command_child(t_data **data, t_elem *list, int *pipe_exit
 		pipe_exit_code);
 }
 
-int	ft_execute_command(t_data **data, t_elem *list)
+static void ft_execute_command_parent(int *pipe_exit_code_fd, int pid)
+{
+	int		pipe_exit_code;
+	int		status;
+
+	pipe_exit_code = 0;
+	close(pipe_exit_code_fd[1]);
+	read(pipe_exit_code_fd[0], &pipe_exit_code, sizeof(int));
+	close(pipe_exit_code_fd[0]);
+	status = 0;
+	waitpid(pid, &status, WUNTRACED | WCONTINUED);
+	if (WIFSIGNALED(status))
+		exit(128 + WTERMSIG(status));
+	else if (pipe_exit_code != 0)
+		g_status_minishell.status_pipe = pipe_exit_code;
+	else if (WIFEXITED(status))
+		g_status_minishell.status_pipe = WEXITSTATUS(status);
+}
+
+static void	ft_execute_command_redirect(t_data **data, t_elem *list,
+	int *pipe_exit_code_fd, int *pipe_exit_code)
+{
+	int		redirection_ret;
+
+	redirection_ret = redirections(list);
+	if (redirection_ret == 0)
+	{
+		ft_execute_command_child(data, list, pipe_exit_code);
+		close(pipe_exit_code_fd[0]);
+		write(pipe_exit_code_fd[1], pipe_exit_code, sizeof(int));
+		close(pipe_exit_code_fd[1]);
+	}
+	else
+	{
+		*pipe_exit_code = 1;
+		close(pipe_exit_code_fd[0]);
+		write(pipe_exit_code_fd[1], pipe_exit_code, sizeof(int));
+		close(pipe_exit_code_fd[1]);
+	}
+}
+
+void	ft_execute_command2(t_data **data, t_elem *list, int *pipe_exit_code_fd,
+		int *pipe_exit_code)
+{
+	ft_execute_command_redirect(data, list, pipe_exit_code_fd,
+		pipe_exit_code);
+	exit(0);
+}
+
+void	ft_execute_command(t_data **data, t_elem *list)
 {
 	int		pipe_exit_code_fd[2];
 	int		pipe_exit_code;
-	int		status;
 	int		pid;
 
 	pid = 0;
 	if (!ft_there_is_pipe(list))
 	{
 		if (ft_execute_command_bi(data, list))
-			return (1);
+			return ;
 		if (pipe(pipe_exit_code_fd) == -1)
-			return (-1);
+			return ;
 		pid = fork();
 		if (pid == -1)
-			return (-1);
+			return ;
 		if (pid == 0)
-		{
-			int redirection_ret = redirections(list);
-			if (redirection_ret == 0)
-			{
-				ft_execute_command_child(data, list, &pipe_exit_code);
-				close(pipe_exit_code_fd[0]);
-				write(pipe_exit_code_fd[1], &pipe_exit_code, sizeof(int));
-				close(pipe_exit_code_fd[1]);
-			}
-			else
-			{
-				pipe_exit_code = 1;
-				close(pipe_exit_code_fd[0]);
-				write(pipe_exit_code_fd[1], &pipe_exit_code, sizeof(int));
-				close(pipe_exit_code_fd[1]);
-			}
-			exit(0);
-		}
+			ft_execute_command2(data, list, pipe_exit_code_fd, &pipe_exit_code);
 		else
-		{
-			int pipe_exit_code = 0;
-			close(pipe_exit_code_fd[1]);
-			read(pipe_exit_code_fd[0], &pipe_exit_code, sizeof(int));
-			close(pipe_exit_code_fd[0]);
-			status = 0;
-			waitpid(pid, &status, WUNTRACED | WCONTINUED);
-			if (WIFSIGNALED(status))
-				exit(128 + WTERMSIG(status));
-			else if (pipe_exit_code != 0)
-				g_status_minishell.status_pipe = pipe_exit_code;
-			else if (WIFEXITED(status))
-				g_status_minishell.status_pipe = WEXITSTATUS(status);
-		}
+			ft_execute_command_parent(pipe_exit_code_fd, pid);
 	}
 	else
 		ft_execute_pipe(data, list);
-	return (0);
 }
