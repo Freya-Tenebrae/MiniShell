@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 16:24:34 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 15:48:08 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/14 16:12:11 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,29 +200,35 @@ void	ft_expension_on_command(t_data **data, t_elem *list)
 	// }
 }
 
-void	ft_expension_on_heredoc(t_data **data, char **str)
+static void ft_expension_on_heredoc2(t_data **data, char **str, char **result)
 {
-	char	*result;
 	int		i;
 
 	i = 0;
-	result = 0;
-	if (!str || !*str)
-		return ;
 	while ((*str)[i])
 	{
 		if ((*str)[i] == '$')
 		{
-			i += ft_expension_inject(data, &((*str)[i + 1]), &result);
+			i += ft_expension_inject(data, &((*str)[i + 1]), result);
 		}
 		else
 		{
-			ft_char_writeon(&result, (*str)[i]);
-			if (!result)
+			ft_char_writeon(result, (*str)[i]);
+			if (!*result)
 				return (ft_put_error_void(GENERIC_ERROR, "malloc error"));
 		}
 		i++;
 	}
+}
+
+void	ft_expension_on_heredoc(t_data **data, char **str)
+{
+	char	*result;
+
+	result = 0;
+	if (!str || !*str)
+		return ;
+	ft_expension_on_heredoc2(data, str, &result);
 	if (!result)
 	{
 		result = ft_strdup("");
