@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 17:34:55 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/14 19:58:01 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,24 @@ static int	ft_there_is_pipe(t_elem *cursor)
 	return (0);
 }
 
-static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
+static int	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
 {
+	t_elem	*list_left;
 	int		std[2];
 	int		fd[2];
 	int		pid;
-	t_elem	*list_left;
 
 	if (pipe(fd) == -1)
-		return ;
+		return (-1);
 	std[0] = dup(STDIN_FILENO);
 	std[1] = dup(STDOUT_FILENO);
 	pid = fork();
+	if (pid == -1)
+	{
+		close(std[0]);
+		close(std[1]);
+		return (-1);
+	}
 	if (pid == 0)
 	{
 		close(std[0]);
@@ -63,6 +69,7 @@ static void	ft_execute_pipe(t_data **data, t_elem *list, char **envp)
 	dup2(std[1], STDOUT_FILENO);
 	close(std[0]);
 	close(std[1]);
+	return (0);
 }
 
 int	redirections(t_elem *list)
@@ -100,11 +107,14 @@ int	redirections(t_elem *list)
 
 int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 {
+	int		pipe_exit_code_fd[2];
+	int		redirection_ret;
+	int		pipe_exit_code;
 	int		result_execve;
-	char	**cmd_args;
 	int		standard[2];
-	int		pid;
+	char	**cmd_args;
 	int		status;
+	int		pid;
 
 	pid = 0;
 	if (!ft_there_is_pipe(list))
@@ -114,7 +124,8 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		{
 			standard[0] = dup(STDIN_FILENO);
 			standard[1] = dup(STDOUT_FILENO);
-			if (redirections(list) == 0)
+			redirection_ret = redirections(list);
+			if (redirection_ret == 0)
 				g_status_minishell.status_pipe = ft_run_bi(data, cmd_args);
 			dup2(standard[0], STDIN_FILENO);
 			dup2(standard[1], STDOUT_FILENO);
@@ -125,22 +136,19 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		}
 		else
 			free(cmd_args);
-		
-		int pipe_exit_code_fd[2];
-
 		if (pipe(pipe_exit_code_fd) == -1)
-			return (0);
-
+			return (-1);
 		pid = fork();
-		
+		if (pid == -1)
+			return (-1);
 		if (pid == 0)
 		{
-			int pipe_exit_code = 0;
-			if (redirections(list) == 0)
+			pipe_exit_code = 0;
+			redirection_ret = redirections(list);
+			if (redirection_ret == 0)
 			{
 				cmd_args = ft_elem_get_cmd_args(data, list);
 				result_execve = ft_run_execve_with_all_path(ft_getenv(data, "PATH")->value, cmd_args, data);
-				
 				if (result_execve == -1)
 				{
 					pipe_exit_code = 2;
@@ -195,8 +203,6 @@ int	ft_execute_command(t_data **data, t_elem *list, char **envp)
 		}
 	}
 	else
-	{
 		ft_execute_pipe(data, list, envp);
-	}
 	return (0);
 }
