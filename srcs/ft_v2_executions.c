@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/14 21:19:38 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/15 13:27:57 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,8 @@ static void	ft_execute_command_child(t_data **data, t_elem *list,
 	cmd_args = ft_elem_get_cmd_args(data, list);
 	result_execve = ft_run_execve_with_all_path(
 			ft_getenv(data, "PATH")->value, cmd_args, data);
-	if (result_execve != -1)
-		free(cmd_args);
+	// if (result_execve != -1)
+	// 	free(cmd_args);
 	ft_execute_command_child_manage_errors(result_execve, cmd_args,
 		pipe_exit_code);
 }
