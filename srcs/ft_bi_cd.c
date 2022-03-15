@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/12 17:20:36 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/15 15:31:49 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
 
-int	ft_move(t_data **data, char *destination)
+int	ft_move2(t_data **data, char *destination, char **pwd_value)
 {
-	char	*pwd;
-	char	*pwd_value;
-	int		ret;
-
 	if (access(destination, F_OK) != 0)
 	{
 		ft_put_error(CD_ERROR, "destination error : no such file or folder");
@@ -25,15 +21,27 @@ int	ft_move(t_data **data, char *destination)
 	}
 	if (ft_getenv(data, "PWD"))
 	{
-		pwd_value = ft_getenv(data, "PWD")->value;
-		if (pwd_value != NULL)
-			pwd_value = ft_strdup(pwd_value);
-		if (ft_create_or_update_variable(data, "OLDPWD", pwd_value) == -1)
+		*pwd_value = ft_getenv(data, "PWD")->value;
+		if (*pwd_value != NULL)
+			*pwd_value = ft_strdup(*pwd_value);
+		if (ft_create_or_update_variable(data, "OLDPWD", *pwd_value) == -1)
 		{
 			ft_put_error(GENERIC_ERROR, "malloc error");
 			return (2);
 		}
 	}
+	return (0);
+}
+
+int	ft_move(t_data **data, char *destination)
+{
+	char	*pwd_value;
+	char	*pwd;
+	int		ret;
+
+	ret = ft_move2(data, destination, &pwd_value);
+	if (ret != 0)
+		return (ret);
 	ret = chdir(destination);
 	if (ret == -1)
 	{
@@ -95,7 +103,7 @@ int	ft_run_bi_cd(t_data **data, char **cmd_args)
 	{
 		directory_operand = cmd_args[1];
 		if (cmd_args[2])
-			ft_put_error(GENERIC_ERROR, "cd : too mutch arguments");
+			ft_put_error(GENERIC_ERROR, "cd : too much arguments");
 	}
 	if (directory_operand[0] && directory_operand[0] == '/')
 		res_move = ft_move(data, directory_operand);
