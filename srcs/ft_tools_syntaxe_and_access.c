@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools_syntaxe_and_access.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 16:12:00 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/13 15:34:14 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/15 17:26:18 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,39 @@ int	ft_check_syntaxe_operator(t_elem *list)
 	return (0);
 }
 
+static int	ft_check_access_ok_in_loop(t_elem **list)
+{
+	if ((*list)->type == IN)
+	{
+		*list = (*list)->next;
+		if (access((*list)->str, F_OK) != 0)
+		{
+			g_status_minishell.status_pipe = 1;
+			return (ft_put_error(FILE_ERROR, (*list)->str));
+		}
+		else if (access((*list)->str, R_OK) != 0)
+			return (ft_put_error(ACCESS_ERROR, (*list)->str));
+	}
+	if ((*list)->type == OUT || (*list)->type == DOUBLE_OUT)
+	{
+		*list = (*list)->next;
+		if (access((*list)->str, F_OK) == 0)
+		{
+			if (access((*list)->str, W_OK) != 0)
+				return (ft_put_error(ACCESS_ERROR, (*list)->str));
+		}
+	}
+	return (0);
+}
+
 int	ft_check_access_ok(t_elem *list)
 {
 	if (list != NULL && list->type == PIPE)
 		list = list->next;
 	while (list != NULL && list->type != PIPE)
 	{
-		if (list->type == IN)
-		{
-			list = list->next;
-			if (access(list->str, F_OK) != 0)
-			{
-				g_status_minishell.status_pipe = 1;
-				return (ft_put_error(FILE_ERROR, list->str));
-			}
-			else if (access(list->str, R_OK) != 0)
-				return (ft_put_error(ACCESS_ERROR, list->str));
-		}
-		if (list->type == OUT || list->type == DOUBLE_OUT)
-		{
-			list = list->next;
-			if (access(list->str, F_OK) == 0)
-			{
-				if (access(list->str, W_OK) != 0)
-					return (ft_put_error(ACCESS_ERROR, list->str));
-			}
-		}
+		if (ft_check_access_ok_in_loop(&list) == -1)
+			return (-1);
 		list = list->next;
 	}
 	return (0);
