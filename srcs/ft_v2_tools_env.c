@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_tools_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:57:18 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/12 15:01:15 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/15 13:35:41 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,27 @@ static int	ft_is_whitespace_following(char *str)
 	return (1);
 }
 
+static int	test(char **value, char **res, int i)
+{
+	if (ft_is_whitespace_following(*value + i))
+		return (0);
+	if (!(*value)[i + 1] || !ft_iswhitespace((*value)[i]) || \
+											!ft_iswhitespace((*value)[i + 1]))
+	{
+		ft_char_writeon(res, (*value)[i]);
+		if (!*res || *res == NULL)
+		{
+			free(value);
+			return (ft_put_error(GENERIC_ERROR, "malloc error"));
+		}
+	}
+	return (1);
+}
+
 static int	ft_trim_variable_value(char **value)
 {
 	char	*res;
+	int		ret;
 	int		i;
 
 	i = 0;
@@ -37,18 +55,11 @@ static int	ft_trim_variable_value(char **value)
 		i++;
 	while ((*value)[i])
 	{
-		if (ft_is_whitespace_following(*value + i))
+		ret = test(value, &res, i);
+		if (ret == 0)
 			break ;
-		if (!(*value)[i + 1] || !ft_iswhitespace((*value)[i]) || \
-											!ft_iswhitespace((*value)[i + 1]))
-		{
-			ft_char_writeon(&res, (*value)[i]);
-			if (!res || res == NULL)
-			{
-				free(value);
-				return (ft_put_error(GENERIC_ERROR, "malloc error"));
-			}
-		}
+		if (ret == -1)
+			return (-1);
 		i++;
 	}
 	free(*value);
