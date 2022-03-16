@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/11 15:41:24 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:19:37 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static int	ft_redirection_read_file(t_elem *list)
 
 	if (list->type == IN)
 	{
+		if (ft_check_one_access_ok_mute(list) != 0)
+			return (-1);
 		in_fd = ft_redirection_get_fd_in(list);
 		if (in_fd < 2)
 			return (0);

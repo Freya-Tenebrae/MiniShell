@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 16:12:00 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/16 14:04:42 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:20:51 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int	ft_check_access_ok_mute_in_loop_is_dir(t_elem **list)
 {
 	struct stat	*statbuf;
 
-	ft_put_error(GENERIC_ERROR, (*list)->str);
 	statbuf = malloc(sizeof(struct stat));
 	if (!statbuf || statbuf == NULL)
 		return (ft_put_error(GENERIC_ERROR, "malloc error"));
