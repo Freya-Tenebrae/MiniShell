@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/16 14:19:37 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/16 18:06:07 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static char	*ft_tools_read_fd(int fd)
 	if (!res || res == NULL)
 		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	buf = NULL;
-	while ((ret = get_next_line(fd, &buf)))
+	ret = get_next_line(fd, &buf);
+	while (ret)
 	{
 		ft_str_writeon(&res, buf);
 		free(buf);
@@ -33,6 +34,7 @@ static char	*ft_tools_read_fd(int fd)
 		ft_char_writeon(&res, '\n');
 		if (!res || res == NULL)
 			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
+		ret = get_next_line(fd, &buf);
 	}
 	free(buf);
 	buf = NULL;
@@ -45,8 +47,6 @@ static int	ft_redirection_read_file(t_elem *list)
 
 	if (list->type == IN)
 	{
-		if (ft_check_one_access_ok_mute(list) != 0)
-			return (-1);
 		in_fd = ft_redirection_get_fd_in(list);
 		if (in_fd < 2)
 			return (0);
