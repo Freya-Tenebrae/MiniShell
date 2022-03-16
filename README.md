@@ -20,19 +20,35 @@ git clone --recurse-submodules https://github.com/Freya-Tenebrae/MiniShell.git
 ./minishell
 ```
 
-#### /!\\ ONLY SOME FONCTIONNALITY ARE SUPORTED /!\\
- - launching an executable or system command
- - signals : 
+#### Uses
+This project aims to make a fonctionnal and simplified "SHELL" (similar to `bash -posix`)
+
+> ONLY SOME FONCTIONNALITY ARE SUPORTED: SOMETHING NOT LISTED BELOW WILL HAVE AN INDETERMINATED BAHAVIOR
+ - Launching an executable (with absolute or relative path)
+ - Launchinf a build in command :
+ 	- exit
+ 	- echo
+ 	- pwd
+ 	- cd
+ 	- env
+ 	- export
+ 	- unset
+ - Signals : 
  	- ctrl-C 
  	- ctrl-D 
  	- ctrl-\\
- - simple character supported : 
+ 	- crtl-l
+ - Quote :
  	- '
  	- "
+ - Redirection :
  	- <
  	- <<
  	- \>
  	- \>\>
+ - Pipes 
  	- |
- 	- $ (only if followd by ? or a sequence of characters)
- - A simple working history (arrow up and down without autocompletion)
+ - VARIABLES
+ 	- $?
+ 	- $VAR (with VAR is a sequence of characters)
+ - A simple working history
