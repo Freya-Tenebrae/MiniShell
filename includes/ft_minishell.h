@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minishell.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/16 12:47:01 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/16 18:02:15 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int			ft_run_bi(t_data **data, char **cmd_args);
 int			ft_run_bi_cd(t_data **data, char **cmd_args);
 int			ft_run_bi_echo(char **cmd_args);
 int			ft_run_bi_env(t_data **data);
+int			ft_fill(char **cmd_args, t_data **data);
 int			ft_run_bi_export(t_data **data, char **cmd_args);
 int			ft_run_bi_pwd(void);
 int			ft_run_bi_unset(t_data **data, char **cmd_args);
@@ -226,7 +227,7 @@ int			ft_is_only_variable(t_data **data, char *str);
 int			ft_expension_inject(t_data **data, char *str, char **result);
 
 void		ft_execute_command_parent(int *pipe_exit_code_fd, int pid);
-void		ft_execute_command_child(t_data **data, t_elem *list, 
+void		ft_execute_command_child(t_data **data, t_elem *list, \
 				int *pipe_exit_code);
 
 int			redirections(t_elem *list);
