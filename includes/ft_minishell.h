@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/14 21:00:14 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/16 11:58:17 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,15 @@ int			ft_add_variable(t_data **data, t_env *variable);
 
 char		*ft_get_filename_in(t_elem *list);
 int			ft_if_slash_exist(char *cmd);
+
+int			ft_is_only_variable(t_data **data, char *str);
+int			ft_expension_inject(t_data **data, char *str, char **result);
+
+void		ft_execute_command_parent(int *pipe_exit_code_fd, int pid);
+void		ft_execute_command_child(t_data **data, t_elem *list, 
+				int *pipe_exit_code);
+
+int			redirections(t_elem *list);
 
 /* ************************************************************************** */
 /*                                    END                                     */
