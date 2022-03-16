@@ -6,7 +6,7 @@
 #    By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/20 19:17:29 by cmaginot          #+#    #+#              #
-#    Updated: 2022/03/16 12:03:04 by gadeneux         ###   ########.fr        #
+#    Updated: 2022/03/16 13:40:26 by gadeneux         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,11 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_tools_syntaxe_and_access.c \
 	ft_v2_executions.c \
 	ft_v2_executions_2.c \
+	ft_v2_executions_3.c \
+	ft_v2_executions_4.c \
 	ft_v2_redirections.c \
 	ft_v2_tools_redirections.c \
+	ft_v2_tools_redirections_2.c \
 	ft_v2_tools_env.c \
 	ft_v2_expension.c \
 	ft_v2_expension_2.c \
