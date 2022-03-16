@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/20 19:17:29 by cmaginot          #+#    #+#              #
-#    Updated: 2022/03/16 14:26:15 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/03/16 18:12:44 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_bi_echo.c \
 	ft_bi_env.c \
 	ft_bi_export.c \
+	ft_bi_export2.c \
 	ft_bi_pwd.c \
 	ft_bi_unset.c \
 	ft_bi_exit.c \
@@ -48,6 +49,7 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_v2_executions_3.c \
 	ft_v2_executions_4.c \
 	ft_v2_redirections.c \
+	ft_v2_redirections2.c \
 	ft_v2_tools_redirections.c \
 	ft_v2_tools_redirections_2.c \
 	ft_v2_tools_env.c \
