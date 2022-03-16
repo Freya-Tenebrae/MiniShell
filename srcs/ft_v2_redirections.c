@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/11 15:41:24 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:57:52 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static char	*ft_tools_read_fd(int fd)
 	if (!res || res == NULL)
 		return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
 	buf = NULL;
-	while ((ret = get_next_line(fd, &buf)))
+	ret = get_next_line(fd, &buf);
+	while (ret)
 	{
 		ft_str_writeon(&res, buf);
 		free(buf);
@@ -33,6 +34,7 @@ static char	*ft_tools_read_fd(int fd)
 		ft_char_writeon(&res, '\n');
 		if (!res || res == NULL)
 			return (ft_put_error_null(GENERIC_ERROR, "malloc error"));
+		ret = get_next_line(fd, &buf);
 	}
 	free(buf);
 	buf = NULL;
