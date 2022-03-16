@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/16 18:11:49 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/16 18:23:34 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,6 @@ void		*ft_put_error_null(int i, char *str);
 void		ft_put_error_void(int i, char *str);
 void		ft_print_error(int i, char *str);
 
-int			ft_isquote(char c);
 int			ft_check_quote(char *str);
 char		*ft_keepinside_quote(char *str);
 int			ft_havequote(char *str);
@@ -181,6 +180,7 @@ int			ft_str_indexof(char *str, char c);
 int			ft_str_lastindexof(char *str, int from, char c);
 int			ft_iswhitespace(char c);
 int			ft_isquote(char c);
+int			ft_is_whitespace_following(char *str);
 char		*ft_str_before(char *str, char c);
 char		*ft_str_after(char *str, char c);
 char		*ft_str_writeon(char **str, char *to_add);

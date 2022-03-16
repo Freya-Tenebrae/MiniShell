@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/20 19:17:29 by cmaginot          #+#    #+#              #
-#    Updated: 2022/03/16 18:12:44 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/03/16 18:27:54 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,8 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_v2_tools_redirections.c \
 	ft_v2_tools_redirections_2.c \
 	ft_v2_tools_env.c \
+	ft_v2_tools_env2.c \
+	ft_v2_tools_env3.c \
 	ft_v2_expension.c \
 	ft_v2_expension_2.c \
 	ft_v2_expension_3.c \
