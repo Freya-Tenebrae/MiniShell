@@ -6,117 +6,11 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/16 12:32:05 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/16 12:42:42 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-static int	ft_there_is_pipe(t_elem *cursor)
-{
-	while (cursor)
-	{
-		if (cursor->type == PIPE)
-			return (1);
-		cursor = cursor->next;
-	}
-	return (0);
-}
-
-static int	ft_execute_pipe_child(t_data **data, t_elem *list, int *std,
-	int *fd)
-{
-	t_elem	*list_left;
-
-	close(std[0]);
-	close(std[1]);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[0]);
-	close(fd[1]);
-	list_left = ft_elem_clone_left(list);
-	ft_execute_command(data, list_left);
-	ft_free_elem(&list_left);
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	exit(0);
-}
-
-static void	ft_execute_pipe_parent(t_data **data, t_elem *list, int *fd)
-{
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[1]);
-	close(fd[0]);
-	ft_execute_command(data, ft_elem_get_right(list));
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	wait(NULL);
-}
-
-static int	ft_execute_pipe(t_data **data, t_elem *list)
-{
-	int		std[2];
-	int		fd[2];
-	int		pid;
-
-	if (pipe(fd) == -1)
-		return (-1);
-	std[0] = dup(STDIN_FILENO);
-	std[1] = dup(STDOUT_FILENO);
-	pid = fork();
-	if (pid == -1)
-	{
-		close(std[0]);
-		close(std[1]);
-		return (-1);
-	}
-	if (pid == 0)
-		ft_execute_pipe_child(data, list, std, fd);
-	else
-		ft_execute_pipe_parent(data, list, fd);
-	dup2(std[0], STDIN_FILENO);
-	dup2(std[1], STDOUT_FILENO);
-	close(std[0]);
-	close(std[1]);
-	return (0);
-}
-
-static void	redirections2(t_elem *list)
-{
-	if (ft_redirection_out_present(list))
-	{
-		dup2(list->out_fd, STDOUT_FILENO);
-		close(list->out_fd);
-		list->out_fd = -1;
-	}
-}
-
-int	redirections(t_elem *list)
-{
-	char	*content_redirection_in;
-	char	*filename_in;
-	int		fd[2];
-
-	if (ft_check_access_ok(list) != 0)
-		return (-1);
-	if (ft_redirection_in_present(list))
-	{
-		content_redirection_in = ft_redirection_get_in(list);
-		if (!content_redirection_in || content_redirection_in == NULL)
-		{
-			filename_in = ft_get_filename_in(list);
-			ft_put_error(FILE_ERROR, filename_in);
-			return (-1);
-		}	
-		if (pipe(fd) == -1)
-			return (-1);
-		ft_putstr_fd(content_redirection_in, fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-	}
-	redirections2(list);
-	return (0);
-}
 
 static int	ft_execute_command_bi(t_data **data, t_elem *list)
 {

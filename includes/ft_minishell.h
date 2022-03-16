@@ -6,7 +6,7 @@
 /*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/16 11:58:17 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/16 12:47:01 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,11 @@ void		ft_execute_command_child(t_data **data, t_elem *list,
 				int *pipe_exit_code);
 
 int			redirections(t_elem *list);
+int			ft_execute_pipe(t_data **data, t_elem *list);
+
+int			redirections(t_elem *list);
+
+int			ft_there_is_pipe(t_elem *cursor);
 
 /* ************************************************************************** */
 /*                                    END                                     */
