@@ -6,7 +6,7 @@
 #    By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/20 19:17:29 by cmaginot          #+#    #+#              #
-#    Updated: 2022/03/16 18:27:54 by cmaginot         ###   ########.fr        #
+#    Updated: 2022/03/17 02:15:39 by cmaginot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,8 +42,9 @@ SRCS=$(addprefix ${FOLDER}/, \
 	ft_tools_str_replace.c \
 	ft_tools_redirection_in.c \
 	ft_tools_redirection_out.c \
-	ft_tools_syntaxe_and_access.c \
-	ft_tools_syntaxe_and_access_mute.c \
+	ft_tools_syntaxe.c \
+	ft_tools_access.c \
+	ft_tools_access_mute.c \
 	ft_v2_executions.c \
 	ft_v2_executions_2.c \
 	ft_v2_executions_3.c \

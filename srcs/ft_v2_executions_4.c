@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions_4.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:42:27 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/16 12:42:50 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/17 02:19:27 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	redirections(t_elem *list)
 	char	*filename_in;
 	int		fd[2];
 
-	if (ft_check_access_ok(list) != 0)
+	if (ft_check_access_in_ok(list) != 0 || ft_check_access_out_ok(list) != 0)
 		return (-1);
 	if (ft_redirection_in_present(list))
 	{
