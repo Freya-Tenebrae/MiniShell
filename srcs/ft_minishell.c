@@ -6,11 +6,13 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/16 18:01:53 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:42:03 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
+
+t_status	g_status_minishell;
 
 static void	ft_loop(t_data **data)
 {
@@ -75,7 +77,7 @@ static int	ft_init_minishell_data(t_data **data, char **envp)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_data	*data;
+	t_data		*data;
 
 	(void) ac;
 	(void) av;
