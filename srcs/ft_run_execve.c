@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/18 16:36:18 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/18 16:37:47 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,6 @@ static int	ft_run_execve_with_one_path(char **cmd_args, char *path, \
 static int	ft_run_execve_for_exec(char **cmd_args, char ***envp)
 {
 	execve(cmd_args[0], cmd_args, *envp);
-	ft_put_error(GENERIC_ERROR, "file is not a ./exec");
-	ft_put_error(GENERIC_ERROR, "file is");
-
 	return (0);
 }
 
