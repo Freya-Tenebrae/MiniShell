@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/17 13:42:03 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/18 13:52:44 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,16 @@ int	main(int ac, char **av, char **envp)
 {
 	t_data		*data;
 
+	if (ac > 1)
+	{
+		ft_put_error(GENERIC_ERROR, "minisell should not take arguments");
+		return (1);
+	}
+	if (!envp || envp == NULL || !*envp || *envp == NULL)
+	{
+		ft_put_error(GENERIC_ERROR, "fatal error: env is NULL");
+		return (1);
+	}
 	(void) ac;
 	(void) av;
 	ft_init_minishell_global();
