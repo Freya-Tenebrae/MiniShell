@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 18:45:07 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/11 14:46:16 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/18 15:18:59 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_is_build_in(char *cmd)
 {
 	if (cmd == NULL)
 		return (0);
-	if (ft_strcmp(cmd, "echoX") == 0 || ft_strcmp(cmd, "cd") == 0 || \
+	if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "cd") == 0 || \
 		ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0 || \
 		ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0 || \
 		ft_strcmp(cmd, "exit") == 0)
