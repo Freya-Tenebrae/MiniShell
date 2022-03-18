@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/12 15:01:43 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:54:38 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,8 @@ static int	ft_run_execve_with_one_path(char **cmd_args, char *path, \
 	return (0);
 }
 
-static int	ft_run_execve_for_exec(char **cmd_args, char ***paths, char ***envp)
+static int	ft_run_execve_for_exec(char **cmd_args, char ***envp)
 {
-	ft_freestrs(paths);
 	execve(cmd_args[0], cmd_args, *envp);
 	return (0);
 }
@@ -80,10 +79,12 @@ int	ft_run_execve_with_all_path(char *path, char **cmd_args, t_data **data)
 
 	if (!cmd_args || cmd_args == NULL || !cmd_args[0] || cmd_args[0] == NULL)
 		return (-1);
-	if (ft_if_slash_exist(cmd_args[0]) != 0)
-		return (ft_if_slash_exist(cmd_args[0]));
+	i = ft_if_slash_exist(cmd_args[0]);
+	if (i == 1)
+		return (ft_run_execve_for_exec(cmd_args, &envp));
+	else if (i != 0)
+		return (i);
 	paths = ft_split(path, ':');
-	i = 0;
 	envp = (*data)->envp;
 	if (!paths)
 		return (0);
@@ -94,5 +95,5 @@ int	ft_run_execve_with_all_path(char *path, char **cmd_args, t_data **data)
 			return (res_one_path);
 		i++;
 	}
-	return (ft_run_execve_for_exec(cmd_args, &paths, &envp));
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/10 16:53:11 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/18 14:43:44 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_if_slash_exist_test_dir(char *cmd)
 	else
 	{
 		free(statbuf);
-		return (0);
+		return (1);
 	}
 }
 
