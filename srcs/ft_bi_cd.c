@@ -3,60 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bi_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/15 15:31:49 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/18 15:43:25 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_minishell.h"
-
-int	ft_move2(t_data **data, char *destination, char **pwd_value)
-{
-	if (access(destination, F_OK) != 0)
-	{
-		ft_put_error(CD_ERROR, "destination error : no such file or folder");
-		return (1);
-	}
-	if (ft_getenv(data, "PWD"))
-	{
-		*pwd_value = ft_getenv(data, "PWD")->value;
-		if (*pwd_value != NULL)
-			*pwd_value = ft_strdup(*pwd_value);
-		if (ft_create_or_update_variable(data, "OLDPWD", *pwd_value) == -1)
-		{
-			ft_put_error(GENERIC_ERROR, "malloc error");
-			return (2);
-		}
-	}
-	return (0);
-}
-
-int	ft_move(t_data **data, char *destination)
-{
-	char	*pwd_value;
-	char	*pwd;
-	int		ret;
-
-	ret = ft_move2(data, destination, &pwd_value);
-	if (ret != 0)
-		return (ret);
-	ret = chdir(destination);
-	if (ret == -1)
-	{
-		ft_put_error(CD_ERROR, strerror(errno));
-		return (1);
-	}
-	pwd = NULL;
-	pwd = getcwd(pwd, 0);
-	if (ft_create_or_update_variable(data, "PWD", pwd) == -1)
-	{
-		ft_put_error(GENERIC_ERROR, "malloc error");
-		return (2);
-	}
-	return (0);
-}
 
 static int	check_valid_home(t_data **data)
 {
@@ -66,17 +20,32 @@ static int	check_valid_home(t_data **data)
 	return (home && home->value && ft_strlen(home->value) > 0);
 }
 
+static int	step6_create_path(char *directory_operand, t_env *pwd_env, \
+																char **new_path)
+{
+	if (ft_str_writeon(new_path, pwd_env->value) == NULL)
+		return (ft_put_error(GENERIC_ERROR, "malloc error"));
+	if (ft_str_writeon(new_path, "/") == NULL)
+		return (ft_put_error(GENERIC_ERROR, "malloc error"));
+	if (ft_str_writeon(new_path, directory_operand) == NULL)
+		return (ft_put_error(GENERIC_ERROR, "malloc error"));
+	return (0);
+}
+
 static int	step6(t_data **data, char *directory_operand)
 {
 	char	*new_path;
 	int		res_move;
+	t_env	*pwd_env;
 
 	new_path = 0;
-	if (ft_str_writeon(&new_path, ft_getenv(data, "PWD")->value) == NULL)
+	pwd_env = ft_getenv(data, "PWD");
+	if (!pwd_env || pwd_env == NULL)
+	{
+		ft_put_error(CD_ERROR, "PWD not set");
 		return (2);
-	if (ft_str_writeon(&new_path, "/") == NULL)
-		return (2);
-	if (ft_str_writeon(&new_path, directory_operand) == NULL)
+	}
+	if (step6_create_path(directory_operand, pwd_env, &new_path) != 0)
 		return (2);
 	res_move = ft_move(data, new_path);
 	free(new_path);

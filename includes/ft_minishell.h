@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/17 13:39:45 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/18 15:43:13 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,8 @@ int			ft_there_is_pipe(t_elem *cursor);
 
 int			ft_redirection_open_in(t_data **data, t_elem *list);
 int			ft_redirection_open_out(t_elem *list);
+
+int			ft_move(t_data **data, char *destination);
 
 /* ************************************************************************** */
 /*                                    END                                     */
