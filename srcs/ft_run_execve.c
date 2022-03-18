@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:09:50 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/18 14:54:38 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/18 15:28:11 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ int	ft_run_execve_with_all_path(char *path, char **cmd_args, t_data **data)
 			return (res_one_path);
 		i++;
 	}
+	ft_freestrs(&paths);
 	return (0);
 }
