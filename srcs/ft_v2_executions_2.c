@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:25:39 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/18 15:20:17 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/18 17:15:48 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	ft_execute_command_parent(int *pipe_exit_code_fd, int pid)
 	close(pipe_exit_code_fd[0]);
 	status = 0;
 	waitpid(pid, &status, WUNTRACED | WCONTINUED);
+	// revoir le truc en bas, ne marche pas correctement ... et voir si autoriser ?
 	if (WIFSIGNALED(status))
 		exit(128 + WTERMSIG(status));
 	else if (pipe_exit_code != 0)
