@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:01:22 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/18 16:00:56 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/19 14:46:16 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 			if (buffer == NULL)
 			{
 				ft_put_error(GENERIC_ERROR, "warning: «here-doc» reach eof");
-				return (1);
+				return (0);
 			}
 			ret = ft_is_eof(buffer, list->next->str);
 			ret = test(data, list, ret, &buffer);
@@ -76,5 +76,5 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 				return (ret);
 		}
 	}
-	return (1);
+	return (0);
 }

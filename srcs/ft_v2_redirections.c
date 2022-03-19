@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/17 02:18:30 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/19 14:47:57 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ static int	ft_redirection_read_file(t_elem *list)
 			return (-1);
 		in_fd = ft_redirection_get_fd_in(list);
 		if (in_fd < 2)
-			return (0);
+			return (1);
 		list->in_content = ft_tools_read_fd(in_fd);
 		close(in_fd);
 	}
-	return (1);
+	return (0);
 }
 
 static int	ft_redirection_fill_in(t_data **data, t_elem *cmd)
@@ -65,26 +65,34 @@ static int	ft_redirection_fill_in(t_data **data, t_elem *cmd)
 	cursor = cmd;
 	while (cursor && cursor->type != PIPE)
 	{
-		ft_redirection_read_heredoc(data, cursor);
+		// appel de signal handling for heredoc (i'll do it) (va exit(0) si ctrl-c is pressed)
+		// fork a faire et pipe (et a wait le resultat)
+		if (ft_redirection_read_heredoc(data, cursor) != 0)
+			return (1);
+		// appel de signal handling normal (i'll do it)
 		cursor = cursor->next;
 	}
 	cursor = cmd;
 	while (cursor && cursor->type != PIPE)
 	{
-		ft_redirection_read_file(cursor);
+		if (ft_redirection_read_file(cursor) != 0)
+			return (1);
 		cursor = cursor->next;
 	}
-	return (1);
+	return (0);
 }
 
 int	ft_redirection_open_in(t_data **data, t_elem *list)
 {
+	int	res;
+
+	res = 0;
 	while (list)
 	{
-		ft_redirection_fill_in(data, list);
+		res = ft_redirection_fill_in(data, list);
 		list = ft_elem_get_right(list);
 	}
-	return (0);
+	return (res);
 }
 
 int	ft_redirection_open_out(t_elem *list)
@@ -97,7 +105,7 @@ int	ft_redirection_open_out(t_elem *list)
 	{
 		left = ft_elem_clone_left(list);
 		if (!left)
-			return (0);
+			return (ft_put_error(GENERIC_ERROR, "malloc error"));
 		if (ft_redirection_out_present(list))
 		{
 			out_fd = ft_redirection_get_fd_out(list);
@@ -107,5 +115,5 @@ int	ft_redirection_open_out(t_elem *list)
 		list = ft_elem_get_right(list);
 		ft_free_elem(&left);
 	}
-	return (1);
+	return (0);
 }

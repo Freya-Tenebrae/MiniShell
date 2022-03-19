@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/16 18:12:06 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/19 14:48:21 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	ft_redirection_open_all(t_data **data, t_elem *list)
 {
-	ft_redirection_open_out(list);
-	ft_redirection_open_in(data, list);
-	return (1);
+	if (ft_redirection_open_out(list) != 0)
+		return (1);
+	if (ft_redirection_open_in(data, list) != 0)
+		return (1);
+	return (0);
 }
 
 char	*ft_get_filename_in(t_elem *list)
