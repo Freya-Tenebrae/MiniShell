@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:25:39 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/18 17:15:48 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/20 18:11:19 by gadeneux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	ft_execute_command_parent(int *pipe_exit_code_fd, int pid)
 	waitpid(pid, &status, WUNTRACED | WCONTINUED);
 	// revoir le truc en bas, ne marche pas correctement ... et voir si autoriser ?
 	if (WIFSIGNALED(status))
-		exit(128 + WTERMSIG(status));
+		g_status_minishell.status_pipe = 128 + WTERMSIG(status);
 	else if (pipe_exit_code != 0)
 		g_status_minishell.status_pipe = pipe_exit_code;
 	else if (WIFEXITED(status))
