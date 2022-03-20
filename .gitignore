@@ -3,3 +3,4 @@
 minishell
 *.out
 .vscodetest/*
+.vscode/settings.json

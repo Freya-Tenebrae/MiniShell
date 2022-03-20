@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/19 14:47:57 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/20 18:38:17 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,8 @@ static int	ft_redirection_fill_in(t_data **data, t_elem *cmd)
 	cursor = cmd;
 	while (cursor && cursor->type != PIPE)
 	{
-		// appel de signal handling for heredoc (i'll do it) (va exit(0) si ctrl-c is pressed)
-		// fork a faire et pipe (et a wait le resultat)
 		if (ft_redirection_read_heredoc(data, cursor) != 0)
 			return (1);
-		// appel de signal handling normal (i'll do it)
 		cursor = cursor->next;
 	}
 	cursor = cmd;
