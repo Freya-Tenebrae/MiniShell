@@ -25,7 +25,7 @@ This project aims to make a fonctionnal and simplified "SHELL" (similar to `bash
 
 > ONLY SOME FONCTIONNALITY ARE SUPORTED: SOMETHING NOT LISTED BELOW WILL HAVE AN INDETERMINATED BAHAVIOR
  - Launching an executable (with absolute or relative path)
- - Launchinf a build in command :
+ - Launching a build in command :
  	- exit
  	- echo
  	- pwd
