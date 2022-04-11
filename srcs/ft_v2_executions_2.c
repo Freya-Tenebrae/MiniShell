@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 12:25:39 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/20 18:21:58 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/21 16:47:56 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 static void	ft_execute_command_child_manage_errors_2(int result_execve,
 	char ***cmd_args, int *pipe_exit_code)
 {
-	if (result_execve == -5)
+	if (result_execve == -4)
+	{
+		*pipe_exit_code = 126;
+		ft_put_error(IS_DIRECTORY_ERROR, (*cmd_args)[0]);
+	}
+	else if (result_execve == -5)
 	{
 		*pipe_exit_code = 2;
 		ft_put_error(GENERIC_ERROR, "error: PATH not set");
 	}
-	else
+	else if (result_execve != -7)
 	{
 		*pipe_exit_code = 127;
 		ft_put_error(CMD_NOT_FOUND_ERROR, (*cmd_args)[0]);
@@ -30,7 +35,13 @@ static void	ft_execute_command_child_manage_errors_2(int result_execve,
 static void	ft_execute_command_child_manage_errors(int result_execve,
 	char ***cmd_args, int *pipe_exit_code)
 {
-	if (result_execve == -2)
+	if (result_execve == -1)
+	{
+		free(cmd_args);
+		*pipe_exit_code = 2;
+		ft_put_error(GENERIC_ERROR, "malloc error");
+	}
+	else if (result_execve == -2)
 	{
 		*pipe_exit_code = 127;
 		ft_put_error(FILE_ERROR, (*cmd_args)[0]);
@@ -39,11 +50,6 @@ static void	ft_execute_command_child_manage_errors(int result_execve,
 	{
 		*pipe_exit_code = 126;
 		ft_put_error(ACCESS_ERROR, (*cmd_args)[0]);
-	}
-	else if (result_execve == -4)
-	{
-		*pipe_exit_code = 126;
-		ft_put_error(IS_DIRECTORY_ERROR, (*cmd_args)[0]);
 	}
 	else
 	{
@@ -66,20 +72,15 @@ void	ft_execute_command_child(t_data **data, t_elem *list,
 	path_env = ft_getenv(data, "PATH");
 	if (!path_env || path_env == NULL)
 		result_execve = -5;
+	else if (!*cmd_args || *cmd_args == NULL)
+		result_execve = -7;
 	else
 	{
 		path = path_env->value;
 		result_execve = ft_run_execve_with_all_path(path, cmd_args, data);
 	}
-	if (result_execve == -1)
-	{
-		free(cmd_args);
-		*pipe_exit_code = 2;
-		ft_put_error(GENERIC_ERROR, "malloc error");
-	}
-	else
-		ft_execute_command_child_manage_errors(result_execve, &cmd_args,
-			pipe_exit_code);
+	ft_execute_command_child_manage_errors(result_execve, &cmd_args, \
+															pipe_exit_code);
 }
 
 void	ft_execute_command_parent(int *pipe_exit_code_fd, int pid)

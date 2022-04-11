@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v2_executions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gadeneux <gadeneux@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:48:08 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/16 12:42:42 by gadeneux         ###   ########.fr       */
+/*   Updated: 2022/03/21 15:36:13 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_execute_command_bi(t_data **data, t_elem *list)
 	char	**cmd_args;
 
 	cmd_args = ft_elem_get_cmd_args(data, list);
-	if (ft_is_build_in(cmd_args[0]) == 1)
+	if (cmd_args && cmd_args != NULL && ft_is_build_in(cmd_args[0]) == 1)
 	{
 		standard[0] = dup(STDIN_FILENO);
 		standard[1] = dup(STDOUT_FILENO);
@@ -33,7 +33,7 @@ static int	ft_execute_command_bi(t_data **data, t_elem *list)
 		free(cmd_args);
 		return (1);
 	}
-	else
+	else if (cmd_args && cmd_args != NULL)
 		free(cmd_args);
 	return (0);
 }

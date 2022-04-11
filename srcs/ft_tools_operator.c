@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 16:38:48 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/02/11 17:48:50 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/21 13:58:15 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,6 @@ int	ft_get_operator_type(char *str)
 			return (DOUBLE_OUT);
 		else if (ft_strcmp(str, "|") == 0)
 			return (PIPE);
-		else if (ft_strcmp(str, "||") == 0)
-			return (DOUBLE_PIPE);
-		else if (ft_strcmp(str, "&") == 0)
-			return (AND);
-		else if (ft_strcmp(str, "&&") == 0)
-			return (DOUBLE_AND);
 		else
 			return (ft_put_operator_error(str));
 	}
@@ -74,7 +68,5 @@ int	ft_char_isoperator(char c)
 		return (OUT);
 	if (c == '|')
 		return (PIPE);
-	if (c == '&')
-		return (AND);
 	return (0);
 }

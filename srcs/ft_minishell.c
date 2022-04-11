@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/18 13:52:44 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/21 12:15:52 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	ft_loop(t_data **data)
 		{
 			g_status_minishell.exitcode = 0;
 			g_status_minishell.status_minishell = 0;
+			g_status_minishell.status_heredoc = 0;
 		}
 		str = readline("minishell~ ");
 		if (str == NULL)
@@ -44,6 +45,7 @@ static void	ft_init_minishell_global(void)
 {
 	g_status_minishell.status_minishell = 0;
 	g_status_minishell.status_pipe = 0;
+	g_status_minishell.status_heredoc = 0;
 	g_status_minishell.exitcode = 0;
 }
 

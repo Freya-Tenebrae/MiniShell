@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 17:01:22 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/19 14:46:16 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/21 13:20:17 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ static int	test(t_data **data, t_elem *list, int eof_ret, char **buffer)
 	return (0);
 }
 
+static int	ft_redirection_read_heredoc_test_buffer(char *buffer)
+{
+	if (buffer == NULL)
+	{
+		if (g_status_minishell.status_heredoc == 1)
+			return (0);
+		ft_put_error(GENERIC_ERROR, "warning: «here-doc» reach eof");
+		return (1);
+	}
+	return (2);
+}
+
 int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 {
 	char	*buffer;
@@ -63,11 +75,9 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 		while (1)
 		{
 			buffer = readline("> ");
-			if (buffer == NULL)
-			{
-				ft_put_error(GENERIC_ERROR, "warning: «here-doc» reach eof");
-				return (0);
-			}
+			ret = ft_redirection_read_heredoc_test_buffer(buffer);
+			if (ret != 2)
+				return (ret);
 			ret = ft_is_eof(buffer, list->next->str);
 			ret = test(data, list, ret, &buffer);
 			if (buffer)
@@ -76,5 +86,5 @@ int	ft_redirection_read_heredoc(t_data **data, t_elem *list)
 				return (ret);
 		}
 	}
-	return (0);
+	return (1);
 }

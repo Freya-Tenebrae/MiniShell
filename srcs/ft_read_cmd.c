@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 21:18:37 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/08 14:18:22 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/21 14:05:36 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ static int	ft_read_next_if_operator(char *str, int i, char **buffer)
 	{
 		if (ft_char_writeon(buffer, str[i]) == NULL)
 			return (-1);
+		if (str[i] != str[i + 1])
+		{
+			i++;
+			break ;
+		}
 		i++;
 	}
 	return (i);

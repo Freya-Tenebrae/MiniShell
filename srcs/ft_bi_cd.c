@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:29 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/18 15:43:25 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/21 16:56:15 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ static int	step6(t_data **data, char *directory_operand)
 	return (res_move);
 }
 
+static int	ft_check_if_too_mutch_args(char **cmd_args, int res_move)
+{
+	if (cmd_args[1] && cmd_args[2] && res_move == 0)
+	{
+		ft_put_error(GENERIC_ERROR, "cd : too much arguments");
+		res_move = 1;
+	}
+	return (res_move);
+}
+
 int	ft_run_bi_cd(t_data **data, char **cmd_args)
 {
 	char	*directory_operand;
@@ -69,14 +79,10 @@ int	ft_run_bi_cd(t_data **data, char **cmd_args)
 		directory_operand = ft_getenv(data, "HOME")->value;
 	}
 	else
-	{
 		directory_operand = cmd_args[1];
-		if (cmd_args[2])
-			ft_put_error(GENERIC_ERROR, "cd : too much arguments");
-	}
 	if (directory_operand[0] && directory_operand[0] == '/')
 		res_move = ft_move(data, directory_operand);
 	else
 		res_move = step6(data, directory_operand);
-	return (res_move);
+	return (ft_check_if_too_mutch_args(cmd_args, res_move));
 }

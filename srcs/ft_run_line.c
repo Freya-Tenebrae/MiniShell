@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 15:18:49 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/19 14:42:20 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/21 15:52:42 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,15 @@ static int	ft_parse_line(t_data **data, char **str, int *ret, t_elem **list)
 {
 	if (!ft_check_quote(*str))
 	{
-		g_status_minishell.status_pipe = 127;
+		g_status_minishell.status_pipe = 258;
 		return (ft_put_error(GENERIC_ERROR, "Quote error"));
 	}
 	*ret = 0;
 	*list = ft_read_line(*str, ret);
 	if (*ret != READ_OK)
 		return (ft_put_error(GENERIC_ERROR, "Reading line error"));
+	if (ft_check_syntaxe_operator(*list) != 0)
+		return (-2);
 	ft_expension_on_command(data, *list);
 	*list = ft_clear_list_from_null(list);
 	return (0);
@@ -96,15 +98,16 @@ void	ft_run_line(char **str, t_data **data)
 		g_status_minishell.status_minishell = 2;
 	else
 		g_status_minishell.status_minishell = 1;
+	if (res_parse_line == -2)
+		ft_free_elem(&list);
 	if (res_parse_line == 0)
 	{
-		if (ft_check_syntaxe_operator(list) == 0)
+		if (ft_redirection_open_all(data, list) != 0)
 		{
-			if (ft_redirection_open_all(data, list) == 0)
-			{
-				if (list && list->str)
-					ft_execute_command(data, list);
-			}
+			if (list && list->str)
+				ft_execute_command(data, list);
+			else
+				g_status_minishell.status_pipe = 0;
 		}
 		ft_free_elem(&list);
 	}

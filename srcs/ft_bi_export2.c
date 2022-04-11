@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:39:37 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/18 13:44:05 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/21 16:04:45 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static int	test2(t_data **data, char **cmd_args, int i)
 	}
 	else if (ft_create_or_update_variable(data, tmp, \
 								ft_str_after(cmd_args[i], '=')) == -1)
+	{
+		free(tmp);
 		return (-2);
+	}
 	free(tmp);
 	return (1);
 }

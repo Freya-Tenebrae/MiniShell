@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 12:44:43 by cmaginot          #+#    #+#             */
-/*   Updated: 2022/03/18 15:43:13 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/21 13:47:51 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@
 # define OUT 4
 # define DOUBLE_OUT 5
 # define PIPE 6
-# define DOUBLE_PIPE 7
-# define AND 8
-# define DOUBLE_AND 9
 
 # define GENERIC_ERROR 0
 # define OPERATOR_ERROR 1
@@ -68,6 +65,7 @@
 typedef struct s_status {
 	int				status_minishell;
 	int				status_pipe;
+	int				status_heredoc;
 	unsigned char	exitcode;
 }					t_status;
 
@@ -115,6 +113,7 @@ extern t_status	g_status_minishell;
 /* ************************************************************************** */
 int			main(int ac, char **av, char **envp);
 void		ft_init_signal_handling(void);
+void		ft_init_signal_handling_heredoc(void);
 void		ft_run_line(char **str, t_data **data);
 t_elem		*ft_read_line(char *str, int *ret);
 int			ft_read_cmd(char *str, int i, char **buffer, int *is_operator);

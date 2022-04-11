@@ -6,7 +6,7 @@
 /*   By: cmaginot <cmaginot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/27 15:45:06 by gadeneux          #+#    #+#             */
-/*   Updated: 2022/03/20 18:38:17 by cmaginot         ###   ########.fr       */
+/*   Updated: 2022/03/21 12:38:43 by cmaginot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,45 +51,49 @@ static int	ft_redirection_read_file(t_elem *list)
 			return (-1);
 		in_fd = ft_redirection_get_fd_in(list);
 		if (in_fd < 2)
-			return (1);
+			return (0);
 		list->in_content = ft_tools_read_fd(in_fd);
 		close(in_fd);
 	}
-	return (0);
+	return (1);
 }
 
 static int	ft_redirection_fill_in(t_data **data, t_elem *cmd)
 {
 	t_elem	*cursor;
+	int		fd;
 
 	cursor = cmd;
 	while (cursor && cursor->type != PIPE)
 	{
-		if (ft_redirection_read_heredoc(data, cursor) != 0)
-			return (1);
+		fd = dup(STDIN_FILENO);
+		ft_init_signal_handling_heredoc();
+		ft_redirection_read_heredoc(data, cursor);
+		ft_init_signal_handling();
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+		if (g_status_minishell.status_heredoc == 1)
+			return (0);
 		cursor = cursor->next;
 	}
 	cursor = cmd;
 	while (cursor && cursor->type != PIPE)
 	{
-		if (ft_redirection_read_file(cursor) != 0)
-			return (1);
+		ft_redirection_read_file(cursor);
 		cursor = cursor->next;
 	}
-	return (0);
+	return (1);
 }
 
 int	ft_redirection_open_in(t_data **data, t_elem *list)
 {
-	int	res;
-
-	res = 0;
 	while (list)
 	{
-		res = ft_redirection_fill_in(data, list);
+		if (ft_redirection_fill_in(data, list) == 0)
+			return (0);
 		list = ft_elem_get_right(list);
 	}
-	return (res);
+	return (1);
 }
 
 int	ft_redirection_open_out(t_elem *list)
@@ -102,7 +106,10 @@ int	ft_redirection_open_out(t_elem *list)
 	{
 		left = ft_elem_clone_left(list);
 		if (!left)
-			return (ft_put_error(GENERIC_ERROR, "malloc error"));
+		{
+			ft_put_error(GENERIC_ERROR, "malloc error");
+			return (0);
+		}
 		if (ft_redirection_out_present(list))
 		{
 			out_fd = ft_redirection_get_fd_out(list);
@@ -112,5 +119,5 @@ int	ft_redirection_open_out(t_elem *list)
 		list = ft_elem_get_right(list);
 		ft_free_elem(&left);
 	}
-	return (0);
+	return (1);
 }
