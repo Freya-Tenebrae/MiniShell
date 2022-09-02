@@ -52,3 +52,5 @@ This project aims to make a fonctionnal and simplified "SHELL" (similar to `bash
  	- $?
  	- $VAR (with VAR is a sequence of characters)
  - A simple working history
+
+![Minishell](https://github.com/Freya-Tenebrae/MiniShell/blob/master/minishell.png)
